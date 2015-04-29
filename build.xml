@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="warcraft" default="compile" basedir=".">
+	<description>
+		Fichier de construction pour le projet CPS "Warcraft"
+	</description>
+
+	<property name="src" location="src" />
+	<property name="build" location="build" />
+
+	<!-- METTRE ICI LE NOM DU BINOME -->
+	<property name="nom1" value="XXXXX" />
+	<property name="nom2" value="YYYYY" />
+
+    <!-- Creer dossier build -->
+	<target name="init" description="Creer dossier build">
+		<mkdir dir="${build}" />
+	</target>
+	
+	<!-- Compiler les sources -->
+	<target name="compile" depends="init" description="Compiler les sources">
+	   <echo>================ Compilation ================</echo>
+		<javac debug="true" srcdir="${src}" excludes="" destdir="${build}" includeantruntime="false"/>
+	</target>
+
+    <!-- Lance le jeu -->
+	<target name="run" depends="compile" description="Lance le jeu">
+	<echo>================ Run ================</echo>
+		<java classname="???" fork="true" classpath="${build}"/>
+	</target>
+
+    <!-- Lance les tests sans contrats -->
+    <target name="test" depends="compile" description="Lance les tests sans contrats">
+    <echo>================ Test sans contrats ================</echo>
+        <java classname="???" fork="true" classpath="${build}"/>
+    </target>
+
+    <!-- Lance les tests avec contrats -->
+    <target name="ctest" depends="compile" description="Lance les tests avec contrats">
+    <echo>================ Test avec contrats ================</echo>
+        <java classname="???" fork="true" classpath="${build}"/>
+    </target>
+    
+    <!-- Generer la distribution -->
+    <target name="dist" depends="init,clean" description="Generer la distribution" >
+    <echo>================ Distribution ================</echo>
+        <jar basedir=".." jarfile="../Warcraft-${nom1}-${nom2}.jar"
+    includes="Warcraft-CPS/**/*" excludes="**/CVS"/>
+  </target>
+    
+	<!-- Nettoyage dans le dossier -->
+	<target name="clean" description="Nettoyage dans le dossier">
+	<echo>================ Clean up ================</echo>
+		<fileset dir="${basedir}" defaultexcludes="no">
+			<include name="**/*~" />
+		</fileset>
+		<delete dir="${build}" />
+	</target>
+</project>
