@@ -7,7 +7,9 @@ Observators:
     const hauteur:          [Mine] -> int
     orRestant:              [Mine] -> int
     etat_d_appartenance:    [Mine] -> ETAT
-    est_laminee:            [Mine] -> boolean
+    estLaminee:             [Mine] -> boolean
+    compteurAbandon			[Mine] -> int
+    estAbandonnee			[Mine] -> boolean
 
 Constructors:
 	init: int x int -> [Mine]
@@ -17,11 +19,14 @@ Constructors:
 Operators:
 	retrait: [Mine] x int -> [Mine]
 		pre retrait(M,s)
-			require ¬est_laminee(M) ^ s>0
+			require ¬estLaminee(M) ^ s>0
 
 Observations:
 [Invariants]
-	est_laminee(M) =(min)= orRestant(M)≤0
+	estLaminee(M) =(min)= (orRestant(M)=0)
+	estAbandonnee(M) =(min)= (compteurAbandon(M)=51)
+	orRestant(M)≥0
+	0≤compteurAbandon(M)≤51
 
 [init]
 	largeur(init(l,h))				= l

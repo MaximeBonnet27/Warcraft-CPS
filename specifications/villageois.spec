@@ -13,6 +13,7 @@ Observators:
     quantiteOr:     [Villageois] -> int
     compteurCorvee: [Villageois] -> int
     corveeFini:		[Villageois] -> boolean
+    enCorvee: 		[Villageois] -> boolean
 
 Constructors:
 	init: RACE x int x int x int x double x int -> [Villageois]
@@ -42,6 +43,7 @@ Observations:
 [Invariants]
 	estMort(V) =(min)= pointsDeVie(V)≤0
 	corveeFini(V) =(min)= (compteurCorvee(V)=16)
+	enCorvee(V) =(min)= (compteurCorvee>0)
 	quantiteOr(V)≥0
 	0≤compteurCorvee(V)≤16
 
@@ -73,7 +75,7 @@ Observations:
 [commenceTravaille]
 	pointsDeVie(commenceTravaille(V))		= pointsDeVie(V)
 	quantiteOr(commenceTravaille(V))		= quantiteOr(V)
-	compteurCorvee(commenceTravaille(V))	= (compteurCorvee(V)=0)
+	compteurCorvee(commenceTravaille(V))	= (compteurCorvee(V)=1)
 
 [travaille]
 	pointsDeVie(travaille(V))		= pointsDeVie(V)
