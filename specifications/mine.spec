@@ -8,8 +8,8 @@ Observators:
     orRestant:              [Mine] -> int
     etat_d_appartenance:    [Mine] -> ETAT
     estLaminee:             [Mine] -> boolean
-    compteurAbandon			[Mine] -> int
-    estAbandonnee			[Mine] -> boolean
+    compteurAbandon:			[Mine] -> int
+    estAbandonnee:			[Mine] -> boolean
 
 Constructors:
 	init: int x int -> [Mine]
