@@ -1,14 +1,15 @@
 service: Muraille
 
 Observators:
-	const largeur: [Muraille] -> int
-	const hauteur: [Muraille] -> int
-	durabilite: [Muraille] -> int
-	estDetruite: [Muraille] -> boolean
+	const largeur: 	[Muraille] -> int
+	const hauteur: 	[Muraille] -> int
+	pointsDeVie: 	[Muraille] -> int
+	estDetruite: 	[Muraille] -> boolean
+
 Constructors:
 	init : int x int x int-> [Muraille]
-		pre init(l, h, d)
-			require l > 0 ^ h > 0 ^ d > 0
+		pre init(l, h, p)
+			require l > 0 ^ h > 0 ^ p > 0
 
 Operators:
 	taper : [Muraille] x int -> [Muraille]
@@ -17,14 +18,13 @@ Operators:
 
 Observations:
 [Invariants]
-	estDetruite(M) =(min)= (durabilite = 0)
-	durabilite(M) >= 0
+	estDetruite(M) =(min)= (pointsDeVie ≤ 0)
 
 [init]
-	largeur(init(l,h,d)) = l
-	hauteur(init(l,h,d)) = h
-	durabilite(init(l,h,d)) = d
+	largeur(init(l,h,p)) 		= l
+	hauteur(init(l,h,p)) 		= h
+	pointsDeVie(init(l,h,p)) 	= p
 
 [taper]
-	durabilite(taper(M, x)) = max(0, durabilite(M) - x)
+	pointsDeVie(taper(M, x)) = pointsDeVie(M) - x
 	

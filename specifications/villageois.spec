@@ -1,6 +1,6 @@
 service: Villageois
 
-types: RACE{ORC, HUMAIN}, int, double, boolean
+types: enum RACE{ORC, HUMAIN}, int, double, boolean
 
 Observators:
     const race:     [Villageois] -> RACE

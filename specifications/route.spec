@@ -3,7 +3,7 @@ service: Route
 Observators:
     const largeur:          [Route] -> int
     const hauteur:          [Route] -> int
-	const multiplicateur: [Route] -> double
+	const multiplicateur: 	[Route] -> double
 
 Constructors:
 	init : int x int x double -> [Muraille]
@@ -16,6 +16,6 @@ Observations:
 [Invariants]
 	
 [init]
-	largeur(init(l,h,m)) = l
-	hauteur(init(l,h,m)) = h
+	largeur(init(l,h,m)) 		= l
+	hauteur(init(l,h,m)) 		= h
 	multiplicateur(init(l,h,m)) = m

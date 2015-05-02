@@ -1,6 +1,6 @@
 service: Mine
 
-types: int, ETAT{OCCUPE,LIBRE}, boolean, RACE{ORC, HUMAIN}
+types: int, enum ETAT{OCCUPE,LIBRE}, boolean, RACE{ORC, HUMAIN}
 
 Observators:
     const largeur:          [Mine] -> int

@@ -1,6 +1,6 @@
 service: HotelDeVille
 
-types: int, ETAT{OCCUPE,LIBRE}, boolean, RACE{ORC, HUMAIN}
+types: int, enum ETAT{OCCUPE,LIBRE}, boolean, enum RACE{ORC, HUMAIN}
 
 Observators:
     const largeur:          [HotelDeVille] -> int
