@@ -10,29 +10,37 @@ Observators:
     const maxPasJeu:            [MoteurJeu] -> int
     pasJeuCourant:              [MoteurJeu] -> int
     estFini:                    [MoteurJeu] -> boolean
+
     resultatFinal:              [MoteurJeu] -> RESULTAT
 		pre resultatFinal(M) 
 			require estFini(M)
+
     const numeroesVillageois:   [MoteurJeu] -> Set<int>
     getVillageois:              [MoteurJeu] x int -> Villageois
 		pre getVillageois(M,num) 
 			require num ∈ numeroesVillageois(M,num) 
+
     positionVillageoisX:        [MoteurJeu] x int -> int
 		pre positionVillageoisX(M,num) 
 			require num ∈ numeroesVillageois(M,num)
+
     positionVillageoisY:        [MoteurJeu] x int -> int
 		pre positionVillageoisY(M,num) 
 			require num ∈ numeroesVillageois(M,num) 
+
 	getMineVillageois: [MoteurJeur] -> Mine
 		pre getMineVillageois(M,num) 
 			require num ∈ numeroesVillageois(M,num) ^ Villageois::enCorvee(getVillageois(M,num))
+
     const numeroesMine:         [MoteurJeu] -> Set<int>
     getMine:                    [MoteurJeu] x int -> Mine
 		pre getMine(M,num) 
 			require num ∈ numeroesMine(M,num)
+
     const positionMineX:        [MoteurJeu] x int -> int
 		pre positionMineX(M,num)
 			require num ∈ numeroesMine(M,num) 
+
     const positionMineY:        [MoteurJeu] x int -> int
 		pre positionMineY(M,num) 
 			require num ∈ numeroesMine(M,num)
@@ -41,9 +49,11 @@ Observators:
     getRoute:                    [MoteurJeu] x int -> Route
 		pre getRoute(M,num) 
 			require num ∈ numeroesRoute(M,num)
+
     const positionRouteX:        [MoteurJeu] x int -> int
 		pre positionRouteX(M,num)
 			require num ∈ numeroesRoute(M,num) 
+
     const positionRouteY:        [MoteurJeu] x int -> int
 		pre positionRouteY(M,num) 
 			require num ∈ numeroesRoute(M,num)
@@ -52,9 +62,11 @@ Observators:
     getMuraille:                    [MoteurJeu] x int -> Murraille
 		pre getMuraille(M,num) 
 			require num ∈ numeroesMuraille(M,num)
+
     const positionMurailleX:        [MoteurJeu] x int -> int
 		pre positionMurrailleX(M,num)
 			require num ∈ numeroesMurraille(M,num) 
+
     const positionMurrailleY:        [MoteurJeu] x int -> int
 		pre positionMurrailleY(M,num) 
 			require num ∈ numeroesMurraille(M,num)
@@ -64,14 +76,17 @@ Observators:
 	getHotel:	[MoteurJeu] x int -> HotelVille
 		pre getHotel(M,numHotel)
 			require numHotel=0 V numHotel=1 
+
     const positionHotelVilleXA: [MoteurJeu] -> int
     const positionHotelVilleYA: [MoteurJeu] -> int
     const positionHotelVilleXB: [MoteurJeu] -> int
     const positionHotelVilleYB: [MoteurJeu] -> int
+
     peutEntrer:                 [MoteurJeu] x int x int -> boolean
 		pre peutEntrer(M,numVillageois,numMine)
 			require numVillageois ∈ numeroesVillageois(M,numVillageois)
 					^ numMine ∈ numeroesMine(M,numMine) 
+
     peutEntrerHotelVille:     	[MoteurJeu] x int x int -> boolean
 		pre peutEntrerHotelVille(M,numVillageois,numHotel)
 			require numVillageois ∈ numeroesVillageois(M,numVillageois) ^ (numHotel = 0 V numHotel = 1)
@@ -84,19 +99,22 @@ Constructors:
 			require largeur ≥ 600 ^ hauteur ≥ 400 ^ maxPas ≥ 0
 
 Operators:  
-	pasJeu : [MoteurJeu] x COMMANDE x int x int x COMMANDE x int x int -> [MoteurJeu]                   
-		pre pasJeu(M,commmandJ1,numVillgeoisJ1,argumentJ1,commmandJ2,numVillgeoisJ2,argumentJ2) 
+	pasJeu : [MoteurJeu] x COMMANDE x Set<int> x int x COMMANDE x Set<int> x int -> [MoteurJeu]                   
+		pre pasJeu(M,commmandJ1,numsVillgeoisJ1,argumentJ1,commmandJ2,numsVillgeoisJ2,argumentJ2) 
 			require ¬estFini(M) ^
-				numVillageoisJ1 ∈ numeroesVillageois(M,numVillageoisJ1) ^
-				Villageois::race(getVillageois(numVillageoisJ1)) = RACE.HUMAIN ^
-				numVillageoisJ2 ∈ numeroesVillageois(M,numVillageoisJ2) ^
-				Villageois::race(getVillageois(numVillageoisJ2)) = RACE.ORC ^
-				(commandJ1=COMMANDE.DEPLACER => 0 ≤ argumentJ1 ≤ 360) ^
-				(commandJ1=COMMANDE.ENTRERMINE => (argumentJ1 ∈ numeroesMines(M) ^ peutEntrer(M,numVillageoisJ1,argumentJ1))) ^
-				(commandJ1=COMMANDE.ENTRERHOTELVILLE => ((argumentJ1 = 0 V argumentJ1 = 1) ^ peutEntrerHotelVille(M,numVillageois,argumentJ1))) ^
-				(commandJ2=COMMANDE.DEPLACER => 0 ≤ argumentJ2 ≤ 360) ^
-				(commandJ2=COMMANDE.ENTRERMINE => (argumentJ2 ∈ numeroesMines(M) ^ peutEntrer(M,numVillageoisJ2,argumentJ2))) ^
-				(commandJ2=COMMANDE.ENTRERHOTELVILLE => ((argumentJ2 = 0 V argumentJ2 = 1) ^ peutEntrerHotelVille(M,numVillageoisJ2,argumentJ2)))
+				Pour tout i dans numVillageoisJ1
+					i ∈ numeroesVillageois(M) ^
+					Villageois::race(getVillageois(i)) = RACE.HUMAIN ^
+					(commandJ1=COMMANDE.DEPLACER => 0 ≤ argumentJ1 ≤ 360) ^
+					(commandJ1=COMMANDE.ENTRERMINE => (argumentJ1 ∈ numeroesMines(M) ^ peutEntrer(M,i,argumentJ1))) ^
+					(commandJ1=COMMANDE.ENTRERHOTELVILLE => ((argumentJ1 = 0 V argumentJ1 = 1) ^ peutEntrerHotelVille(M,i,argumentJ1))) ^
+
+				Pour tout i dans numVillageoisJ2
+					i ∈ numeroesVillageois(M,i) ^
+					Villageois::race(getVillageois(i)) = RACE.ORC ^
+					(commandJ2=COMMANDE.DEPLACER => 0 ≤ argumentJ2 ≤ 360) ^
+					(commandJ2=COMMANDE.ENTRERMINE => (argumentJ2 ∈ numeroesMines(M) ^ peutEntrer(M,i,argumentJ2))) ^
+					(commandJ2=COMMANDE.ENTRERHOTELVILLE => ((argumentJ2 = 0 V argumentJ2 = 1) ^ peutEntrerHotelVille(M,i,argumentJ2)))
 
 Observations:                   
 [Invariants]
@@ -151,11 +169,13 @@ Observations:
 	 getHotel(M,num_hotel) =(min)= (num_hotel= 0) => hotelDeVilleA(M)
  									^
 									(num_hotel= 1) => hotelDeVilleB(M)
+
 [init]
 	largeurTerrain(init(l,h,m)) = l
 	hauteurTerrain(init(l,h,m)) = h
 	maxPasJeu(init(l,h,m))		= m
 	pasJeuCourant(init(l,h,m))  = 0
+	
 	numeroesVillageois(init(l,h,m))  = {0,...,199}
 	pour tout i dans numeroesVillageois(init(l,h,m)),
 		si i < 100, 
@@ -185,78 +205,79 @@ Observations:
 
 	hotelDeVilleA = HotelDeVille::init(Race.ORC, 100, 100)
 	hotelDeVilleB = HotelDeVille::init(Race.HUMAIN, 100, 100)
+	
 	positionHotelDeVilleXA(init(l,h,m)) = 0
 	positionHotelDeVilleYA(init(l,h,m)) = 0
+	
 	positionHotelDeVilleXB(init(l,h,m)) = largeurTerrain(init(l,h,m)) - HotelDeVille::largeur(hotelDeVilleB) - 1
 	positionHotelDeVilleYB(init(l,h,m)) = hauteurTerrain(init(l,h,m)) - HotelDeVille::hauteur(hotelDeVilleB) - 1
 
 [pasJeu]
 	//pasJeuCourant
-	pasJeuCourant(pasJeu(M, c1, n1, a1, c2, n2, a2)) = pasJeuCourant(M) + 1
+	pasJeuCourant(pasJeu(M, c1, s1, a1, c2, s2, a2)) = pasJeuCourant(M) + 1
 
-	pour tout i dans numeroesVillageois(pasJeu(M, c1, n1, a1, c2, n2, a2)) 
+	pour tout i dans numeroesVillageois(pasJeu(M, c1, s1, a1, c2, s2, a2)) 
 		// getVillageois
-		getVillageois(pasJeu(M, c1, n1, a1, c2, n2, a2),i) = getVillageois(M,i)
+		getVillageois(pasJeu(M, c1, s1, a1, c2, s2, a2),i) = getVillageois(M,i)
 
 		// positionVillageoisX
    		// positionVillageoisY
-		si i = n1 ^ c1 = COMMANDE.DEPLACER
+		si i ∈ s1 ^ c1 = COMMANDE.DEPLACER
 			alors
 				si exist num_route telque positionRouteX(M,num_route) = positionVillageoisX(M) ^ positionRouteY(M,num_route) = positionVillageoisY(M)
 					alors
 					si exist num_muraille telque positionMurailleX(M,num_muraille) = positionVillageoisX(M) + cos(a1)*Villageois::vitesse(getVillageois(M,i))*Route::multiplicateur(getRoute(m,num_route)) 
 						^ positionMurailleY(M,num_muraille) = positionVillageoisY(M) + cos(a1)*Villageois::vitesse(getVillageois(M,i))*Route::multiplicateur(getRoute(m,num_route))
 						alors
-						positionVillageoisX(pasJeu(M, c1, n1, a1, c2, n2, a2),i) = positionVillageoisX(M)
-						positionVillageoisY(pasJeu(M, c1, n1, a1, c2, n2, a2),i) = positionVillageoisY(M)
+						positionVillageoisX(pasJeu(M, c1, s1, a1, c2, s2, a2),i) = positionVillageoisX(M)
+						positionVillageoisY(pasJeu(M, c1, s1, a1, c2, s2, a2),i) = positionVillageoisY(M)
 					sinon alors
-						positionVillageoisX(pasJeu(M, c1, n1, a1, c2, n2, a2),i) = positionVillageoisX(M) + cos(a1)*Villageois::vitesse(getVillageois(M,i))*Route::multiplicateur(getRoute(m,num_route))
-						positionVillageoisY(pasJeu(M, c1, n1, a1, c2, n2, a2),i) = positionVillageoisY(M) + cos(a1)*Villageois::vitesse(getVillageois(M,i))*Route::multiplicateur(getRoute(m,num_route))
+						positionVillageoisX(pasJeu(M, c1, s1, a1, c2, s2, a2),i) = positionVillageoisX(M) + cos(a1)*Villageois::vitesse(getVillageois(M,i))*Route::multiplicateur(getRoute(m,num_route))
+						positionVillageoisY(pasJeu(M, c1, s1, a1, c2, s2, a2),i) = positionVillageoisY(M) + cos(a1)*Villageois::vitesse(getVillageois(M,i))*Route::multiplicateur(getRoute(m,num_route))
 				sinon alors
 	 				si exist num_muraille telque positionMurailleX(M,num_muraille) = positionVillageoisX(M) + cos(a1)*Villageois::vitesse(getVillageois(M,i))
 						^ positionMurailleY(M,num_muraille) = positionVillageoisY(M) + cos(a1)*Villageois::vitesse(getVillageois(M,i))
 						alors
-						positionVillageoisX(pasJeu(M, c1, n1, a1, c2, n2, a2),i) = positionVillageoisX(M)
-						positionVillageoisY(pasJeu(M, c1, n1, a1, c2, n2, a2),i) = positionVillageoisY(M)
+						positionVillageoisX(pasJeu(M, c1, s1, a1, c2, s2, a2),i) = positionVillageoisX(M)
+						positionVillageoisY(pasJeu(M, c1, s1, a1, c2, s2, a2),i) = positionVillageoisY(M)
 					sinon alors
-						positionVillageoisX(pasJeu(M, c1, n1, a1, c2, n2, a2),i) = positionVillageoisX(M) + cos(a1)*Villageois::vitesse(getVillageois(M,i))
-						positionVillageoisY(pasJeu(M, c1, n1, a1, c2, n2, a2),i) = positionVillageoisY(M) + cos(a1)*Villageois::vitesse(getVillageois(M,i))
+						positionVillageoisX(pasJeu(M, c1, s1, a1, c2, s2, a2),i) = positionVillageoisX(M) + cos(a1)*Villageois::vitesse(getVillageois(M,i))
+						positionVillageoisY(pasJeu(M, c1, s1, a1, c2, s2, a2),i) = positionVillageoisY(M) + cos(a1)*Villageois::vitesse(getVillageois(M,i))
 
-		sinon si i = n2 ^ c2 = COMMANDE.DEPLACER
+		sinon si i ∈ s2 ^ c2 = COMMANDE.DEPLACER
 			alors
 				si exist num_route telque positionRouteX(M,num_route) = positionVillageoisX(M) ^ positionRouteY(M,num_route) = positionVillageoisY(M)
 					alors
 					si exist num_muraille telque positionMurailleX(M,num_muraille) = positionVillageoisX(M) + cos(a2)*Villageois::vitesse(getVillageois(M,i))*Route::multiplicateur(getRoute(m,num_route)) 
 						^ positionMurailleY(M,num_muraille) = positionVillageoisY(M) + cos(a2)*Villageois::vitesse(getVillageois(M,i))*Route::multiplicateur(getRoute(m,num_route))
 						alors
-						positionVillageoisX(pasJeu(M, c1, n1, a1, c2, n2, a2),i) = positionVillageoisX(M)
-						positionVillageoisY(pasJeu(M, c1, n1, a1, c2, n2, a2),i) = positionVillageoisY(M)
+						positionVillageoisX(pasJeu(M, c1, s1, a1, c2, s2, a2),i) = positionVillageoisX(M)
+						positionVillageoisY(pasJeu(M, c1, s1, a1, c2, s2, a2),i) = positionVillageoisY(M)
 					sinon alors
-						positionVillageoisX(pasJeu(M, c1, n1, a1, c2, n2, a2),i) = positionVillageoisX(M) + cos(a2)*Villageois::vitesse(getVillageois(M,i))*Route::multiplicateur(getRoute(m,num_route))
-						positionVillageoisY(pasJeu(M, c1, n1, a1, c2, n2, a2),i) = positionVillageoisY(M) + cos(a2)*Villageois::vitesse(getVillageois(M,i))*Route::multiplicateur(getRoute(m,num_route))
+						positionVillageoisX(pasJeu(M, c1, s1, a1, c2, s2, a2),i) = positionVillageoisX(M) + cos(a2)*Villageois::vitesse(getVillageois(M,i))*Route::multiplicateur(getRoute(m,num_route))
+						positionVillageoisY(pasJeu(M, c1, s1, a1, c2, s2, a2),i) = positionVillageoisY(M) + cos(a2)*Villageois::vitesse(getVillageois(M,i))*Route::multiplicateur(getRoute(m,num_route))
 				sinon alors
 	 				si exist num_muraille telque positionMurailleX(M,num_muraille) = positionVillageoisX(M) + cos(a2)*Villageois::vitesse(getVillageois(M,i))
 						^ positionMurailleY(M,num_muraille) = positionVillageoisY(M) + cos(a1)*Villageois::vitesse(getVillageois(M,i))
 						alors
-						positionVillageoisX(pasJeu(M, c1, n1, a1, c2, n2, a2),i) = positionVillageoisX(M)
-						positionVillageoisY(pasJeu(M, c1, n1, a1, c2, n2, a2),i) = positionVillageoisY(M)
+						positionVillageoisX(pasJeu(M, c1, s1, a1, c2, s2, a2),i) = positionVillageoisX(M)
+						positionVillageoisY(pasJeu(M, c1, s1, a1, c2, s2, a2),i) = positionVillageoisY(M)
 					sinon alors
-						positionVillageoisX(pasJeu(M, c1, n1, a1, c2, n2, a2),i) = positionVillageoisX(M) + cos(a2)*Villageois::vitesse(getVillageois(M,i))
-						positionVillageoisY(pasJeu(M, c1, n1, a1, c2, n2, a2),i) = positionVillageoisY(M) + cos(a2)*Villageois::vitesse(getVillageois(M,i))
+						positionVillageoisX(pasJeu(M, c1, s1, a1, c2, s2, a2),i) = positionVillageoisX(M) + cos(a2)*Villageois::vitesse(getVillageois(M,i))
+						positionVillageoisY(pasJeu(M, c1, s1, a1, c2, s2, a2),i) = positionVillageoisY(M) + cos(a2)*Villageois::vitesse(getVillageois(M,i))
 
 		sinon alors
-			positionVillageoisX(pasJeu(M, c1, n1, a1, c2, n2, a2),i) = positionVillageoisX(M)
-			positionVillageoisY(pasJeu(M, c1, n1, a1, c2, n2, a2),i) = positionVillageoisY(M)
+			positionVillageoisX(pasJeu(M, c1, s1, a1, c2, s2, a2),i) = positionVillageoisX(M)
+			positionVillageoisY(pasJeu(M, c1, s1, a1, c2, s2, a2),i) = positionVillageoisY(M)
 
-	
 		// getMineVillageois
-		si i=n1 ^ c1 = COMMANDE.ENTRERMINE 
+		si i ∈ s1 ^ c1 = COMMANDE.ENTRERMINE 
 			alors
-				peutEntrer(M,n1,a1) => Villageois::commenceTravaille(getVillageois(M,n1)) ^ Mine::accueil(getMine(M,a1),Villageois::race(getVillageois(M,n1))) ^ getMineVillageois(pasJeu(M, c1, n1, a1, c2, n2, a2), n1) = a1
+				peutEntrer(M,i,a1) => Villageois::commenceTravaille(getVillageois(M,i)) ^ Mine::accueil(getMine(M,a1),Villageois::race(getVillageois(M,i))) ^ getMineVillageois(pasJeu(M, c1, i, a1, c2, n2, a2), i) = a1
 		
-		si i=n2 ^ c2 = COMMANDE.ENTRERMINE 
+		si i ∈ s2 ^ c2 = COMMANDE.ENTRERMINE 
 			alors
-				peutEntrer(M,n2,a2) => Villageois::commenceTravaille(getVillageois(M,n2)) ^ Mine::accueil(getMine(M,a2),Villageois::race(getVillageois(M,n2))) ^ getMineVillageois(pasJeu(M, c1, n1, a1, c2, n2, a2), n2) = a2
+				peutEntrer(M,i,a2) => Villageois::commenceTravaille(getVillageois(M,i)) ^ Mine::accueil(getMine(M,a2),Villageois::race(getVillageois(M,i))) ^ getMineVillageois(pasJeu(M, c1, n1, a1, c2, i, a2), i) = a2
 		
 		sinon si Villageois::enCorvee(getVillageois(M,i))
 			alors
@@ -266,43 +287,43 @@ Observations:
 					alors
 						si exist n dans numeroesVillageois(M)/i telque  getMineVillageois(M, n) = getMineVillageois(M, i)
 						alors
-							Villageois::ajouteOr(getVillageois(M,i),1) ^ Mine::retrait(getMineVillageois(M, i), 1) ^ ¬Villageois::enCorvee(getVillageois(pasJeu(M, c1, n1, a1, c2, n2, a2),i))
+							Villageois::ajouteOr(getVillageois(M,i),1) ^ Mine::retrait(getMineVillageois(M, i), 1) ^ ¬Villageois::enCorvee(getVillageois(pasJeu(M, c1, s1, a1, c2, s2, a2),i))
 					sinon alors
-						Villageois::ajouteOr(getVillageois(M,i),1) ^ Mine::retrait(getMineVillageois(M, i), 1) ^ Mine::abandoned(getMineVillageois(M, i)) ^ ¬Villageois::enCorvee(getVillageois(pasJeu(M, c1, n1, a1, c2, n2, a2),i))						
+						Villageois::ajouteOr(getVillageois(M,i),1) ^ Mine::retrait(getMineVillageois(M, i), 1) ^ Mine::abandoned(getMineVillageois(M, i)) ^ ¬Villageois::enCorvee(getVillageois(pasJeu(M, c1, s1, a1, c2, s2, a2),i))						
 				sinon alors
 					si exist n dans numeroesVillageois(M)/i telque  getMineVillageois(M, n) = getMineVillageois(M, i)
 						alors
-							¬Villageois::enCorvee(getVillageois(pasJeu(M, c1, n1, a1, c2, n2, a2),i))
+							¬Villageois::enCorvee(getVillageois(pasJeu(M, c1, s1, a1, c2, s2, a2),i))
 					sinon alors
-						Mine::abandoned(getMineVillageois(M, i)) ^ ¬Villageois::enCorvee(getVillageois(pasJeu(M, c1, n1, a1, c2, n2, a2),i))
+						Mine::abandoned(getMineVillageois(M, i)) ^ ¬Villageois::enCorvee(getVillageois(pasJeu(M, c1, s1, a1, c2, s2, a2),i))
 		sinon alors							 
 				 Villageois::travaille(getVillageois(M,i))
 
-		si i=n1 ^ c1 = COMMANDE.ENTRERHOTELVILLE
+		si i ∈ s1 ^ c1 = COMMANDE.ENTRERHOTELVILLE
 			alors
-				peutEntrerHotelVille(M,n1,a1) => HotelDeVille::depot(getHotel(M,a1),Villageois::quantiteOr(getVillageois(M,n1))^ Villageois::retraitOr(getVillageois(M,n1),Villageois::quantiteOr(getVillageois(M,n1)) ^ HotelDeVille::accueil(getHotel(M,a1),Villageois::race(getVillageois(M,n1)))
+				peutEntrerHotelVille(M,i,a1) => HotelDeVille::depot(getHotel(M,a1),Villageois::quantiteOr(getVillageois(M,i))^ Villageois::retraitOr(getVillageois(M,i),Villageois::quantiteOr(getVillageois(M,i)) ^ HotelDeVille::accueil(getHotel(M,a1),Villageois::race(getVillageois(M,i)))
 		
-		si i=n2 ^ c2 = COMMANDE.ENTRERHOTELVILLE
+		si i ∈ s2 ^ c2 = COMMANDE.ENTRERHOTELVILLE
 			alors
-				peutEntrerHotelVille(M,n2,a2) => HotelDeVille::depot(getHotel(M,a2),Villageois::quantiteOr(getVillageois(M,n2))^ Villageois::retraitOr(getVillageois(M,n2),Villageois::quantiteOr(getVillageois(M,n2)) ^ HotelDeVille::accueil(getHotel(M,a2),Villageois::race(getVillageois(M,n2)))
+				peutEntrerHotelVille(M,i,a2) => HotelDeVille::depot(getHotel(M,a2),Villageois::quantiteOr(getVillageois(M,i))^ Villageois::retraitOr(getVillageois(M,i),Villageois::quantiteOr(getVillageois(M,i)) ^ HotelDeVille::accueil(getHotel(M,a2),Villageois::race(getVillageois(M,i)))
 
 	// getMine
-	pour tout i dans  numeroesMine(pasJeu(M, c1, n1, a1, c2, n2, a2))
-		getMine(pasJeu(M, c1, n1, a1, c2, n2, a2),i) = getMine(M,i)
+	pour tout i dans  numeroesMine(pasJeu(M, c1, s1, a1, c2, s2, a2))
+		getMine(pasJeu(M, c1, s1, a1, c2, s2, a2),i) = getMine(M,i)
 
    // getRoute
-	pour tout i dans  numeroesRoute(pasJeu(M, c1, n1, a1, c2, n2, a2))
-		getRoute(pasJeu(M, c1, n1, a1, c2, n2, a2),i) = getRoute(M,i)
+	pour tout i dans  numeroesRoute(pasJeu(M, c1, s1, a1, c2, s2, a2))
+		getRoute(pasJeu(M, c1, s1, a1, c2, s2, a2),i) = getRoute(M,i)
 
    // getMuraille
-	pour tout i dans  numeroesMuraile(pasJeu(M, c1, n1, a1, c2, n2, a2))
-		getMuraille(pasJeu(M, c1, n1, a1, c2, n2, a2),i) = getMuraille(M,i)
+	pour tout i dans  numeroesMuraile(pasJeu(M, c1, s1, a1, c2, s2, a2))
+		getMuraille(pasJeu(M, c1, s1, a1, c2, s2, a2),i) = getMuraille(M,i)
 
 	// hotelDeVilleA
-		hotelDeVilleA(pasJeu(M, c1, n1, a1, c2, n2, a2))=hotelDeVilleA(M)
+		hotelDeVilleA(pasJeu(M, c1, s1, a1, c2, s2, a2))=hotelDeVilleA(M)
 
     //hotelDeVilleB
-		hotelDeVilleB(pasJeu(M, c1, n1, a1, c2, n2, a2))=hotelDeVilleB(M)
+		hotelDeVilleB(pasJeu(M, c1, s1, a1, c2, s2, a2))=hotelDeVilleB(M)
 
 
 
