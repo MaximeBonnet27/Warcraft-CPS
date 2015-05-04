@@ -24,7 +24,7 @@ Operators:
 			require orRestant(H)-s≥0 ^ s≥0
 
 	depot: [HotelDeVille] x int -> [HotelDeVille]
-		pre depot(H,s)
+		pre depot(H,d)
 			require d≥0
 
 	accueil: [HotelDeVille] x RACE -> [HotelDeVille]
@@ -37,7 +37,7 @@ Operators:
 
 Observations:
 [Invariants]
-	est_laminee(H) =(min)= orRestant(H)≤0
+	est_laminee(H) =(min)= (orRestant(H)==0)
 	(etat_d_appartenance(H)=ETAT.LIBRE) =(min)= (compteurAbandon(H)=51)
 	(etat_d_appartenance(H)=ETAT.OCCUPE) =(min)= (0≤compteurAbandon(H)<51)
 	orRestant(H)≥0
@@ -68,5 +68,5 @@ Observations:
 [abandoned]
 	orRestant(abandoned(H))				= orRestant(H)
 	compteurAbandon(abandoned(H))		= compteurAbandon(H) + 1
-	etat_d_appartenance(abandoned(H)) = ETAT.OCCUPE => appartenance(abandoned(H))  = appartenance(H)
+	appartenance(abandoned(H))  		= appartenance(H)
 
