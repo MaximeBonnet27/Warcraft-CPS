@@ -199,65 +199,153 @@ public class VillageoisContrat extends VillageoisDecorator{
 
   @Override
   public IVillageois ajouterOr(int somme) {
+    // Capture
+    int oldPointsDeVie = pointsDeVie();
+    int oldQuantiteOr = quantiteOr();
+    int oldCompteurCorvee = compteurCorvee();
+    
     // Pré-Conditions
+    // somme ≥ 0 
+    if(!(somme >= 0)){
+      throw new PreConditionError("somme ≥ 0");
+    }
     
     // Invariants
+    checkInvariants();
     
     // Appel
     super.ajouterOr(somme);
     
     // Invariants
-    
+    checkInvariants();
     // Post-Conditions
+    // pointsDeVie(ajouteOr(n)) = pointsDeVie()
+    if(!(pointsDeVie() == oldPointsDeVie)){
+      throw new PostConditionError("pointsDeVie(ajouteOr(n)) = pointsDeVie()");
+    }
+    //quantiteOr(ajouteOr(n)) = quantiteOr() + n 
+    if(!(quantiteOr() == oldQuantiteOr + somme)){
+      throw new PostConditionError("quantiteOr(ajouteOr(n)) = quantiteOr() + n"); 
+    }
+    //compteurCorvee(ajouteOr(n)) = compteurCorvee()
+    if(!(compteurCorvee() == oldCompteurCorvee)){
+      throw new PostConditionError("compteurCorvee(ajouteOr(n)) = compteurCorvee()");
+    }
 
     return this;
   }
 
   @Override
   public IVillageois retraitOr(int somme) {
+    // Capture
+    int oldPointsDeVie = pointsDeVie();
+    int oldQuantiteOr = quantiteOr();
+    int oldCompteurCorvee = compteurCorvee();
+
     // Pré-Conditions
+    // quantiteOr()-s≥0
+    if(!(quantiteOr() - somme >= 0)){
+      throw new PreConditionError("quantiteOr()-s≥0");
+    }
+    // s≥0
+    if(!(somme >= 0)){
+      throw new PreConditionError("s≥0");
+    }
     
     // Invariants
+    checkInvariants();
     
     // Appel
     super.retraitOr(somme);
     
     // Invariants
+    checkInvariants();
     
     // Post-Conditions
-
+    // pointsDeVie(retraitOr(s)) = pointsDeVie() 
+    if(!(pointsDeVie() == oldPointsDeVie)){
+      throw new PostConditionError("pointsDeVie(retraitOr(s)) = pointsDeVie()");
+    }
+    // quantiteOr(retraitOr(s)) = quantiteOr() - s 
+    if(!(quantiteOr() == oldQuantiteOr - somme)){
+      throw new PostConditionError("quantiteOr(retraitOr(s)) = quantiteOr() - s");
+    }
+    // compteurCorvee(retraitOr(s)) = compteurCorvee()
+    if(!(compteurCorvee() == oldCompteurCorvee)){
+      throw new PostConditionError("compteurCorvee(retraitOr(s)) = compteurCorvee()");
+    }
     return this;
   }
 
   @Override
   public IVillageois commenceTravaille() {
-    // Pré-Conditions
-    
+    // Capture
+    int oldPointsDeVie = pointsDeVie();
+    int oldQuantiteOr = quantiteOr();
+    int oldCompteurCorvee = compteurCorvee();
+
     // Invariants
+    checkInvariants();
     
     // Appel
     super.commenceTravaille();
     
     // Invariants
+    checkInvariants();
     
     // Post-Conditions
-
+    // pointsDeVie(commenceTravaille()) = pointsDeVie()
+    if(!(pointsDeVie() == oldPointsDeVie)){
+      throw new PostConditionError("pointsDeVie(commenceTravaille()) = pointsDeVie()");
+    }
+    // quantiteOr(commenceTravaille()) = quantiteOr()
+    if(!(quantiteOr() == oldQuantiteOr)){
+      throw new PostConditionError("quantiteOr(commenceTravaille()) = quantiteOr()");
+    }
+    // compteurCorvee(commenceTravaille()) = 1
+    if(!(compteurCorvee() == 1)){
+      throw new PostConditionError("compteurCorvee(commenceTravaille()) = 1");
+    }
+    
     return this;
+    
   }
 
   @Override
   public IVillageois travaille() {
+    // Capture
+    int oldPointsDeVie = pointsDeVie();
+    int oldQuantiteOr = quantiteOr();
+    int oldCompteurCorvee = compteurCorvee();
+
     // Pré-Conditions
+    // ¬corveeFinie()
+    if(!(!corveeFinie())){
+      throw new PreConditionError("¬corveeFinie()");
+    }
     
     // Invariants
+    checkInvariants();
     
     // Appel
     super.travaille();
     
     // Invariants
+    checkInvariants();
     
     // Post-Conditions
-
+    // pointsDeVie(travaille(V)) = pointsDeVie(V)
+    if(!(pointsDeVie() == oldPointsDeVie)){
+      throw new PostConditionError("pointsDeVie(travaille(V)) = pointsDeVie(V)");
+    }
+    // quantiteOr(travaille(V)) = quantiteOr(V) 
+    if(!(quantiteOr() == oldQuantiteOr)){
+      throw new PostConditionError("quantiteOr(travaille(V)) = quantiteOr(V)");
+    }
+    // compteurCorvee(travaille(V)) = compteurCorvee(V) + 1
+    if(!(compteurCorvee() == oldCompteurCorvee + 1 )){
+      throw new PostConditionError("compteurCorvee(travaille(V)) = compteurCorvee(V) + 1");
+    }
     return this;
   }
 

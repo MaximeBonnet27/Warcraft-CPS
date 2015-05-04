@@ -75,7 +75,7 @@ Observations:
 [commenceTravaille]
 	pointsDeVie(commenceTravaille(V))		= pointsDeVie(V)
 	quantiteOr(commenceTravaille(V))		= quantiteOr(V)
-	compteurCorvee(commenceTravaille(V))	= (compteurCorvee(V)=1)
+	compteurCorvee(commenceTravaille(V))	= 1
 
 [travaille]
 	pointsDeVie(travaille(V))		= pointsDeVie(V)
