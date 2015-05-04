@@ -6,7 +6,7 @@ Observators:
 	const multiplicateur: 	[Route] -> double
 
 Constructors:
-	init : int x int x double -> [Muraille]
+	init : int x int x double -> [Route]
 		pre init(l, h, m)
 			require l > 0 ^ h > 0 ^ m >= 1.0
 
