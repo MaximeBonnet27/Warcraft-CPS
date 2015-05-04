@@ -29,7 +29,7 @@ Operators:
 
 	abandoned: [Mine] -> [Mine]
 		pre abandoned(M)
-			require etat_d_appartenance(M)=ETAT.LIBRE
+			require etat_d_appartenance(M)=ETAT.OCCUPE
 
 Observations:
 [Invariants]
@@ -58,5 +58,5 @@ Observations:
 [abandoned]
 	orRestant(abandoned(M))				= orRestant(M)
 	compteurAbandon(abandoned(M))		= compteurAbandon(M) + 1
-	etat_d_appartenance(abandoned(M)) = ETAT.OCCUPE => appartenance(abandoned(M))  = appartenance(M)
+	appartenance(abandoned(M))  		= appartenance(M)
 	

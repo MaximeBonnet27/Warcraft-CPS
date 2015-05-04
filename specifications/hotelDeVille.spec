@@ -33,7 +33,7 @@ Operators:
 
 	abandoned: [HotelDeVille] -> [HotelDeVille]
 		pre abandoned(H)
-			require etat_d_appartenance(H)=ETAT.LIBRE
+			require etat_d_appartenance(H)=ETAT.OCCUPE
 
 Observations:
 [Invariants]
@@ -58,7 +58,7 @@ Observations:
 [depot]
 	orRestant(depot(H,d))				= orRestant(H) + d
 	compteurAbandon(depot(H,d))			= compteurAbandon(H)
-	etat_d_appartenance(H)=ETAT.OCCUPE  => appartenance(depot(H,d)) = appartenance(H)
+	appartenance(depot(H,d)) 			= appartenance(H)
 
 [accueil]
 	orRestant(accueil(H,r)) 		= orRestant(H)

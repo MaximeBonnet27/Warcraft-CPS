@@ -301,11 +301,11 @@ Observations:
 
 		si i ∈ s1 ^ c1 = COMMANDE.ENTRERHOTELVILLE
 			alors
-				peutEntrerHotelVille(M,i,a1) => HotelDeVille::depot(getHotel(M,a1),Villageois::quantiteOr(getVillageois(M,i))^ Villageois::retraitOr(getVillageois(M,i),Villageois::quantiteOr(getVillageois(M,i)) ^ HotelDeVille::accueil(getHotel(M,a1),Villageois::race(getVillageois(M,i)))
+				peutEntrerHotelVille(M,i,a1) => HotelDeVille::depot(getHotel(M,a1),Villageois::quantiteOr(getVillageois(M,i))^ Villageois::retraitOr(getVillageois(M,i),Villageois::quantiteOr(getVillageois(M,i)) ^ HotelDeVille::accueil(getHotel(M,a1),Villageois::race(getVillageois(M,i))) ^ HotelDeVille::abandoned(getHotel(M,a1),Villageois::race(getVillageois(M,i)))
 		
 		si i ∈ s2 ^ c2 = COMMANDE.ENTRERHOTELVILLE
 			alors
-				peutEntrerHotelVille(M,i,a2) => HotelDeVille::depot(getHotel(M,a2),Villageois::quantiteOr(getVillageois(M,i))^ Villageois::retraitOr(getVillageois(M,i),Villageois::quantiteOr(getVillageois(M,i)) ^ HotelDeVille::accueil(getHotel(M,a2),Villageois::race(getVillageois(M,i)))
+				peutEntrerHotelVille(M,i,a2) => HotelDeVille::depot(getHotel(M,a2),Villageois::quantiteOr(getVillageois(M,i))^ Villageois::retraitOr(getVillageois(M,i),Villageois::quantiteOr(getVillageois(M,i)) ^ HotelDeVille::accueil(getHotel(M,a2),Villageois::race(getVillageois(M,i))) ^ HotelDeVille::abandoned(getHotel(M,a2),Villageois::race(getVillageois(M,i)))
 
 	// getMine
 	pour tout i dans  numeroesMine(pasJeu(M, c1, s1, a1, c2, s2, a2))
