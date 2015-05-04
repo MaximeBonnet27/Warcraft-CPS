@@ -18,7 +18,7 @@ Operators:
 
 Observations:
 [Invariants]
-	estDetruite(M) =(min)= (pointsDeVie ≤ 0)
+	estDetruite(M) =(min)= (pointsDeVie(M) ≤ 0)
 
 [init]
 	largeur(init(l,h,p)) 		= l
