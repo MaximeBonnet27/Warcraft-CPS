@@ -178,6 +178,9 @@ public class VillageoisContrat extends VillageoisDecorator{
 		double oldVitesse = super.vitesse();
 
 		// Pré-Conditions
+
+		// \pre : !estMort() 
+		assertTrue("\\pre : !estMort()", !super.estMort());
 		// \pre: somme >= 0
 		assertTrue("\\pre: somme >= 0", somme >= 0);
 
@@ -216,6 +219,9 @@ public class VillageoisContrat extends VillageoisDecorator{
 		double oldVitesse = super.vitesse();
 
 		// Pré-Conditions
+
+		// \pre : !estMort() 
+		assertTrue("\\pre : !estMort()", !super.estMort() );
 		// \pre : quantiteOr()-somme >= 0
 		assertTrue("\\pre : quantiteOr()-somme >= 0", super.quantiteOr() - somme >= 0);
 		// \pre :  somme >= 0
@@ -253,6 +259,10 @@ public class VillageoisContrat extends VillageoisDecorator{
 		int oldForce = super.force();
 		double oldVitesse = super.vitesse();
 
+		// Pré-Conditions
+		// \pre : !estMort() 
+		assertTrue("\\pre : !estMort()", !super.estMort() );
+
 		// Invariants
 		checkInvariants();
 
@@ -289,7 +299,9 @@ public class VillageoisContrat extends VillageoisDecorator{
 		double oldVitesse = super.vitesse();
 
 		// Pré-Conditions
-
+			
+		// \pre : !estMort() 
+		assertTrue("\\pre : !estMort()", !super.estMort() );
 		// \pre : !corveeFinie()
 		assertTrue("\\pre : !corveeFinie()", !corveeFinie());
 
@@ -328,6 +340,8 @@ public class VillageoisContrat extends VillageoisDecorator{
 
 		// Pré-Conditions
 
+		// \pre : !estMort() 
+		assertTrue("\\pre : !estMort()", !super.estMort() );
 		// \pre : val > 0
 		assertTrue("\\pre : val > 0", val > 0);
 
@@ -373,7 +387,7 @@ public class VillageoisContrat extends VillageoisDecorator{
 		}else{
 			assertTrue("\\post : vitesse() == vitesse()@pre", super.vitesse() == oldVitesse);
 		}
-		
+
 		return this;
 	}
 

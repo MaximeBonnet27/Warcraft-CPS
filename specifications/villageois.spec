@@ -27,20 +27,21 @@ Operators:
 
 	ajouteOr: [Villageois] x int -> [Villageois]
 		pre ajouteOr(V,n)
-			require n≥0
+			require ¬estMort(V) ^ n≥0
 
 	retraitOr: [Villageois] x int -> [Villageois]
 		pre retraitOr(V,s)
-			require quantiteOr(V)-s≥0 ^ s≥0
+			require ¬estMort(V) ^ quantiteOr(V)-s≥0 ^ s≥0
 
 	commenceTravaille: [Villageois] -> [Villageois]
-
+		pre commenceTravaille(V) 
+			require ¬estMort(V)
 	travaille: [Villageois] -> [Villageois]
 		pre travaille(V)
-			require ¬corveeFini(V)
+			require ¬estMort(V) ^ ¬corveeFini(V)
 	amelioration : [Villageois] x COMPETENCE x int -> [Villageois]
 		pre amelioration(V, comp, val)
-			require val > 0
+			require ¬estMort(V) ^ val > 0
 Observations:
 [Invariants]
 	estMort(V) =(min)= pointsDeVie(V)≤0

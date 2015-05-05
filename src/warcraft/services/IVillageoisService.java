@@ -76,6 +76,7 @@ public interface IVillageoisService {
 	public IVillageoisService retraitPV(int degats);
 
 	/**
+	 * \pre : !estMort() 
 	 * \pre: somme >= 0
 	 * 
 	 * \post : pointsDeVie() == pointsDeVie()@pre
@@ -87,6 +88,7 @@ public interface IVillageoisService {
 	public IVillageoisService ajouterOr(int somme);
 
 	/**
+	 * \pre : !estMort() 
 	 * \pre : quantiteOr()-somme >= 0
 	 * \pre :  somme >= 0
 	 * 
@@ -100,6 +102,8 @@ public interface IVillageoisService {
 	public IVillageoisService retraitOr(int somme);
 
 	/**
+	 * \pre : !estMort() 
+	 * 
 	 * \post: pointsDeVie() == pointsDeVie()@pre
 	 * \post : quantiteOr() == quantiteOr()@pre
 	 * \post : compteurCorvee() == 1
@@ -110,6 +114,7 @@ public interface IVillageoisService {
 	public IVillageoisService commenceTravaille();
 
 	/**
+	 * \pre : !estMort() 
 	 * \pre : !corveeFinie()
 	 * 
 	 * \post : pointsDeVie() == pointsDeVie()@pre 
@@ -121,6 +126,7 @@ public interface IVillageoisService {
 
 	public IVillageoisService travaille();
 	/**
+	 * \pre : !estMort() 
 	 * \pre : val > 0
 	 * 
 	 * \post : if(competence == COMPETENCE.PV)
