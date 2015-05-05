@@ -17,9 +17,9 @@ public interface IRoute {
    * \pre :  hauteur > 0 
    * \pre : mult >= 1.0
    * 
-   * \post : largeur() = largeur
-   * \post : hauteur() = hauteur
-   * \post : multiplicateur() = mult
+   * \post : largeur() == largeur
+   * \post : hauteur() == hauteur
+   * \post : multiplicateur() == mult
    * 
    */
 

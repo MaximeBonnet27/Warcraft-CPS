@@ -152,7 +152,7 @@ public class VillageoisContrat extends VillageoisDecorator{
 		assertTrue("\\post : pointsDeVie() == pointsDeVie()@pre - s", super.pointsDeVie() == oldPointsDeVie - degats);
 		// \post : quantiteOr() == quantiteOr()@pre 
 		assertTrue("\\post : quantiteOr() == quantiteOr()@pre", super.quantiteOr() == oldQuantiteOr);
-		// \post : compteurCorvee(retraitPV(V,s)) = compteurCorvee(V)
+		// \post : compteurCorvee() = compteurCorvee()@pre
 		assertTrue("\\post : compteurCorvee() == compteurCorvee()@pre", super.compteurCorvee() == oldCompteurCorvee);
 		return this;
 	}
@@ -195,12 +195,6 @@ public class VillageoisContrat extends VillageoisDecorator{
 		int oldPointsDeVie = super.pointsDeVie();
 		int oldQuantiteOr = super.quantiteOr();
 		int oldCompteurCorvee = super.compteurCorvee();
-
-		/**
-		 * 
-		 *  
-		 * \post : compteurCorvee() == compteurCorvee()@pre
-		 */
 		
 		// Pré-Conditions
 		// \pre : quantiteOr()-somme >= 0
@@ -243,9 +237,7 @@ public class VillageoisContrat extends VillageoisDecorator{
 		checkInvariants();
 
 		// Post-Conditions
-		/**
-		 * 
-		 */
+
 		// \post: pointsDeVie() == pointsDeVie()@pre
 		assertTrue("\\post: pointsDeVie() == pointsDeVie()@pre", super.pointsDeVie() == oldPointsDeVie);
 		// \post : quantiteOr() == quantiteOr()@pre

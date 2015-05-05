@@ -8,12 +8,12 @@ public interface IMuraille {
 	public int hauteur();
 	public int pointsDeVie();
 	public boolean estDetruite();
-	
+
 	// Invariants
 	/**
 	 * \inv : estDetruite() == (pointsDeVie() <= 0)
 	 */
-	
+
 	// Constructors
 	/** \pre :  largeur > 0
 	 * \pre :  hauteur > 0
@@ -27,8 +27,8 @@ public interface IMuraille {
 	// Operators
 	/**
 	 * \pre : !estDetruite() 
-	 * \pre : degat > 0  
-	 * \post : pointsDeVie() = pointsDeVie()@pre - x
+	 * \pre : degats > 0  
+	 * \post : pointsDeVie() = pointsDeVie()@pre - degats
 	 */
 
 	public IMuraille taper(int degats);
