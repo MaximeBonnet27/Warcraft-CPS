@@ -7,13 +7,13 @@ Observators:
 Constructors:
 	init : Villageois x Villageois : [GestionCombat]
 		init(attaquant, defenseur) 
-			require !Villageois::estMort(attaquant) ^ !Villageois::estMort(defenseur)
+			require ¬Villageois::estMort(attaquant) ^ ¬Villageois::estMort(defenseur)
 
 Operators:
 
 	combat : [GestionCombat] -> [GestionCombat]
 		combat(GC)
-			require !Villageois::estMort(attaquant) ^ !Villageois::estMort(defenseur)
+			require ¬Villageois::estMort(attaquant(GC)) ^ ¬Villageois::estMort(defenseur(GC))
 
 Observations:
 [Invariants]
