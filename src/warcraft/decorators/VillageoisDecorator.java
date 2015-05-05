@@ -1,86 +1,91 @@
 package warcraft.decorators;
 
+import warcraft.enums.ECompetence;
 import warcraft.enums.ERace;
-import warcraft.services.IVillageois;
+import warcraft.services.IVillageoisService;
 
-public class VillageoisDecorator implements IVillageois{
+public abstract class VillageoisDecorator implements IVillageoisService{
 
-  private IVillageois delegate;
+	private IVillageoisService delegate;
 
-  public VillageoisDecorator(IVillageois delegate) {
-    super();
-    this.delegate = delegate;
-  }
+	public VillageoisDecorator(IVillageoisService delegate) {
+		super();
+		this.delegate = delegate;
+	}
 
-  public ERace race() {
-    return delegate.race();
-  }
+	public ERace race() {
+		return delegate.race();
+	}
 
-  public int largeur() {
-    return delegate.largeur();
-  }
+	public int largeur() {
+		return delegate.largeur();
+	}
 
-  public int hauteur() {
-    return delegate.hauteur();
-  }
+	public int hauteur() {
+		return delegate.hauteur();
+	}
 
-  public int force() {
-    return delegate.force();
-  }
+	public int force() {
+		return delegate.force();
+	}
 
-  public double vitesse() {
-    return delegate.vitesse();
-  }
+	public double vitesse() {
+		return delegate.vitesse();
+	}
 
-  public int pointsDeVie() {
-    return delegate.pointsDeVie();
-  }
+	public int pointsDeVie() {
+		return delegate.pointsDeVie();
+	}
 
-  public boolean estMort() {
-    return delegate.estMort();
-  }
+	public boolean estMort() {
+		return delegate.estMort();
+	}
 
-  public int quantiteOr() {
-    return delegate.quantiteOr();
-  }
+	public int quantiteOr() {
+		return delegate.quantiteOr();
+	}
 
-  public int compteurCorvee() {
-    return delegate.compteurCorvee();
-  }
+	public int compteurCorvee() {
+		return delegate.compteurCorvee();
+	}
 
-  public boolean corveeFinie() {
-    return delegate.corveeFinie();
-  }
+	public boolean corveeFinie() {
+		return delegate.corveeFinie();
+	}
 
-  public boolean enCorvee() {
-    return delegate.enCorvee();
-  }
+	public boolean enCorvee() {
+		return delegate.enCorvee();
+	}
 
-  public IVillageois init(ERace race, int largeur, int hauteur, int force,
-      double vitesse, int pointsDeVie) {
-    return delegate.init(race, largeur, hauteur, force, vitesse, pointsDeVie);
-  }
+	public IVillageoisService init(ERace race, int largeur, int hauteur, int force,
+			double vitesse, int pointsDeVie) {
+		return delegate.init(race, largeur, hauteur, force, vitesse, pointsDeVie);
+	}
 
-  public IVillageois retraitPV(int degats) {
-    return delegate.retraitPV(degats);
-  }
+	public IVillageoisService retraitPV(int degats) {
+		return delegate.retraitPV(degats);
+	}
 
-  public IVillageois ajouterOr(int somme) {
-    return delegate.ajouterOr(somme);
-  }
+	public IVillageoisService ajouterOr(int somme) {
+		return delegate.ajouterOr(somme);
+	}
 
-  public IVillageois retraitOr(int somme) {
-    return delegate.retraitOr(somme);
-  }
+	public IVillageoisService retraitOr(int somme) {
+		return delegate.retraitOr(somme);
+	}
 
-  public IVillageois commenceTravaille() {
-    return delegate.commenceTravaille();
-  }
+	public IVillageoisService commenceTravaille() {
+		return delegate.commenceTravaille();
+	}
 
-  public IVillageois travaille() {
-    return delegate.travaille();
-  }
-  
-  
-  
+	public IVillageoisService travaille() {
+		return delegate.travaille();
+	}
+
+	public IVillageoisService amelioration(ECompetence competence, int val) {
+		return delegate.amelioration(competence, val);
+	}
+
+
+
 }

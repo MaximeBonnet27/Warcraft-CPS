@@ -1,12 +1,12 @@
 package warcraft.decorators;
 
-import warcraft.services.IRoute;
+import warcraft.services.IRouteService;
 
-public class RouteDecorator implements IRoute{
+public abstract class RouteDecorator implements IRouteService{
 
-  private IRoute delegate;
+  private IRouteService delegate;
 
-  public RouteDecorator(IRoute delegate) {
+  public RouteDecorator(IRouteService delegate) {
     super();
     this.delegate = delegate;
   }
@@ -23,7 +23,7 @@ public class RouteDecorator implements IRoute{
     return delegate.multiplicateur();
   }
 
-  public IRoute init(int largeur, int hauteur, double mult) {
+  public IRouteService init(int largeur, int hauteur, double mult) {
     return delegate.init(largeur, hauteur, mult);
   }
   
