@@ -57,35 +57,36 @@ public abstract class VillageoisDecorator implements IVillageoisService{
 		return delegate.enCorvee();
 	}
 
-	public IVillageoisService init(ERace race, int largeur, int hauteur, int force,
+	public void init(ERace race, int largeur, int hauteur, int force,
 			double vitesse, int pointsDeVie) {
-		return delegate.init(race, largeur, hauteur, force, vitesse, pointsDeVie);
+		delegate.init(race, largeur, hauteur, force, vitesse, pointsDeVie);
 	}
 
-	public IVillageoisService retraitPV(int degats) {
-		return delegate.retraitPV(degats);
+	public void retraitPV(int degats) {
+		delegate.retraitPV(degats);
 	}
 
-	public IVillageoisService ajouterOr(int somme) {
-		return delegate.ajouterOr(somme);
+	public void ajouterOr(int somme) {
+		delegate.ajouterOr(somme);
 	}
 
-	public IVillageoisService retraitOr(int somme) {
-		return delegate.retraitOr(somme);
+	public void retraitOr(int somme) {
+		delegate.retraitOr(somme);
 	}
 
-	public IVillageoisService commenceTravaille() {
-		return delegate.commenceTravaille();
+	public void commenceTravaille() {
+		delegate.commenceTravaille();
 	}
 
-	public IVillageoisService travaille() {
-		return delegate.travaille();
+	public void travaille() {
+		delegate.travaille();
 	}
 
-	public IVillageoisService amelioration(ECompetence competence, int val) {
-		return delegate.amelioration(competence, val);
+	public void amelioration(ECompetence competence, int val) {
+		delegate.amelioration(competence, val);
 	}
 
+	
 
 
 }

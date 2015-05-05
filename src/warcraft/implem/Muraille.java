@@ -28,20 +28,17 @@ public class Muraille implements IMurailleService{
   }
 
   @Override
-  public IMurailleService init(int largeur, int hauteur, int pv) {
+  public void init(int largeur, int hauteur, int pv) {
 
-    Muraille m = new Muraille();
-    m.largeur = largeur;
-    m.hauteur = hauteur;
-    m.pointsDeVie = pv;
-    return m;
+    this.largeur = largeur;
+    this.hauteur = hauteur;
+    this.pointsDeVie = pv;
   
   }
 
   @Override
-  public IMurailleService taper(int degats) {
+  public void taper(int degats) {
     pointsDeVie -= degats;
-    return this;
   }
 
 }

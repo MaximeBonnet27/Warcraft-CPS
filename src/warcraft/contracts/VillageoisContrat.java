@@ -83,7 +83,7 @@ public class VillageoisContrat extends VillageoisDecorator{
 	}
 
 	@Override
-	public IVillageoisService init(ERace race, int largeur, int hauteur, int force,
+	public void init(ERace race, int largeur, int hauteur, int force,
 			double vitesse, int pointsDeVie) {
 		// Pre-Conditions
 
@@ -124,11 +124,10 @@ public class VillageoisContrat extends VillageoisDecorator{
 		assertTrue("\\post : quantiteOr() == 0", quantiteOr() == 0);
 		// \post : compteurCorvee() == 0
 		assertTrue("\\post : compteurCorvee() == 0", compteurCorvee() == 0);
-		return this;
 	}
 
 	@Override
-	public IVillageoisService retraitPV(int degats) {
+	public void retraitPV(int degats) {
 		// Capture
 		int oldPointsDeVie = super.pointsDeVie();
 		int oldQuantiteOr = super.quantiteOr();
@@ -165,11 +164,10 @@ public class VillageoisContrat extends VillageoisDecorator{
 		// \post : vitesse() == vitesse()@pre
 		assertTrue("\\post : vitesse() == vitesse()@pre", super.vitesse() == oldVitesse);
 
-		return this;
 	}
 
 	@Override
-	public IVillageoisService ajouterOr(int somme) {
+	public void ajouterOr(int somme) {
 		// Capture
 		int oldPointsDeVie = super.pointsDeVie();
 		int oldQuantiteOr = super.quantiteOr();
@@ -206,11 +204,10 @@ public class VillageoisContrat extends VillageoisDecorator{
 		// \post : vitesse() == vitesse()@pre
 		assertTrue("\\post : vitesse() == vitesse()@pre", super.vitesse() == oldVitesse);
 
-		return this;
 	}
 
 	@Override
-	public IVillageoisService retraitOr(int somme) {
+	public void retraitOr(int somme) {
 		// Capture
 		int oldPointsDeVie = super.pointsDeVie();
 		int oldQuantiteOr = super.quantiteOr();
@@ -248,11 +245,10 @@ public class VillageoisContrat extends VillageoisDecorator{
 		// \post : vitesse() == vitesse()@pre
 		assertTrue("\\post : vitesse() == vitesse()@pre", super.vitesse() == oldVitesse);
 
-		return this;
 	}
 
 	@Override
-	public IVillageoisService commenceTravaille() {
+	public void commenceTravaille() {
 		// Capture
 		int oldPointsDeVie = super.pointsDeVie();
 		int oldQuantiteOr = super.quantiteOr();
@@ -285,12 +281,10 @@ public class VillageoisContrat extends VillageoisDecorator{
 		// \post : vitesse() == vitesse()@pre
 		assertTrue("\\post : vitesse() == vitesse()@pre", super.vitesse() == oldVitesse);
 
-		return this;
-
 	}
 
 	@Override
-	public IVillageoisService travaille() {
+	public void travaille() {
 		// Capture
 		int oldPointsDeVie = super.pointsDeVie();
 		int oldQuantiteOr = super.quantiteOr();
@@ -299,7 +293,7 @@ public class VillageoisContrat extends VillageoisDecorator{
 		double oldVitesse = super.vitesse();
 
 		// Pré-Conditions
-			
+
 		// \pre : !estMort() 
 		assertTrue("\\pre : !estMort()", !super.estMort() );
 		// \pre : !corveeFinie()
@@ -327,10 +321,9 @@ public class VillageoisContrat extends VillageoisDecorator{
 		// \post : vitesse() == vitesse()@pre
 		assertTrue("\\post : vitesse() == vitesse()@pre", super.vitesse() == oldVitesse);
 
-		return this;
 	}
 	@Override
-	public IVillageoisService amelioration(ECompetence competence, int val) {
+	public void amelioration(ECompetence competence, int val) {
 		// Capture
 		int oldPointsDeVie = super.pointsDeVie();
 		int oldQuantiteOr = super.quantiteOr();
@@ -388,7 +381,5 @@ public class VillageoisContrat extends VillageoisDecorator{
 			assertTrue("\\post : vitesse() == vitesse()@pre", super.vitesse() == oldVitesse);
 		}
 
-		return this;
 	}
-
 }

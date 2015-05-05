@@ -59,7 +59,7 @@ public interface IVillageoisService {
 	 * \post : quantiteOr() == 0 
 	 * \post : compteurCorvee() == 0
 	 */
-	public IVillageoisService init(ERace race, int largeur, int hauteur, int force,
+	public void init(ERace race, int largeur, int hauteur, int force,
 			double vitesse, int pointsDeVie);
 
 	// Operators
@@ -73,7 +73,7 @@ public interface IVillageoisService {
 	 * \post : vitesse() == vitesse()@pre
 	 * \post : force() == force()@pre
 	 */
-	public IVillageoisService retraitPV(int degats);
+	public void retraitPV(int degats);
 
 	/**
 	 * \pre : !estMort() 
@@ -85,7 +85,7 @@ public interface IVillageoisService {
 	 * \post : vitesse() == vitesse()@pre
 	 * \post : force() == force()@pre
 	 */
-	public IVillageoisService ajouterOr(int somme);
+	public void ajouterOr(int somme);
 
 	/**
 	 * \pre : !estMort() 
@@ -99,7 +99,7 @@ public interface IVillageoisService {
 	 * \post : force() == force()@pre
 	 */
 
-	public IVillageoisService retraitOr(int somme);
+	public void retraitOr(int somme);
 
 	/**
 	 * \pre : !estMort() 
@@ -111,7 +111,7 @@ public interface IVillageoisService {
 	 * \post : force() == force()@pre
 	 */
 
-	public IVillageoisService commenceTravaille();
+	public void commenceTravaille();
 
 	/**
 	 * \pre : !estMort() 
@@ -124,7 +124,7 @@ public interface IVillageoisService {
 	 * \post : force() == force()@pre
 	 */
 
-	public IVillageoisService travaille();
+	public void travaille();
 	/**
 	 * \pre : !estMort() 
 	 * \pre : val > 0
@@ -141,6 +141,6 @@ public interface IVillageoisService {
 	 * then vitesse() == vitese()@pre + val
 	 * else vitesse() == vitesse()@pre
 	 */
-	public IVillageoisService amelioration(ECompetence competence, int val);
+	public void amelioration(ECompetence competence, int val);
 	
 }

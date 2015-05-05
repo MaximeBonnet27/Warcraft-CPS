@@ -37,7 +37,7 @@ public class MurailleContrat extends MurailleDecorator{
 	}
 
 	@Override
-	public IMurailleService init(int largeur, int hauteur, int pv) {
+	public void init(int largeur, int hauteur, int pv) {
 		// Pre-Conditions
 		
 		// \pre : largeur > 0
@@ -61,11 +61,10 @@ public class MurailleContrat extends MurailleDecorator{
 		assertTrue("\\post : hauteur() == hauteur", super.hauteur() == hauteur);
 		// \post : pointsDeVie() == pv
 		assertTrue("\\post : pointsDeVie() == pv", super.pointsDeVie() == pv);
-		return this;
 	}
 
 	@Override
-	public IMurailleService taper(int degats) {
+	public void taper(int degats) {
 		// Capture
 		int oldPointsDeVie = pointsDeVie();
 
@@ -87,7 +86,6 @@ public class MurailleContrat extends MurailleDecorator{
 		// Post-Conditions 
 		// \post : pointsDeVie() == pointsDeVie()@pre - degats
 		assertTrue("\\post : pointsDeVie(taper(x)) == pointsDeVie() - x", super.pointsDeVie() == oldPointsDeVie - degats);
-		return this;
 	}
 
 

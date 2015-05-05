@@ -23,7 +23,7 @@ public interface IRouteService {
    * 
    */
 
-  public IRouteService init(int largeur, int hauteur, double mult);
+  public void init(int largeur, int hauteur, double mult);
 
   // Operators
 

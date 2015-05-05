@@ -19,7 +19,7 @@ public interface IGestionCombatService {
 	 * \post : attaquant() == attaquant
 	 * \post : defenseur() == defenseur
 	 */
-	public IGestionCombatService init(IVillageoisService attaquant, IVillageoisService defenseur);
+	public void init(IVillageoisService attaquant, IVillageoisService defenseur);
 
 	// Operators
 
@@ -30,5 +30,5 @@ public interface IGestionCombatService {
 	 * \post : attaquant.pointsDeVie() == attaquant.pointsDeVie()@pre
 	 * \post : defenseur.pointsDeVie() == defenseur.pointsDeVie()@pre - attaquant.force()@pre
 	 */
-	public IGestionCombatService combat();
+	public void combat();
 }

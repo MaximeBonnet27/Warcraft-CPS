@@ -22,18 +22,15 @@ public class GestionCombat implements IGestionCombatService{
 	}
 
 	@Override
-	public IGestionCombatService init(IVillageoisService attaquant,
+	public void init(IVillageoisService attaquant,
 			IVillageoisService defenseur) {
-		GestionCombat gc = new GestionCombat();
-		gc.attaquant = attaquant;
-		gc.defenseur = defenseur;
-		return gc;
+		this.attaquant = attaquant;
+		this.defenseur = defenseur;
 	}
 
 	@Override
-	public IGestionCombatService combat() {
+	public void combat() {
 		defenseur.retraitPV(attaquant.force());
-		return this;
 	}
 
 }

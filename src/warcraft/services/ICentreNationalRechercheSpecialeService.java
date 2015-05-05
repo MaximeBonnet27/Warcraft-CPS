@@ -47,7 +47,7 @@ public interface ICentreNationalRechercheSpecialeService {
 	 * \post : tempsCourant() == 0
 	 * \post : rechercheCourante() == 0
 	 */
-	public ICentreNationalRechercheSpecialeService init(int tempsDeConstruction, int tempsDeRecherche, int prixConstruction, int prixRecherche);
+	public void init(int tempsDeConstruction, int tempsDeRecherche, int prixConstruction, int prixRecherche);
 	
 	// Operators
 	
@@ -57,14 +57,14 @@ public interface ICentreNationalRechercheSpecialeService {
 	 * 
 	 * \post : tempsCourant() == 1
 	 */
-	public ICentreNationalRechercheSpecialeService commencerConstruction(int prix);
+	public void commencerConstruction(int prix);
 	
 	/**
 	 * \pre : !constructionFinie()
 	 * 
 	 * \post : tempsCourant() == tempsCourant()@pre + 1
 	 */
-	public ICentreNationalRechercheSpecialeService construire();
+	public void construire();
 	
 	/**
 	 * \pre : constructionFinie()
@@ -72,13 +72,13 @@ public interface ICentreNationalRechercheSpecialeService {
 	 * 
 	 * \post : rechercheCourante() == 1
 	 */
-	public ICentreNationalRechercheSpecialeService commencerRecherche(int prix);
+	public void commencerRecherche(int prix);
 	
 	/**
 	 * \pre : !rechercheFinie()
 	 * 
 	 * \post : rechercheCourante() == rechercheCourante()@pre + 1
 	 */
-	public ICentreNationalRechercheSpecialeService recherche();
+	public void recherche();
 	
 }

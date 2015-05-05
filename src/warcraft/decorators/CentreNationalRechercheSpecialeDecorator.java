@@ -60,28 +60,26 @@ public abstract class CentreNationalRechercheSpecialeDecorator implements ICentr
 		return delegate.rechercheFinie();
 	}
 
-	public ICentreNationalRechercheSpecialeService init(
-			int tempsDeConstruction, int tempsDeRecherche,
+	public void init(int tempsDeConstruction, int tempsDeRecherche,
 			int prixConstruction, int prixRecherche) {
-		return delegate.init(tempsDeConstruction, tempsDeRecherche,
-				prixConstruction, prixRecherche);
+		delegate.init(tempsDeConstruction, tempsDeRecherche, prixConstruction,
+				prixRecherche);
 	}
 
-	public ICentreNationalRechercheSpecialeService commencerConstruction(
-			int prix) {
-		return delegate.commencerConstruction(prix);
+	public void commencerConstruction(int prix) {
+		delegate.commencerConstruction(prix);
 	}
 
-	public ICentreNationalRechercheSpecialeService construire() {
-		return delegate.construire();
+	public void construire() {
+		delegate.construire();
 	}
 
-	public ICentreNationalRechercheSpecialeService commencerRecherche(int prix) {
-		return delegate.commencerRecherche(prix);
+	public void commencerRecherche(int prix) {
+		delegate.commencerRecherche(prix);
 	}
 
-	public ICentreNationalRechercheSpecialeService recherche() {
-		return delegate.recherche();
+	public void recherche() {
+		delegate.recherche();
 	}
 	
 	

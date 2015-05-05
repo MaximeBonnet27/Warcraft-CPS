@@ -69,42 +69,36 @@ public class CentreNationalRechercheSpeciale implements ICentreNationalRecherche
 	}
 
 	@Override
-	public ICentreNationalRechercheSpecialeService init(
+	public void init(
 			int tempsDeConstruction, int tempsDeRecherche,
 			int prixConstruction, int prixRecherche) {
-			CentreNationalRechercheSpeciale cnrs = new CentreNationalRechercheSpeciale();
-			cnrs.tempsDeConstruction = tempsDeConstruction;
-			cnrs.tempsDeRecherche = tempsDeRecherche;
-			cnrs.prixConstruction = prixConstruction;
-			cnrs.prixRecherche = prixRecherche;
-			cnrs.tempsCourant = 0;
-			cnrs.rechercheCourante = 0;
-			return cnrs;
+			this.tempsDeConstruction = tempsDeConstruction;
+			this.tempsDeRecherche = tempsDeRecherche;
+			this.prixConstruction = prixConstruction;
+			this.prixRecherche = prixRecherche;
+			this.tempsCourant = 0;
+			this.rechercheCourante = 0;
 	}
 
 	@Override
-	public ICentreNationalRechercheSpecialeService commencerConstruction(
+	public void commencerConstruction(
 			int prix) {
 		tempsCourant = 1;
-		return this;
 	}
 
 	@Override
-	public ICentreNationalRechercheSpecialeService construire() {
+	public void construire() {
 		tempsCourant += 1;
-		return this;
 	}
 
 	@Override
-	public ICentreNationalRechercheSpecialeService commencerRecherche(int prix) {
+	public void commencerRecherche(int prix) {
 		rechercheCourante = 1;
-		return this;
 	}
 
 	@Override
-	public ICentreNationalRechercheSpecialeService recherche() {
+	public void recherche() {
 		rechercheCourante += 1;
-		return this;
 	}
 
 }

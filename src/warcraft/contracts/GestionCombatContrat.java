@@ -31,7 +31,7 @@ public class GestionCombatContrat extends GestionCombatDecorator{
 
 
 	@Override
-	public IGestionCombatService init(IVillageoisService attaquant,
+	public void init(IVillageoisService attaquant,
 			IVillageoisService defenseur) {
 		// Pré-Conditions
 
@@ -55,11 +55,10 @@ public class GestionCombatContrat extends GestionCombatDecorator{
 		// \post : defenseur() == defenseur
 		assertTrue("\\post : defenseur() == defenseur", super.defenseur() == defenseur);
 
-		return this;
 	}
 
 	@Override
-	public IGestionCombatService combat() {
+	public void combat() {
 
 		// Captures
 		int oldAttaquant_PointsDeVie = super.attaquant().pointsDeVie();
@@ -88,7 +87,6 @@ public class GestionCombatContrat extends GestionCombatDecorator{
 		// \post : defenseur().pointsDeVie() == defenseur().pointsDeVie()@pre - attaquant().force()@pre
 		assertTrue("defenseur().pointsDeVie() == defenseur().pointsDeVie()@pre - attaquant().force()", super.defenseur().pointsDeVie() == oldDefenseur_PointsDeVie - oldAttaquant_Force);
 		
-		return this;
 	}
 
 

@@ -30,7 +30,7 @@ public class RouteContrat extends RouteDecorator {
 	}
 
 	@Override
-	public IRouteService init(int largeur, int hauteur, double mult) {
+	public void init(int largeur, int hauteur, double mult) {
 		// Pre-Conditions
 
 		// \pre : largeur > 0
@@ -57,7 +57,6 @@ public class RouteContrat extends RouteDecorator {
 		// \post : multiplicateur() == mult
 		assertTrue("\\post : multiplicateur() == mult", super.multiplicateur() == mult);
 		
-		return this;
 	}
 
 }

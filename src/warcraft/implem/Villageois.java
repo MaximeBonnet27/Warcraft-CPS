@@ -70,50 +70,43 @@ public class Villageois implements IVillageoisService{
   }
 
   @Override
-  public IVillageoisService init(ERace race, int largeur, int hauteur, int force,
+  public void init(ERace race, int largeur, int hauteur, int force,
       double vitesse, int pointsDeVie) {
-    Villageois v = new Villageois();
-    v.race = race;
-    v.largeur = largeur;
-    v.hauteur = hauteur;
-    v.force = force;
-    v.vitesse = vitesse;
-    v.pointsDeVie = pointsDeVie;
-    return v;
+    this.race = race;
+    this.largeur = largeur;
+    this.hauteur = hauteur;
+    this.force = force;
+    this.vitesse = vitesse;
+    this.pointsDeVie = pointsDeVie;
   }
 
   @Override
-  public IVillageoisService retraitPV(int degats) {
+  public void retraitPV(int degats) {
     pointsDeVie -= degats;
-    return this;
   }
 
   @Override
-  public IVillageoisService ajouterOr(int somme) {
+  public void ajouterOr(int somme) {
     quantiteOr += somme;
-    return this;
   }
 
   @Override
-  public IVillageoisService retraitOr(int somme) {
+  public void retraitOr(int somme) {
     quantiteOr -= somme;
-    return this;
   }
 
   @Override
-  public IVillageoisService commenceTravaille() {
+  public void commenceTravaille() {
     compteurCorvee = 1;
-    return this;
   }
 
   @Override
-  public IVillageoisService travaille() {
+  public void travaille() {
     compteurCorvee += 1;
-    return this;
   }
 
 @Override
-public IVillageoisService amelioration(ECompetence competence, int val) {
+public void amelioration(ECompetence competence, int val) {
 	switch (competence) {
 	case FORCE : force += val; break;
 	case PV : pointsDeVie += val; break;
@@ -121,7 +114,6 @@ public IVillageoisService amelioration(ECompetence competence, int val) {
 	default:
 		break;
 	}
-	return this;
 }
 
 }

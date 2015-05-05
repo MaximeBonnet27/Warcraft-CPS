@@ -23,12 +23,10 @@ public class Route implements IRouteService{
   }
 
   @Override
-  public IRouteService init(int largeur, int hauteur, double mult) {
-    Route r = new Route();
-    r.largeur = largeur;
-    r.hauteur = hauteur;
-    r.multiplicateur = mult;
-    return r;
+  public void init(int largeur, int hauteur, double mult) {
+    this.largeur = largeur;
+    this.hauteur = hauteur;
+    this.multiplicateur = mult;
   }
 
 }

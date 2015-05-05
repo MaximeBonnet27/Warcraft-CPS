@@ -23,15 +23,13 @@ public abstract class GestionCombatDecorator implements IGestionCombatService{
 		return delegate.defenseur();
 	}
 
-	public IGestionCombatService init(IVillageoisService attaquant,
-			IVillageoisService defenseur) {
-		return delegate.init(attaquant, defenseur);
+	public void init(IVillageoisService attaquant, IVillageoisService defenseur) {
+		delegate.init(attaquant, defenseur);
 	}
 
-	public IGestionCombatService combat() {
-		return delegate.combat();
+	public void combat() {
+		delegate.combat();
 	}
-	
 	
 	
 }

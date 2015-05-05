@@ -23,10 +23,9 @@ public abstract class RouteDecorator implements IRouteService{
     return delegate.multiplicateur();
   }
 
-  public IRouteService init(int largeur, int hauteur, double mult) {
-    return delegate.init(largeur, hauteur, mult);
-  }
-  
-  
+public void init(int largeur, int hauteur, double mult) {
+	delegate.init(largeur, hauteur, mult);
+}
+
   
 }

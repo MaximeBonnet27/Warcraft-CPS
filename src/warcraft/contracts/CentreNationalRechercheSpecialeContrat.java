@@ -80,7 +80,7 @@ public class CentreNationalRechercheSpecialeContrat extends CentreNationalRecher
 		return super.rechercheFinie();
 	}
 	@Override
-	public ICentreNationalRechercheSpecialeService init(
+	public void init(
 			int tempsDeConstruction, int tempsDeRecherche,
 			int prixConstruction, int prixRecherche) {
 
@@ -119,116 +119,111 @@ public class CentreNationalRechercheSpecialeContrat extends CentreNationalRecher
 		// \post : rechercheCourante() == 0
 		assertTrue("\\post : rechercheCourante() == 0", super.rechercheCourante() == 0);
 
-		return this;
 	}
 
 
 	@Override
-	public ICentreNationalRechercheSpecialeService commencerConstruction(
+	public void commencerConstruction(
 			int prix) {
 		// Pré-Conditions
-		
+
 		// \pre : !enConstruction()
 		assertTrue("\\pre : !enConstruction()", !super.enConstruction());
 		// \pre : prix == prixConstruction()
 		assertTrue("\\pre : prix == prixConstruction()", prix == super.prixConstruction());
-		
+
 		// Invariants
 		checkInvariants();
-		
+
 		// Appel
 		super.commencerConstruction(prix);
-		
+
 		// Invariants
 		checkInvariants();
-		
+
 		// Post-Conditions
 		// \post : tempsCourant() == 1
 		assertTrue("\\post : tempsCourant() == 1", super.tempsCourant() == 1);
-		
-		return this;
+
 	}
 	/**
 	 * \post : tempsCourant() == tempsCourant()@pre + 1
 	 */
 	@Override
-	public ICentreNationalRechercheSpecialeService construire() {
+	public void construire() {
 		// Capture
 		int oldTempsCourant = super.tempsCourant();
-		
+
 		// Pré-Conditions
-		
+
 		// \pre : !constructionFinie()
 		assertTrue("\\pre : !constructionFinie()", !super.constructionFinie());
-		
+
 		// Invariants
 		checkInvariants();
 		// Appel
 		super.construire();
-		
+
 		// Invariants
 		checkInvariants();
-		
+
 		// Post-Conditions
-		
+
 		// \post : tempsCourant() == tempsCourant()@pre + 1
 		assertTrue("\\post : tempsCourant() == tempsCourant()@pre + 1", super.tempsCourant() == oldTempsCourant + 1);
-		
-		return this;
+
 	}
 
-	
+
 	@Override
-	public ICentreNationalRechercheSpecialeService commencerRecherche(int prix) {
+	public void commencerRecherche(int prix) {
 		// Pré-Conditions
-		
+
 		// \pre : constructionFinie()
 		assertTrue("\\pre : constructionFinie()", super.constructionFinie());
 		// \pre : prix == prixRecherche()
 		assertTrue("\\pre : prix == prixRecherche()", prix == super.prixRecherche());
-		
+
 		// Invariants
 		checkInvariants();
-		
+
 		// Appel
 		super.commencerRecherche(prix);
-		
+
 		// Invariants
 		checkInvariants();
-		
+
 		// Post-Conditions
-		
+
 		// \post : rechercheCourante() == 1
 		assertTrue("\\post : rechercheCourante() == 1", super.rechercheCourante() == 1);
-		
-		return this;
+
 	}
 
 
 	@Override
-	public ICentreNationalRechercheSpecialeService recherche() {
+	public void recherche() {
 		// Capture
 		int oldRechercheCourante = super.rechercheCourante();
-		
+
 		// Pré-Conditions
-		
+
 		// \pre : !rechercheFinie()
 		assertTrue("\\pre : !rechercheFinie()", !super.rechercheFinie());
-		
+
 		// Invariants
 		checkInvariants();
-		
+
 		// Appel
 		super.recherche();
-		
+
 		// Invariants
 		checkInvariants();
-		
+
 		// Post-Conditions
 		// \post : rechercheCourante() == rechercheCourante()@pre + 1
 		assertTrue("\\post : rechercheCourante() == rechercheCourante()@pre + 1", super.rechercheCourante() == oldRechercheCourante + 1);
-		
-		return this;
+
 	}
 
 
