@@ -1,352 +1,292 @@
 package warcraft.contracts;
-
+import static org.junit.Assert.assertTrue;
 import warcraft.decorators.VillageoisDecorator;
 import warcraft.enums.ERace;
-import warcraft.exceptions.InvariantError;
-import warcraft.exceptions.PostConditionError;
-import warcraft.exceptions.PreConditionError;
 import warcraft.services.IVillageois;
 
 public class VillageoisContrat extends VillageoisDecorator{
 
-  public VillageoisContrat(IVillageois delegate) {
-    super(delegate);
-  }
+	public VillageoisContrat(IVillageois delegate) {
+		super(delegate);
+	}
+	public void checkInvariants(){
+		// \inv : estMort() == (pointsDeVie() <= 0)
+		assertTrue("\\inv : estMort() == (pointsDeVie() <= 0)", super.estMort() == (super.pointsDeVie() <= 0));
+		// \inv : corveeFinie() == (compteurCorvee()==16)
+		assertTrue("\\inv : corveeFini() == (compteurCorvee()==16)", super.corveeFinie() == (super.compteurCorvee()==16));
+		// \inv : enCorvee() == (compteurCorvee()>0)
+		assertTrue("\\inv : enCorvee() == (compteurCorvee()>0)", super.enCorvee() == (super.compteurCorvee()>0));
+		// \inv : quantiteOr() >= 0
+		assertTrue("\\inv : quantiteOr() >= 0",super.quantiteOr() >= 0);
+		// \inv :  0 <= compteurCorvee() && compteurCorvee() <= 16
+		assertTrue("\\inv : 0 <= compteurCorvee() && compteurCorvee() <= 16",  0 <= super.compteurCorvee() && super.compteurCorvee() <= 16);
 
-  public void checkInvariants(){
-    // estMort(V) =(min)= pointsDeVie(V)≤0
-    if(!(estMort() == (pointsDeVie() <= 0))){
-      throw new InvariantError("estMort(V) =(min)= pointsDeVie(V)≤0");
-    }
-    // corveeFini(V) =(min)= (compteurCorvee(V)=16)
-    if(!(corveeFinie() == (compteurCorvee() == 16))){
-      throw new InvariantError("corveeFini(V) =(min)= (compteurCorvee(V)=16)");
-    }
-    // enCorvee(V) =(min)= (compteurCorvee>0)
-    if(!(enCorvee() == (compteurCorvee() > 0))){
-      throw new InvariantError("enCorvee(V) =(min)= (compteurCorvee>0)");
-    }
-    // enCorvee(V) =(min)= (compteurCorvee>0)
-    if(!(enCorvee() == (compteurCorvee() > 0))){
-      throw new InvariantError("enCorvee(V) =(min)= (compteurCorvee>0)");
-    }
-    // quantiteOr(V)≥0
-    if(!(quantiteOr() >= 0)){
-      throw new InvariantError("quantiteOr(V)≥0");
-    }
-    // 0≤compteurCorvee(V)≤16
-    if(!(0 <= compteurCorvee() && compteurCorvee() >= 16)){
-      throw new InvariantError("0≤compteurCorvee(V)≤16");
-    }
-  }
+	}
 
-  @Override
-  public ERace race() {
-    return super.race();
-  }
+	@Override
+	public ERace race() {
+		return super.race();
+	}
 
-  @Override
-  public int largeur() {
-    return super.largeur();
-  }
+	@Override
+	public int largeur() {
+		return super.largeur();
+	}
 
-  @Override
-  public int hauteur() {
-    return super.hauteur();
-  }
+	@Override
+	public int hauteur() {
+		return super.hauteur();
+	}
 
-  @Override
-  public int force() {
-    return super.force();
-  }
+	@Override
+	public int force() {
+		return super.force();
+	}
 
-  @Override
-  public double vitesse() {
-    return super.vitesse();
-  }
+	@Override
+	public double vitesse() {
+		return super.vitesse();
+	}
 
-  @Override
-  public int pointsDeVie() {
-    return super.pointsDeVie();
-  }
+	@Override
+	public int pointsDeVie() {
+		return super.pointsDeVie();
+	}
 
-  @Override
-  public boolean estMort() {
-    return super.estMort();
-  }
+	@Override
+	public boolean estMort() {
+		return super.estMort();
+	}
 
-  @Override
-  public int quantiteOr() {
-    return super.quantiteOr();
-  }
+	@Override
+	public int quantiteOr() {
+		return super.quantiteOr();
+	}
 
-  @Override
-  public int compteurCorvee() {
-    return super.compteurCorvee();
-  }
+	@Override
+	public int compteurCorvee() {
+		return super.compteurCorvee();
+	}
 
-  @Override
-  public boolean corveeFinie() {
-    return super.corveeFinie();
-  }
+	@Override
+	public boolean corveeFinie() {
+		return super.corveeFinie();
+	}
 
-  @Override
-  public boolean enCorvee() {
-    return super.enCorvee();
-  }
+	@Override
+	public boolean enCorvee() {
+		return super.enCorvee();
+	}
 
-  @Override
-  public IVillageois init(ERace race, int largeur, int hauteur, int force,
-      double vitesse, int pointsDeVie) {
-    // Pre-Conditions
-    // largeur>0 
-    if(!(largeur > 0)){
-      throw new PreConditionError("largeur>0");
-    }
-    // hauteur>0 
-    if(!(hauteur > 0)){
-      throw new PreConditionError("hauteur>0");
-    }
-    // force>0 
-    if(!(force > 0)){
-      throw new PreConditionError("force>0");
-    }
-    // vitesse>0 
-    if(!(vitesse > 0)){
-      throw new PreConditionError("vitesse>0");
-    }
-    // pointsDeVie>0 
-    if(!(pointsDeVie > 0)){
-      throw new PreConditionError("pointsDeVie>0");
-    }
-    
-    // Pas d'invariants avant initialisation
-    
-    // Appel
-    super.init(race, largeur, hauteur, force, vitesse, pointsDeVie);
-    
-    // Invariants
-    checkInvariants();
-    // Post-Conditions
-    // race(init(race,largeur,hauteur,force,vitesse,pointsDeVie)) = race
-    if(!(race() == race)){
-      throw new PostConditionError("race(init(race,largeur,hauteur,force,vitesse,pointsDeVie)) = race");
-    }
-    // largeur(init(race,largeur,hauteur,force,vitesse,pointsDeVie)) = largeur
-    if(!(largeur() == largeur)){
-      throw new PostConditionError("largeur(init(race,largeur,hauteur,force,vitesse,pointsDeVie)) = largeur");
-    }
-    // hauteur(init(race,largeur,hauteur,force,vitesse,pointsDeVie)) = hauteur
-    if(!(hauteur() == hauteur)){
-      throw new PostConditionError("hauteur(init(race,largeur,hauteur,force,vitesse,pointsDeVie)) = hauteur");
-    }
-    // force(init(race,largeur,hauteur,force,vitesse,pointsDeVie)) = force
-    if(!(force() == force)){
-      throw new PostConditionError("force(init(race,largeur,hauteur,force,vitesse,pointsDeVie)) = force");
-    }
-    // vitesse(init(race,largeur,hauteur,force,vitesse,pointsDeVie)) = vitesse
-    if(!(vitesse() == vitesse)){
-      throw new PostConditionError("vitesse(init(race,largeur,hauteur,force,vitesse,pointsDeVie)) = vitesse");
-    }
-    // pointsDeVie(init(race,largeur,hauteur,force,vitesse,pointsDeVie)) = pointsDeVie
-    if(!(pointsDeVie() == pointsDeVie)){
-      throw new PostConditionError("pointsDeVie(init(race,largeur,hauteur,force,vitesse,pointsDeVie)) = pointsDeVie");
-    }
-    return this;
-  }
+	@Override
+	public IVillageois init(ERace race, int largeur, int hauteur, int force,
+			double vitesse, int pointsDeVie) {
+		// Pre-Conditions
+		
+		// \pre : largeur>0 
+		assertTrue("\\pre : largeur > 0", largeur > 0);
+		// \pre : hauteur>0 
+		assertTrue("\\pre : hauteur>0 ", hauteur>0 );
+		// \pre : force>0 
+		assertTrue("\\pre : force>0 ", force>0 );
+		// \pre : vitesse>0 
+		assertTrue("\\pre : vitesse>0", vitesse>0);
+		// \pre : pointsDeVie>0 
+		assertTrue("\\pre : pointsDeVie>0 ", pointsDeVie>0 );
+		
+		// Pas d'invariants avant initialisation
 
-  @Override
-  public IVillageois retraitPV(int degats) {
-    // Capture
-    int oldPointsDeVie = pointsDeVie();
-    int oldQuantiteOr = quantiteOr();
-    int oldCompteurCorvee = compteurCorvee();
-    
-    // Pré-Conditions
-    // ¬estMort(V)
-    if(!(!estMort())){
-      throw new PreConditionError("¬estMort(V)");
-    }
-    // degats>0
-    if(!(degats > 0)){
-      throw new PreConditionError("degats > 0");
-    }
-    
-    // Invariants
-    checkInvariants();
-    
-    // Appel
-    super.retraitPV(degats);
-    
-    // Invariants
-    checkInvariants();
-    
-    // Post-Conditions
-    // pointsDeVie(retraitPV(V,s)) = pointsDeVie(V) - s 
-    if(!(pointsDeVie() == oldPointsDeVie - degats)){
-      throw new PostConditionError("pointsDeVie(retraitPV(V,s)) = pointsDeVie(V) - s");
-    }
-    // quantiteOr(retraitPV(V,s)) = quantiteOr(V) 
-    if(!(quantiteOr() == oldQuantiteOr)){
-      throw new PostConditionError("quantiteOr(retraitPV(V,s)) = quantiteOr(V)");
-    }
-    // compteurCorvee(retraitPV(V,s)) = compteurCorvee(V)
-    if(!(compteurCorvee() == oldCompteurCorvee)){
-      throw new PostConditionError("compteurCorvee(retraitPV(V,s)) = compteurCorvee(V)");
-    }
-    return this;
-  }
+		// Appel
+		super.init(race, largeur, hauteur, force, vitesse, pointsDeVie);
 
-  @Override
-  public IVillageois ajouterOr(int somme) {
-    // Capture
-    int oldPointsDeVie = pointsDeVie();
-    int oldQuantiteOr = quantiteOr();
-    int oldCompteurCorvee = compteurCorvee();
-    
-    // Pré-Conditions
-    // somme ≥ 0 
-    if(!(somme >= 0)){
-      throw new PreConditionError("somme ≥ 0");
-    }
-    
-    // Invariants
-    checkInvariants();
-    
-    // Appel
-    super.ajouterOr(somme);
-    
-    // Invariants
-    checkInvariants();
-    // Post-Conditions
-    // pointsDeVie(ajouteOr(n)) = pointsDeVie()
-    if(!(pointsDeVie() == oldPointsDeVie)){
-      throw new PostConditionError("pointsDeVie(ajouteOr(n)) = pointsDeVie()");
-    }
-    //quantiteOr(ajouteOr(n)) = quantiteOr() + n 
-    if(!(quantiteOr() == oldQuantiteOr + somme)){
-      throw new PostConditionError("quantiteOr(ajouteOr(n)) = quantiteOr() + n"); 
-    }
-    //compteurCorvee(ajouteOr(n)) = compteurCorvee()
-    if(!(compteurCorvee() == oldCompteurCorvee)){
-      throw new PostConditionError("compteurCorvee(ajouteOr(n)) = compteurCorvee()");
-    }
+		// Invariants
+		checkInvariants();
+		
+		// Post-Conditions
+		
+		// \post : race() == race 
+		assertTrue("\\post : race() == r", race() == race );
+		// \post : largeur() == largeur
+		assertTrue("\\post : largeur() == largeur", largeur() == largeur);
+		// \post : hauteur() == hauteur
+		assertTrue("\\post : hauteur() == hauteur", hauteur() == hauteur);
+		// \post : force() == force
+		assertTrue("\\post : force() == force", force() == force);
+		// \post : vitesse() == vitesse
+		assertTrue("\\post : vitesse() == vitesse", vitesse() == vitesse);
+		// \post : pointsDeVie() == pointsDeVie
+		assertTrue("\\post : pointsDevie() == pointsDeVie", pointsDeVie() == pointsDeVie);
+		// \post : quantiteOr() == 0
+		assertTrue("\\post : quantiteOr() == 0", quantiteOr() == 0);
+		// \post : compteurCorvee() == 0
+		assertTrue("\\post : compteurCorvee() == 0", compteurCorvee() == 0);
+		return this;
+	}
 
-    return this;
-  }
+	@Override
+	public IVillageois retraitPV(int degats) {
+		// Capture
+		int oldPointsDeVie = super.pointsDeVie();
+		int oldQuantiteOr = super.quantiteOr();
+		int oldCompteurCorvee = super.compteurCorvee();
+		
+		// Pré-Conditions
+		 
+		// \pre : !estMort() 
+		assertTrue("\\pre : !estMort()", !super.estMort() );
+		// \pre : degats>0
+		assertTrue("degats>0", degats>0);
+		
+		// Invariants
+		checkInvariants();
 
-  @Override
-  public IVillageois retraitOr(int somme) {
-    // Capture
-    int oldPointsDeVie = pointsDeVie();
-    int oldQuantiteOr = quantiteOr();
-    int oldCompteurCorvee = compteurCorvee();
+		// Appel
+		super.retraitPV(degats);
 
-    // Pré-Conditions
-    // quantiteOr()-s≥0
-    if(!(quantiteOr() - somme >= 0)){
-      throw new PreConditionError("quantiteOr()-s≥0");
-    }
-    // s≥0
-    if(!(somme >= 0)){
-      throw new PreConditionError("s≥0");
-    }
-    
-    // Invariants
-    checkInvariants();
-    
-    // Appel
-    super.retraitOr(somme);
-    
-    // Invariants
-    checkInvariants();
-    
-    // Post-Conditions
-    // pointsDeVie(retraitOr(s)) = pointsDeVie() 
-    if(!(pointsDeVie() == oldPointsDeVie)){
-      throw new PostConditionError("pointsDeVie(retraitOr(s)) = pointsDeVie()");
-    }
-    // quantiteOr(retraitOr(s)) = quantiteOr() - s 
-    if(!(quantiteOr() == oldQuantiteOr - somme)){
-      throw new PostConditionError("quantiteOr(retraitOr(s)) = quantiteOr() - s");
-    }
-    // compteurCorvee(retraitOr(s)) = compteurCorvee()
-    if(!(compteurCorvee() == oldCompteurCorvee)){
-      throw new PostConditionError("compteurCorvee(retraitOr(s)) = compteurCorvee()");
-    }
-    return this;
-  }
+		// Invariants
+		checkInvariants();
 
-  @Override
-  public IVillageois commenceTravaille() {
-    // Capture
-    int oldPointsDeVie = pointsDeVie();
-    int oldQuantiteOr = quantiteOr();
-    int oldCompteurCorvee = compteurCorvee();
+		// Post-Conditions
+		
+		// \post : pointsDeVie() == pointsDeVie()@pre - degats
+		assertTrue("\\post : pointsDeVie() == pointsDeVie()@pre - s", super.pointsDeVie() == oldPointsDeVie - degats);
+		// \post : quantiteOr() == quantiteOr()@pre 
+		assertTrue("\\post : quantiteOr() == quantiteOr()@pre", super.quantiteOr() == oldQuantiteOr);
+		// \post : compteurCorvee(retraitPV(V,s)) = compteurCorvee(V)
+		assertTrue("\\post : compteurCorvee() == compteurCorvee()@pre", super.compteurCorvee() == oldCompteurCorvee);
+		return this;
+	}
 
-    // Invariants
-    checkInvariants();
-    
-    // Appel
-    super.commenceTravaille();
-    
-    // Invariants
-    checkInvariants();
-    
-    // Post-Conditions
-    // pointsDeVie(commenceTravaille()) = pointsDeVie()
-    if(!(pointsDeVie() == oldPointsDeVie)){
-      throw new PostConditionError("pointsDeVie(commenceTravaille()) = pointsDeVie()");
-    }
-    // quantiteOr(commenceTravaille()) = quantiteOr()
-    if(!(quantiteOr() == oldQuantiteOr)){
-      throw new PostConditionError("quantiteOr(commenceTravaille()) = quantiteOr()");
-    }
-    // compteurCorvee(commenceTravaille()) = 1
-    if(!(compteurCorvee() == 1)){
-      throw new PostConditionError("compteurCorvee(commenceTravaille()) = 1");
-    }
-    
-    return this;
-    
-  }
+	@Override
+	public IVillageois ajouterOr(int somme) {
+		// Capture
+		int oldPointsDeVie = super.pointsDeVie();
+		int oldQuantiteOr = super.quantiteOr();
+		int oldCompteurCorvee = super.compteurCorvee();
 
-  @Override
-  public IVillageois travaille() {
-    // Capture
-    int oldPointsDeVie = pointsDeVie();
-    int oldQuantiteOr = quantiteOr();
-    int oldCompteurCorvee = compteurCorvee();
+		// Pré-Conditions
+		// \pre: somme >= 0
+		assertTrue("\\pre: somme >= 0", somme >= 0);
+		
+		// Invariants
+		checkInvariants();
 
-    // Pré-Conditions
-    // ¬corveeFinie()
-    if(!(!corveeFinie())){
-      throw new PreConditionError("¬corveeFinie()");
-    }
-    
-    // Invariants
-    checkInvariants();
-    
-    // Appel
-    super.travaille();
-    
-    // Invariants
-    checkInvariants();
-    
-    // Post-Conditions
-    // pointsDeVie(travaille(V)) = pointsDeVie(V)
-    if(!(pointsDeVie() == oldPointsDeVie)){
-      throw new PostConditionError("pointsDeVie(travaille(V)) = pointsDeVie(V)");
-    }
-    // quantiteOr(travaille(V)) = quantiteOr(V) 
-    if(!(quantiteOr() == oldQuantiteOr)){
-      throw new PostConditionError("quantiteOr(travaille(V)) = quantiteOr(V)");
-    }
-    // compteurCorvee(travaille(V)) = compteurCorvee(V) + 1
-    if(!(compteurCorvee() == oldCompteurCorvee + 1 )){
-      throw new PostConditionError("compteurCorvee(travaille(V)) = compteurCorvee(V) + 1");
-    }
-    return this;
-  }
+		// Appel
+		super.ajouterOr(somme);
+
+		// Invariants
+		checkInvariants();
+		
+		// Post-Conditions
+		
+		// \post : pointsDeVie() == pointsDeVie()@pre
+		assertTrue("\\post : pointsDeVie() == pointsDeVie()@pre", super.pointsDeVie() == oldPointsDeVie);
+		// \post : quantiteOr() == quantiteOr()@pre + somme 
+		assertTrue("\\post : quantiteOr() == quantiteOr()@pre + somme", super.quantiteOr() == oldQuantiteOr + somme);
+		// \post : compteurCorvee() == compteurCorvee()@pre
+		assertTrue("\\post : compteurCorvee() == compteurCorvee()@pre", super.compteurCorvee() == oldCompteurCorvee);
+		
+		return this;
+	}
+
+	@Override
+	public IVillageois retraitOr(int somme) {
+		// Capture
+		int oldPointsDeVie = super.pointsDeVie();
+		int oldQuantiteOr = super.quantiteOr();
+		int oldCompteurCorvee = super.compteurCorvee();
+
+		/**
+		 * 
+		 *  
+		 * \post : compteurCorvee() == compteurCorvee()@pre
+		 */
+		
+		// Pré-Conditions
+		// \pre : quantiteOr()-somme >= 0
+		assertTrue("\\pre : quantiteOr()-somme >= 0", super.quantiteOr() - somme >= 0);
+		// \pre :  somme >= 0
+		assertTrue("\\pre :  somme >= 0", somme >= 0);
+		
+		// Invariants
+		checkInvariants();
+
+		// Appel
+		super.retraitOr(somme);
+
+		// Invariants
+		checkInvariants();
+
+		// Post-Conditions
+		// \post : pointsDeVie() == pointsDeVie()@pre
+		assertTrue("\\post : pointsDeVie() == pointsDeVie()@pre", super.pointsDeVie() == oldPointsDeVie);
+		// \post : quantiteOr() == quantiteOr()@pre - somme
+		assertTrue("\\post : quantiteOr() == quantiteOr()@pre - somme", super.quantiteOr() == oldQuantiteOr - somme);
+		// \post : compteurCorvee() == compteurCorvee()@pre
+		assertTrue("\\post : compteurCorvee() == compteurCorvee()@pre", super.compteurCorvee() == oldCompteurCorvee);
+		return this;
+	}
+
+	@Override
+	public IVillageois commenceTravaille() {
+		// Capture
+		int oldPointsDeVie = super.pointsDeVie();
+		int oldQuantiteOr = super.quantiteOr();
+
+		// Invariants
+		checkInvariants();
+
+		// Appel
+		super.commenceTravaille();
+
+		// Invariants
+		checkInvariants();
+
+		// Post-Conditions
+		/**
+		 * 
+		 */
+		// \post: pointsDeVie() == pointsDeVie()@pre
+		assertTrue("\\post: pointsDeVie() == pointsDeVie()@pre", super.pointsDeVie() == oldPointsDeVie);
+		// \post : quantiteOr() == quantiteOr()@pre
+		assertTrue("\\post : quantiteOr() == quantiteOr()@pre", super.quantiteOr() == oldQuantiteOr);
+		// \post : compteurCorvee() == 1
+		assertTrue("\\post : compteurCorvee() == 1", super.compteurCorvee() == 1);
+		
+		return this;
+
+	}
+
+	@Override
+	public IVillageois travaille() {
+		// Capture
+		int oldPointsDeVie = super.pointsDeVie();
+		int oldQuantiteOr = super.quantiteOr();
+		int oldCompteurCorvee = super.compteurCorvee();
+
+		// Pré-Conditions
+		
+		// \pre : !corveeFinie()
+		assertTrue("\\pre : !corveeFinie()", !corveeFinie());
+		
+		// Invariants
+		checkInvariants();
+
+		// Appel
+		super.travaille();
+
+		// Invariants
+		checkInvariants();
+
+		// Post-Conditions
+		// \post : pointsDeVie() == pointsDeVie()@pre
+		assertTrue("\\post : pointsDeVie() == pointsDeVie()@pre", super.pointsDeVie() == oldPointsDeVie);
+		
+		// \post : quantiteOr() == quantiteOr()@pre 
+		assertTrue("\\post : quantiteOr() == quantiteOr()@pre", super.quantiteOr() == oldQuantiteOr);
+		// \post : compteurCorvee() == compteurCorvee()@pre + 1
+		assertTrue("\\post : compteurCorvee() == compteurCorvee()@pre + 1", super.compteurCorvee() == oldCompteurCorvee + 1);
+		return this;
+	}
 
 }

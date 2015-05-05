@@ -2,7 +2,7 @@ package warcraft.decorators;
 
 import warcraft.services.IMuraille;
 
-public class MurailleDecorator  implements IMuraille{
+public abstract class MurailleDecorator  implements IMuraille{
 
   private IMuraille delegate;
 

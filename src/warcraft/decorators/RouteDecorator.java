@@ -2,7 +2,7 @@ package warcraft.decorators;
 
 import warcraft.services.IRoute;
 
-public class RouteDecorator implements IRoute{
+public abstract class RouteDecorator implements IRoute{
 
   private IRoute delegate;
 

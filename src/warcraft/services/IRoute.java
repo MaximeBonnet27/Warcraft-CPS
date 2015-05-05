@@ -13,12 +13,13 @@ public interface IRoute {
   // Constructors
 
   /**
-   * \pre : init(largeur, hauteur, mult) require largeur > 0 ^ hauteur > 0 ^ mult
-   * >= 1.0
+   * \pre : largeur > 0
+   * \pre :  hauteur > 0 
+   * \pre : mult >= 1.0
    * 
    * \post : largeur() = largeur
-   * hauteur() = hauteur
-   * multiplicateur() = mult
+   * \post : hauteur() = hauteur
+   * \post : multiplicateur() = mult
    * 
    */
 

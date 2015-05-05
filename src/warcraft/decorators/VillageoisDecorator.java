@@ -3,7 +3,7 @@ package warcraft.decorators;
 import warcraft.enums.ERace;
 import warcraft.services.IVillageois;
 
-public class VillageoisDecorator implements IVillageois{
+public abstract class VillageoisDecorator implements IVillageois{
 
   private IVillageois delegate;
 
