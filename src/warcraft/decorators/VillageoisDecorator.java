@@ -1,13 +1,13 @@
 package warcraft.decorators;
 
 import warcraft.enums.ERace;
-import warcraft.services.IVillageois;
+import warcraft.services.IVillageoisService;
 
-public abstract class VillageoisDecorator implements IVillageois{
+public abstract class VillageoisDecorator implements IVillageoisService{
 
-  private IVillageois delegate;
+  private IVillageoisService delegate;
 
-  public VillageoisDecorator(IVillageois delegate) {
+  public VillageoisDecorator(IVillageoisService delegate) {
     super();
     this.delegate = delegate;
   }
@@ -56,28 +56,28 @@ public abstract class VillageoisDecorator implements IVillageois{
     return delegate.enCorvee();
   }
 
-  public IVillageois init(ERace race, int largeur, int hauteur, int force,
+  public IVillageoisService init(ERace race, int largeur, int hauteur, int force,
       double vitesse, int pointsDeVie) {
     return delegate.init(race, largeur, hauteur, force, vitesse, pointsDeVie);
   }
 
-  public IVillageois retraitPV(int degats) {
+  public IVillageoisService retraitPV(int degats) {
     return delegate.retraitPV(degats);
   }
 
-  public IVillageois ajouterOr(int somme) {
+  public IVillageoisService ajouterOr(int somme) {
     return delegate.ajouterOr(somme);
   }
 
-  public IVillageois retraitOr(int somme) {
+  public IVillageoisService retraitOr(int somme) {
     return delegate.retraitOr(somme);
   }
 
-  public IVillageois commenceTravaille() {
+  public IVillageoisService commenceTravaille() {
     return delegate.commenceTravaille();
   }
 
-  public IVillageois travaille() {
+  public IVillageoisService travaille() {
     return delegate.travaille();
   }
   

@@ -1,9 +1,9 @@
 package warcraft.implem;
 
 import warcraft.enums.ERace;
-import warcraft.services.IVillageois;
+import warcraft.services.IVillageoisService;
 
-public class Villageois implements IVillageois{
+public class Villageois implements IVillageoisService{
 
   private ERace race;
   private int largeur, hauteur;
@@ -69,7 +69,7 @@ public class Villageois implements IVillageois{
   }
 
   @Override
-  public IVillageois init(ERace race, int largeur, int hauteur, int force,
+  public IVillageoisService init(ERace race, int largeur, int hauteur, int force,
       double vitesse, int pointsDeVie) {
     Villageois v = new Villageois();
     v.race = race;
@@ -82,31 +82,31 @@ public class Villageois implements IVillageois{
   }
 
   @Override
-  public IVillageois retraitPV(int degats) {
+  public IVillageoisService retraitPV(int degats) {
     pointsDeVie -= degats;
     return this;
   }
 
   @Override
-  public IVillageois ajouterOr(int somme) {
+  public IVillageoisService ajouterOr(int somme) {
     quantiteOr += somme;
     return this;
   }
 
   @Override
-  public IVillageois retraitOr(int somme) {
+  public IVillageoisService retraitOr(int somme) {
     quantiteOr -= somme;
     return this;
   }
 
   @Override
-  public IVillageois commenceTravaille() {
+  public IVillageoisService commenceTravaille() {
     compteurCorvee = 1;
     return this;
   }
 
   @Override
-  public IVillageois travaille() {
+  public IVillageoisService travaille() {
     compteurCorvee += 1;
     return this;
   }

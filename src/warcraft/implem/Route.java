@@ -1,8 +1,8 @@
 package warcraft.implem;
 
-import warcraft.services.IRoute;
+import warcraft.services.IRouteService;
 
-public class Route implements IRoute{
+public class Route implements IRouteService{
 
   private int largeur, hauteur;
   private double multiplicateur;
@@ -23,7 +23,7 @@ public class Route implements IRoute{
   }
 
   @Override
-  public IRoute init(int largeur, int hauteur, double mult) {
+  public IRouteService init(int largeur, int hauteur, double mult) {
     Route r = new Route();
     r.largeur = largeur;
     r.hauteur = hauteur;

@@ -1,6 +1,6 @@
 package warcraft.services;
 
-public interface IRoute {
+public interface IRouteService {
 
   // Observators
 
@@ -23,7 +23,7 @@ public interface IRoute {
    * 
    */
 
-  public IRoute init(int largeur, int hauteur, double mult);
+  public IRouteService init(int largeur, int hauteur, double mult);
 
   // Operators
 

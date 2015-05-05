@@ -1,12 +1,12 @@
 package warcraft.decorators;
 
-import warcraft.services.IMuraille;
+import warcraft.services.IMurailleService;
 
-public abstract class MurailleDecorator  implements IMuraille{
+public abstract class MurailleDecorator  implements IMurailleService{
 
-  private IMuraille delegate;
+  private IMurailleService delegate;
 
-  public MurailleDecorator(IMuraille delegate) {
+  public MurailleDecorator(IMurailleService delegate) {
     super();
     this.delegate = delegate;
   }
@@ -27,11 +27,11 @@ public abstract class MurailleDecorator  implements IMuraille{
     return delegate.estDetruite();
   }
 
-  public IMuraille init(int largeur, int hauteur, int pv) {
+  public IMurailleService init(int largeur, int hauteur, int pv) {
     return delegate.init(largeur, hauteur, pv);
   }
 
-  public IMuraille taper(int degats) {
+  public IMurailleService taper(int degats) {
     return delegate.taper(degats);
   }
 

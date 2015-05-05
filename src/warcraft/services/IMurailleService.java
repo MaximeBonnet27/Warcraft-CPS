@@ -1,6 +1,6 @@
 package warcraft.services;
 
-public interface IMuraille {
+public interface IMurailleService {
 
 	// Observators
 
@@ -22,7 +22,7 @@ public interface IMuraille {
 	 * \post :hauteur() == hauteur
 	 * \post :pointsDeVie() == pv
 	 */
-	public IMuraille init(int largeur, int hauteur, int pv);
+	public IMurailleService init(int largeur, int hauteur, int pv);
 
 	// Operators
 	/**
@@ -31,6 +31,6 @@ public interface IMuraille {
 	 * \post : pointsDeVie() = pointsDeVie()@pre - degats
 	 */
 
-	public IMuraille taper(int degats);
+	public IMurailleService taper(int degats);
 
 }

@@ -2,7 +2,7 @@ package warcraft.services;
 
 import warcraft.enums.ERace;
 
-public interface IVillageois {
+public interface IVillageoisService {
 
 	// Observators
 
@@ -56,7 +56,7 @@ public interface IVillageois {
 	 * \post : quantiteOr() == 0 
 	 * \post : compteurCorvee() == 0
 	 */
-	public IVillageois init(ERace race, int largeur, int hauteur, int force,
+	public IVillageoisService init(ERace race, int largeur, int hauteur, int force,
 			double vitesse, int pointsDeVie);
 
 	// Operators
@@ -68,7 +68,7 @@ public interface IVillageois {
 	 * \post : quantiteOr() == quantiteOr()@pre 
 	 * \post : compteurCorvee() == compteurCorvee()@pre
 	 */
-	public IVillageois retraitPV(int degats);
+	public IVillageoisService retraitPV(int degats);
 
 	/**
 	 * \pre: somme >= 0
@@ -77,7 +77,7 @@ public interface IVillageois {
 	 * \post : quantiteOr() == quantiteOr()@pre + somme 
 	 * \post : compteurCorvee() == compteurCorvee()@pre
 	 */
-	public IVillageois ajouterOr(int somme);
+	public IVillageoisService ajouterOr(int somme);
 
 	/**
 	 * \pre : quantiteOr()-somme >= 0
@@ -88,7 +88,7 @@ public interface IVillageois {
 	 * \post : compteurCorvee() == compteurCorvee()@pre
 	 */
 
-	public IVillageois retraitOr(int somme);
+	public IVillageoisService retraitOr(int somme);
 
 	/**
 	 * \post: pointsDeVie() == pointsDeVie()@pre
@@ -96,7 +96,7 @@ public interface IVillageois {
 	 * \post : compteurCorvee() == 1
 	 */
 
-	public IVillageois commenceTravaille();
+	public IVillageoisService commenceTravaille();
 
 	/**
 	 * \pre : !corveeFinie()
@@ -106,6 +106,6 @@ public interface IVillageois {
 	 * \post : compteurCorvee() == compteurCorvee()@pre + 1
 	 */
 
-	public IVillageois travaille();
+	public IVillageoisService travaille();
 
 }

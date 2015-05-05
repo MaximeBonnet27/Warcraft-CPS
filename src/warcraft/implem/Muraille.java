@@ -1,8 +1,8 @@
 package warcraft.implem;
 
-import warcraft.services.IMuraille;
+import warcraft.services.IMurailleService;
 
-public class Muraille implements IMuraille{
+public class Muraille implements IMurailleService{
 
   private int largeur, hauteur;
   private int pointsDeVie;
@@ -28,7 +28,7 @@ public class Muraille implements IMuraille{
   }
 
   @Override
-  public IMuraille init(int largeur, int hauteur, int pv) {
+  public IMurailleService init(int largeur, int hauteur, int pv) {
 
     Muraille m = new Muraille();
     m.largeur = largeur;
@@ -39,7 +39,7 @@ public class Muraille implements IMuraille{
   }
 
   @Override
-  public IMuraille taper(int degats) {
+  public IMurailleService taper(int degats) {
     pointsDeVie -= degats;
     return this;
   }

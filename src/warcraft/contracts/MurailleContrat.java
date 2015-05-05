@@ -2,11 +2,11 @@ package warcraft.contracts;
 
 import static org.junit.Assert.assertTrue;
 import warcraft.decorators.MurailleDecorator;
-import warcraft.services.IMuraille;
+import warcraft.services.IMurailleService;
 
 public class MurailleContrat extends MurailleDecorator{
 
-	public MurailleContrat(IMuraille delegate) {
+	public MurailleContrat(IMurailleService delegate) {
 		super(delegate);
 	}
 
@@ -37,7 +37,7 @@ public class MurailleContrat extends MurailleDecorator{
 	}
 
 	@Override
-	public IMuraille init(int largeur, int hauteur, int pv) {
+	public IMurailleService init(int largeur, int hauteur, int pv) {
 		// Pre-Conditions
 		
 		// \pre : largeur > 0
@@ -65,7 +65,7 @@ public class MurailleContrat extends MurailleDecorator{
 	}
 
 	@Override
-	public IMuraille taper(int degats) {
+	public IMurailleService taper(int degats) {
 		// Capture
 		int oldPointsDeVie = pointsDeVie();
 

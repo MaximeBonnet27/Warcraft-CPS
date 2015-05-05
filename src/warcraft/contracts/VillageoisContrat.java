@@ -2,11 +2,11 @@ package warcraft.contracts;
 import static org.junit.Assert.assertTrue;
 import warcraft.decorators.VillageoisDecorator;
 import warcraft.enums.ERace;
-import warcraft.services.IVillageois;
+import warcraft.services.IVillageoisService;
 
 public class VillageoisContrat extends VillageoisDecorator{
 
-	public VillageoisContrat(IVillageois delegate) {
+	public VillageoisContrat(IVillageoisService delegate) {
 		super(delegate);
 	}
 	public void checkInvariants(){
@@ -79,7 +79,7 @@ public class VillageoisContrat extends VillageoisDecorator{
 	}
 
 	@Override
-	public IVillageois init(ERace race, int largeur, int hauteur, int force,
+	public IVillageoisService init(ERace race, int largeur, int hauteur, int force,
 			double vitesse, int pointsDeVie) {
 		// Pre-Conditions
 		
@@ -124,7 +124,7 @@ public class VillageoisContrat extends VillageoisDecorator{
 	}
 
 	@Override
-	public IVillageois retraitPV(int degats) {
+	public IVillageoisService retraitPV(int degats) {
 		// Capture
 		int oldPointsDeVie = super.pointsDeVie();
 		int oldQuantiteOr = super.quantiteOr();
@@ -158,7 +158,7 @@ public class VillageoisContrat extends VillageoisDecorator{
 	}
 
 	@Override
-	public IVillageois ajouterOr(int somme) {
+	public IVillageoisService ajouterOr(int somme) {
 		// Capture
 		int oldPointsDeVie = super.pointsDeVie();
 		int oldQuantiteOr = super.quantiteOr();
@@ -190,7 +190,7 @@ public class VillageoisContrat extends VillageoisDecorator{
 	}
 
 	@Override
-	public IVillageois retraitOr(int somme) {
+	public IVillageoisService retraitOr(int somme) {
 		// Capture
 		int oldPointsDeVie = super.pointsDeVie();
 		int oldQuantiteOr = super.quantiteOr();
@@ -222,7 +222,7 @@ public class VillageoisContrat extends VillageoisDecorator{
 	}
 
 	@Override
-	public IVillageois commenceTravaille() {
+	public IVillageoisService commenceTravaille() {
 		// Capture
 		int oldPointsDeVie = super.pointsDeVie();
 		int oldQuantiteOr = super.quantiteOr();
@@ -250,7 +250,7 @@ public class VillageoisContrat extends VillageoisDecorator{
 	}
 
 	@Override
-	public IVillageois travaille() {
+	public IVillageoisService travaille() {
 		// Capture
 		int oldPointsDeVie = super.pointsDeVie();
 		int oldQuantiteOr = super.quantiteOr();

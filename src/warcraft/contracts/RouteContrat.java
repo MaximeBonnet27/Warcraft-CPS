@@ -2,11 +2,11 @@ package warcraft.contracts;
 
 import static org.junit.Assert.assertTrue;
 import warcraft.decorators.RouteDecorator;
-import warcraft.services.IRoute;
+import warcraft.services.IRouteService;
 
 public class RouteContrat extends RouteDecorator {
 
-	public RouteContrat(IRoute delegate) {
+	public RouteContrat(IRouteService delegate) {
 		super(delegate);
 	}
 
@@ -30,7 +30,7 @@ public class RouteContrat extends RouteDecorator {
 	}
 
 	@Override
-	public IRoute init(int largeur, int hauteur, double mult) {
+	public IRouteService init(int largeur, int hauteur, double mult) {
 		// Pre-Conditions
 
 		// \pre : largeur > 0
