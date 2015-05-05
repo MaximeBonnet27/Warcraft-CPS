@@ -77,7 +77,7 @@ Observators:
 		pre getHotel(M,numHotel)
 			require numHotel=0 V numHotel=1 
 
-    const positionHotelVilleXA: [MoteurJeu] -> int
+    const positionH	otelVilleXA: [MoteurJeu] -> int
     const positionHotelVilleYA: [MoteurJeu] -> int
     const positionHotelVilleXB: [MoteurJeu] -> int
     const positionHotelVilleYB: [MoteurJeu] -> int
@@ -150,8 +150,8 @@ Observations:
 												HotelVille::appartenance(hotelDeVilleB(M)) = RACE.HUMAIN)
 
 	resultatFinal(M)=RESULTAT.NULL =(min)= 	pasJeuCourant(M) = maxPasJeu(M) V
-											(HotelVille::orRestant(hotelDeVilleA(M))≥1664 ^
-											HotelVille::orRestant(hotelDeVilleB(M))≥1664 ^
+											(HotelVille::orRestant(hotelDeVilleA(M)) < 1664 ^
+											HotelVille::orRestant(hotelDeVilleB(M)) < 1664 ^
 											HotelVille::etat_d_appartenance(hotelDeVilleA(M))=ETAT.OCCUPE ^
 											HotelVille::etat_d_appartenance(hotelDeVilleB(M))=ETAT.OCCUPE ^
 											¬(HotelVille::appartenance(hotelDeVilleA(M))=HotelVille::appartenance(hotelDeVilleB(M))))

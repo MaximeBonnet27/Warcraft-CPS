@@ -36,6 +36,10 @@ Constructors :
 		pre recherche(c)
 			require ¬rechercheFinie(c)
 
+	ameliorerVillageois : [CentreNationalRechercheSpeciale] x COMPETENCE x val x Set<Villageois>-> [CentreNationalRechercheSpeciale]
+		pre ameliorerVillageois(c, competence, val, villageois)
+			require rechercheFinie(c) ^ val > 0 ^ villageois.size() > 0
+
 Observations :
 [invariants]
 	0<tempsCourant<=tempsDeConstruction
@@ -54,14 +58,19 @@ Observations :
 	rechercheCourante(init(tempsC, tempsR,prixC,prixR)) == 0
 
 [commencerConstruction]
-	tempsCourant(commencerconstruction(c)) == 1
+	tempsCourant(commencerConstruction(c)) == 1
+	rechercheCourante(commencerConstruction(c)) == rechercheCourante(c)
 
 [construire]
 	tempsCourant(construire(c)) == (tempsCourant(c)+1)
+	rechercheCourante(constuire(c)) == rechercheCourante(c)
 
 [commencerRecherche]
 	rechercheCourante(commencerRecherche(c)) == 1
+	tempsCourant(commencerRecherche(c)) == tempsCourant(c)
 
 [recherche]
-	rechercheCourante(recherche(c)) == (rechercheCourante(c) + 1)	
+	rechercheCourante(recherche(c)) == (rechercheCourante(c) + 1)
+	tempsCourant(recherche(c)) == tempsCourant(c)
 
+[ameliorerVillageois]
