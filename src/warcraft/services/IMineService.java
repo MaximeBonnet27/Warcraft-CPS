@@ -45,10 +45,10 @@ public interface IMineService {
 	public void retrait(int s);
 	
 	
-	// \pre: §etat_d_appartenance()==ETAT.OCCOPE) ==> (race == appartenance())
+	// \pre: etat_d_appartenance()==ETAT.OCCOPE) ==> (race == appartenance())
 	// \post: orRestant() == orRestant()@pre 
 	// \post: compteurAbandon() == 0
-	// \post: appartenance() == r
+	// \post: appartenance() == race
 	public void accueil(ERace race);
 	
 	// \pre: etat_d_appartenance() == ETAT.OCCUPE
