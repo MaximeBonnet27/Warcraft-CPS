@@ -1,6 +1,7 @@
 package warcraft.contracts;
 import static org.junit.Assert.assertTrue;
 import warcraft.decorators.VillageoisDecorator;
+import warcraft.enums.ECompetence;
 import warcraft.enums.ERace;
 import warcraft.services.IVillageoisService;
 
@@ -20,7 +21,10 @@ public class VillageoisContrat extends VillageoisDecorator{
 		assertTrue("\\inv : quantiteOr() >= 0",super.quantiteOr() >= 0);
 		// \inv :  0 <= compteurCorvee() && compteurCorvee() <= 16
 		assertTrue("\\inv : 0 <= compteurCorvee() && compteurCorvee() <= 16",  0 <= super.compteurCorvee() && super.compteurCorvee() <= 16);
-
+		// \inv : force() > 0
+		assertTrue("force() > 0", super.force() > 0);
+		// \inv : vitesse() > 0
+		assertTrue("vitesse() > 0", super.vitesse() > 0);
 	}
 
 	@Override
@@ -82,7 +86,7 @@ public class VillageoisContrat extends VillageoisDecorator{
 	public IVillageoisService init(ERace race, int largeur, int hauteur, int force,
 			double vitesse, int pointsDeVie) {
 		// Pre-Conditions
-		
+
 		// \pre : largeur>0 
 		assertTrue("\\pre : largeur > 0", largeur > 0);
 		// \pre : hauteur>0 
@@ -93,7 +97,7 @@ public class VillageoisContrat extends VillageoisDecorator{
 		assertTrue("\\pre : vitesse>0", vitesse>0);
 		// \pre : pointsDeVie>0 
 		assertTrue("\\pre : pointsDeVie>0 ", pointsDeVie>0 );
-		
+
 		// Pas d'invariants avant initialisation
 
 		// Appel
@@ -101,9 +105,9 @@ public class VillageoisContrat extends VillageoisDecorator{
 
 		// Invariants
 		checkInvariants();
-		
+
 		// Post-Conditions
-		
+
 		// \post : race() == race 
 		assertTrue("\\post : race() == r", race() == race );
 		// \post : largeur() == largeur
@@ -129,14 +133,16 @@ public class VillageoisContrat extends VillageoisDecorator{
 		int oldPointsDeVie = super.pointsDeVie();
 		int oldQuantiteOr = super.quantiteOr();
 		int oldCompteurCorvee = super.compteurCorvee();
-		
+		int oldForce = super.force();
+		double oldVitesse = super.vitesse();
+
 		// Pré-Conditions
-		 
+
 		// \pre : !estMort() 
 		assertTrue("\\pre : !estMort()", !super.estMort() );
 		// \pre : degats>0
 		assertTrue("degats>0", degats>0);
-		
+
 		// Invariants
 		checkInvariants();
 
@@ -147,13 +153,18 @@ public class VillageoisContrat extends VillageoisDecorator{
 		checkInvariants();
 
 		// Post-Conditions
-		
+
 		// \post : pointsDeVie() == pointsDeVie()@pre - degats
 		assertTrue("\\post : pointsDeVie() == pointsDeVie()@pre - s", super.pointsDeVie() == oldPointsDeVie - degats);
 		// \post : quantiteOr() == quantiteOr()@pre 
 		assertTrue("\\post : quantiteOr() == quantiteOr()@pre", super.quantiteOr() == oldQuantiteOr);
-		// \post : compteurCorvee() = compteurCorvee()@pre
+		// \post : compteurCorvee() == compteurCorvee()@pre
 		assertTrue("\\post : compteurCorvee() == compteurCorvee()@pre", super.compteurCorvee() == oldCompteurCorvee);
+		// \post : force() == force()@pre
+		assertTrue("\\post : force() == force()@pre", super.force() == oldForce);
+		// \post : vitesse() == vitesse()@pre
+		assertTrue("\\post : vitesse() == vitesse()@pre", super.vitesse() == oldVitesse);
+
 		return this;
 	}
 
@@ -163,11 +174,13 @@ public class VillageoisContrat extends VillageoisDecorator{
 		int oldPointsDeVie = super.pointsDeVie();
 		int oldQuantiteOr = super.quantiteOr();
 		int oldCompteurCorvee = super.compteurCorvee();
+		int oldForce = super.force();
+		double oldVitesse = super.vitesse();
 
 		// Pré-Conditions
 		// \pre: somme >= 0
 		assertTrue("\\pre: somme >= 0", somme >= 0);
-		
+
 		// Invariants
 		checkInvariants();
 
@@ -176,16 +189,20 @@ public class VillageoisContrat extends VillageoisDecorator{
 
 		// Invariants
 		checkInvariants();
-		
+
 		// Post-Conditions
-		
+
 		// \post : pointsDeVie() == pointsDeVie()@pre
 		assertTrue("\\post : pointsDeVie() == pointsDeVie()@pre", super.pointsDeVie() == oldPointsDeVie);
 		// \post : quantiteOr() == quantiteOr()@pre + somme 
 		assertTrue("\\post : quantiteOr() == quantiteOr()@pre + somme", super.quantiteOr() == oldQuantiteOr + somme);
 		// \post : compteurCorvee() == compteurCorvee()@pre
 		assertTrue("\\post : compteurCorvee() == compteurCorvee()@pre", super.compteurCorvee() == oldCompteurCorvee);
-		
+		// \post : force() == force()@pre
+		assertTrue("\\post : force() == force()@pre", super.force() == oldForce);
+		// \post : vitesse() == vitesse()@pre
+		assertTrue("\\post : vitesse() == vitesse()@pre", super.vitesse() == oldVitesse);
+
 		return this;
 	}
 
@@ -195,13 +212,15 @@ public class VillageoisContrat extends VillageoisDecorator{
 		int oldPointsDeVie = super.pointsDeVie();
 		int oldQuantiteOr = super.quantiteOr();
 		int oldCompteurCorvee = super.compteurCorvee();
-		
+		int oldForce = super.force();
+		double oldVitesse = super.vitesse();
+
 		// Pré-Conditions
 		// \pre : quantiteOr()-somme >= 0
 		assertTrue("\\pre : quantiteOr()-somme >= 0", super.quantiteOr() - somme >= 0);
 		// \pre :  somme >= 0
 		assertTrue("\\pre :  somme >= 0", somme >= 0);
-		
+
 		// Invariants
 		checkInvariants();
 
@@ -218,6 +237,11 @@ public class VillageoisContrat extends VillageoisDecorator{
 		assertTrue("\\post : quantiteOr() == quantiteOr()@pre - somme", super.quantiteOr() == oldQuantiteOr - somme);
 		// \post : compteurCorvee() == compteurCorvee()@pre
 		assertTrue("\\post : compteurCorvee() == compteurCorvee()@pre", super.compteurCorvee() == oldCompteurCorvee);
+		// \post : force() == force()@pre
+		assertTrue("\\post : force() == force()@pre", super.force() == oldForce);
+		// \post : vitesse() == vitesse()@pre
+		assertTrue("\\post : vitesse() == vitesse()@pre", super.vitesse() == oldVitesse);
+
 		return this;
 	}
 
@@ -226,6 +250,8 @@ public class VillageoisContrat extends VillageoisDecorator{
 		// Capture
 		int oldPointsDeVie = super.pointsDeVie();
 		int oldQuantiteOr = super.quantiteOr();
+		int oldForce = super.force();
+		double oldVitesse = super.vitesse();
 
 		// Invariants
 		checkInvariants();
@@ -244,7 +270,11 @@ public class VillageoisContrat extends VillageoisDecorator{
 		assertTrue("\\post : quantiteOr() == quantiteOr()@pre", super.quantiteOr() == oldQuantiteOr);
 		// \post : compteurCorvee() == 1
 		assertTrue("\\post : compteurCorvee() == 1", super.compteurCorvee() == 1);
-		
+		// \post : force() == force()@pre
+		assertTrue("\\post : force() == force()@pre", super.force() == oldForce);
+		// \post : vitesse() == vitesse()@pre
+		assertTrue("\\post : vitesse() == vitesse()@pre", super.vitesse() == oldVitesse);
+
 		return this;
 
 	}
@@ -255,12 +285,14 @@ public class VillageoisContrat extends VillageoisDecorator{
 		int oldPointsDeVie = super.pointsDeVie();
 		int oldQuantiteOr = super.quantiteOr();
 		int oldCompteurCorvee = super.compteurCorvee();
+		int oldForce = super.force();
+		double oldVitesse = super.vitesse();
 
 		// Pré-Conditions
-		
+
 		// \pre : !corveeFinie()
 		assertTrue("\\pre : !corveeFinie()", !corveeFinie());
-		
+
 		// Invariants
 		checkInvariants();
 
@@ -273,11 +305,75 @@ public class VillageoisContrat extends VillageoisDecorator{
 		// Post-Conditions
 		// \post : pointsDeVie() == pointsDeVie()@pre
 		assertTrue("\\post : pointsDeVie() == pointsDeVie()@pre", super.pointsDeVie() == oldPointsDeVie);
-		
+
 		// \post : quantiteOr() == quantiteOr()@pre 
 		assertTrue("\\post : quantiteOr() == quantiteOr()@pre", super.quantiteOr() == oldQuantiteOr);
 		// \post : compteurCorvee() == compteurCorvee()@pre + 1
 		assertTrue("\\post : compteurCorvee() == compteurCorvee()@pre + 1", super.compteurCorvee() == oldCompteurCorvee + 1);
+		// \post : force() == force()@pre
+		assertTrue("\\post : force() == force()@pre", super.force() == oldForce);
+		// \post : vitesse() == vitesse()@pre
+		assertTrue("\\post : vitesse() == vitesse()@pre", super.vitesse() == oldVitesse);
+
+		return this;
+	}
+	@Override
+	public IVillageoisService amelioration(ECompetence competence, int val) {
+		// Capture
+		int oldPointsDeVie = super.pointsDeVie();
+		int oldQuantiteOr = super.quantiteOr();
+		int oldCompteurCorvee = super.compteurCorvee();
+		int oldForce = super.force();
+		double oldVitesse = super.vitesse();
+
+		// Pré-Conditions
+
+		// \pre : val > 0
+		assertTrue("\\pre : val > 0", val > 0);
+
+		// Invariants
+		checkInvariants();
+
+		// Appel
+		super.amelioration(competence, val);
+
+		// Invariants
+		checkInvariants();
+
+		// Post-Conditions
+
+		/* \post : if(competence == COMPETENCE.PV)
+		 * then pointsDeVie() == pointsDeVie()@pre + val
+		 * else pointsDeVie() == pointsDeVie()@pre
+		 */
+		if(competence == ECompetence.PV){
+			assertTrue("\\post : pointsDeVie() == pointsDeVie()@pre + val", super.pointsDeVie() == oldPointsDeVie + val);
+		}else{
+			assertTrue("\\post : pointsDeVie() == pointsDeVie()@pre", super.pointsDeVie() == oldPointsDeVie);
+		}
+		// \post : quantiteOr() == quantiteOr()@pre
+		assertTrue("\\post : quantiteOr() == quantiteOr()@pre", super.quantiteOr() == oldQuantiteOr);
+		// \post : compteurCorvee() == compteurCorvee()@pre
+		assertTrue("\\post : compteurCorvee() == compteurCorvee()@pre", super.compteurCorvee() == oldCompteurCorvee);
+		/* \post : if(competence == COMPETENCE.FORCE)
+		 * then force() == force()@pre + val
+		 * else force() == force()@pre
+		 */
+		if(competence == ECompetence.FORCE){
+			assertTrue("\\post : force() == force()@pre + val", super.force() == oldForce + val);
+		}else{
+			assertTrue("\\post : force() == force()@pre", super.force() == oldForce);
+		}
+		/*\post : if(comptence == COMPETENCE.VITESSE)
+		 * then vitesse() == vitese()@pre + val
+		 * else vitesse() == vitesse()@pre
+		 */
+		if(competence == ECompetence.VITESSE){
+			assertTrue("\\post : vitesse() == vitese()@pre + val", super.vitesse() == oldVitesse + val);
+		}else{
+			assertTrue("\\post : vitesse() == vitesse()@pre", super.vitesse() == oldVitesse);
+		}
+		
 		return this;
 	}
 

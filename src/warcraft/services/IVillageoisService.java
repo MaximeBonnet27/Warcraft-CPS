@@ -1,5 +1,6 @@
 package warcraft.services;
 
+import warcraft.enums.ECompetence;
 import warcraft.enums.ERace;
 
 public interface IVillageoisService {
@@ -36,6 +37,8 @@ public interface IVillageoisService {
 	 * \inv : enCorvee() == (compteurCorvee()>0)
 	 * \inv : quantiteOr() >= 0
 	 * \inv : 0 <= compteurCorvee() && compteurCorvee() <= 16
+	 * \inv : force() > 0
+	 * \inv : vitesse() > 0
 	 */
 
 	// Constructors
@@ -67,6 +70,8 @@ public interface IVillageoisService {
 	 * \post: pointsDeVie() == pointsDeVie()@pre - degats
 	 * \post : quantiteOr() == quantiteOr()@pre 
 	 * \post : compteurCorvee() == compteurCorvee()@pre
+	 * \post : vitesse() == vitesse()@pre
+	 * \post : force() == force()@pre
 	 */
 	public IVillageoisService retraitPV(int degats);
 
@@ -76,6 +81,8 @@ public interface IVillageoisService {
 	 * \post : pointsDeVie() == pointsDeVie()@pre
 	 * \post : quantiteOr() == quantiteOr()@pre + somme 
 	 * \post : compteurCorvee() == compteurCorvee()@pre
+	 * \post : vitesse() == vitesse()@pre
+	 * \post : force() == force()@pre
 	 */
 	public IVillageoisService ajouterOr(int somme);
 
@@ -86,6 +93,8 @@ public interface IVillageoisService {
 	 * \post : pointsDeVie() == pointsDeVie()@pre
 	 * \post : quantiteOr() == quantiteOr()@pre - somme 
 	 * \post : compteurCorvee() == compteurCorvee()@pre
+	 * \post : vitesse() == vitesse()@pre
+	 * \post : force() == force()@pre
 	 */
 
 	public IVillageoisService retraitOr(int somme);
@@ -94,6 +103,8 @@ public interface IVillageoisService {
 	 * \post: pointsDeVie() == pointsDeVie()@pre
 	 * \post : quantiteOr() == quantiteOr()@pre
 	 * \post : compteurCorvee() == 1
+	 * \post : vitesse() == vitesse()@pre
+	 * \post : force() == force()@pre
 	 */
 
 	public IVillageoisService commenceTravaille();
@@ -104,8 +115,26 @@ public interface IVillageoisService {
 	 * \post : pointsDeVie() == pointsDeVie()@pre 
 	 * \post : quantiteOr() == quantiteOr()@pre 
 	 * \post : compteurCorvee() == compteurCorvee()@pre + 1
+	 * \post : vitesse() == vitesse()@pre
+	 * \post : force() == force()@pre
 	 */
 
 	public IVillageoisService travaille();
-
+	/**
+	 * \pre : val > 0
+	 * 
+	 * \post : if(competence == COMPETENCE.PV)
+	 * then pointsDeVie() == pointsDeVie()@pre + val
+	 * else pointsDeVie() == pointsDeVie()@pre
+	 * \post : quantiteOr() == quantiteOr()@pre
+	 * \post : compteurCorvee() == compteurCorvee()@pre
+	 * \post : if(competence == COMPETENCE.FORCE)
+	 * then force() == force()@pre + val
+	 * else force() == force()@pre
+	 * \post : if(comptence == COMPETENCE.VITESSE)
+	 * then vitesse() == vitese()@pre + val
+	 * else vitesse() == vitesse()@pre
+	 */
+	public IVillageoisService amelioration(ECompetence competence, int val);
+	
 }

@@ -1,5 +1,6 @@
 package warcraft.implem;
 
+import warcraft.enums.ECompetence;
 import warcraft.enums.ERace;
 import warcraft.services.IVillageoisService;
 
@@ -110,5 +111,17 @@ public class Villageois implements IVillageoisService{
     compteurCorvee += 1;
     return this;
   }
+
+@Override
+public IVillageoisService amelioration(ECompetence competence, int val) {
+	switch (competence) {
+	case FORCE : force += val; break;
+	case PV : pointsDeVie += val; break;
+	case VITESSE : vitesse += val; break;
+	default:
+		break;
+	}
+	return this;
+}
 
 }

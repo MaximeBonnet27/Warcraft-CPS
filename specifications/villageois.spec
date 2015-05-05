@@ -1,18 +1,18 @@
 service: Villageois
 
-types: enum RACE{ORC, HUMAIN}, int, double, boolean
+types: enum RACE{ORC, HUMAIN}, int, double, boolean, COMPETENCE{FORCE,PV,VITESSE,RIEN}
 
 Observators:
     const race:     [Villageois] -> RACE
     const largeur:  [Villageois] -> int
     const hauteur:  [Villageois] -> int
-    const force:    [Villageois] -> int
-    const vitesse:  [Villageois] -> double
+    force:    [Villageois] -> int
+    vitesse:  [Villageois] -> double
     pointsDeVie:    [Villageois] -> int
     estMort:        [Villageois] -> boolean
     quantiteOr:     [Villageois] -> int
     compteurCorvee: [Villageois] -> int
-    corveeFini:		[Villageois] -> boolean
+    corveeFinie:		[Villageois] -> boolean
     enCorvee: 		[Villageois] -> boolean
 
 Constructors:
@@ -38,7 +38,9 @@ Operators:
 	travaille: [Villageois] -> [Villageois]
 		pre travaille(V)
 			require ¬corveeFini(V)
-
+	amelioration : [Villageois] x COMPETENCE x int -> [Villageois]
+		pre amelioration(V, comp, val)
+			require val > 0
 Observations:
 [Invariants]
 	estMort(V) =(min)= pointsDeVie(V)≤0
@@ -46,6 +48,8 @@ Observations:
 	enCorvee(V) =(min)= (compteurCorvee>0)
 	quantiteOr(V)≥0
 	0≤compteurCorvee(V)≤16
+	force(V) > 0
+	vitesse(V) > 0
 
 [init]
 	race(init(r,l,h,f,v,p))				= r
@@ -61,23 +65,46 @@ Observations:
 	pointsDeVie(retraitPV(V,s))		= pointsDeVie(V) - s
 	quantiteOr(retraitPV(V,s))		= quantiteOr(V)
 	compteurCorvee(retraitPV(V,s))	= compteurCorvee(V)
+	force(retraitPV(V,s)) = force(V)
+	vitesse(retraitPV(V,s)) = vitesse(V)
 
 [ajouteOr]
 	pointsDeVie(ajouteOr(V,n))		= pointsDeVie(V)
 	quantiteOr(ajouteOr(V,n))		= quantiteOr(V) + n
 	compteurCorvee(ajouteOr(V,n))	= compteurCorvee(V)
+	force(ajouteOr(V,n)) = force(V)
+	vitesse(ajouteOr(V,n)) = vitesse(V)
 
 [retraitOr]
 	pointsDeVie(retraitOr(V,s))		= pointsDeVie(V)
 	quantiteOr(retraitOr(V,s))		= quantiteOr(V) - s
 	compteurCorvee(retraitOr(V,s))	= compteurCorvee(V)
+	force(retraitOr(V,s)) = force(V)
+	vitesse(retraitOr(V,s)) = vitesse(V)
 
 [commenceTravaille]
 	pointsDeVie(commenceTravaille(V))		= pointsDeVie(V)
 	quantiteOr(commenceTravaille(V))		= quantiteOr(V)
 	compteurCorvee(commenceTravaille(V))	= 1
+	force(commenceTravaille(V) = force(V)
+	vitesse(commenceTravaille(V) = vitesse(V)
 
 [travaille]
 	pointsDeVie(travaille(V))		= pointsDeVie(V)
 	quantiteOr(travaille(V))		= quantiteOr(V)
 	compteurCorvee(travaille(V))	= compteurCorvee(V) + 1
+	force(travaille(V)) = force(V)
+	vitesse(travaille(V)) = vitesse(V)
+
+[amelioration]
+	pointsDeVie(amelioration(V, comp, val)) == 
+		pointsDeVie(V) + val si comp == COMPETENCE.PV,
+		pointsDeVie(V) sinon
+	quantiteOr(amelioration(V, comp, val)) = quantiteOr(V)
+	compteurCorvee(amelioration(V, comp, val)) = compteurCorvee(V)
+	force(amelioration(V, comp, val)) == 
+		force(V) + val si comp == COMPETENCE.FORCE,
+		force(V) sinon
+	vitesse(amelioration(V, comp, val)) ==
+		vitesse(V) + val si comp == COMPETENCE.VITESSE,
+		vitesse(V) sinon
