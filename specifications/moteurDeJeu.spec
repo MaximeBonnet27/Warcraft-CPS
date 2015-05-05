@@ -120,8 +120,8 @@ Observations:
 [Invariants]
 	0 ≤ pasJeuCourant(M) ≤ maxPasJeu(M)
 
-	estFini(M) =(min)= 	HotelVille::orRestant(hotelDeVilleA(M)) ≥ 1664 V
-						HotelVille::orRestant(hotelDeVilleB(M)) ≥ 1664 V
+	estFini(M) =(min)= 	(HotelVille::orRestant(hotelDeVilleA(M)) ≥ 1664 ^ HotelVille::etat_d_appartenance(hotelDeVilleA(M)) = ETAT.OCCUPE) V
+						(HotelVille::orRestant(hotelDeVilleB(M)) ≥ 1664 ^ HotelVille::etat_d_appartenance(hotelDeVilleB(M)) = ETAT.OCCUPE) V
 						(HotelVille::etat_d_appartenance(hotelDeVilleA(M)) = ETAT.OCCUPE ^
 						HotelVille::etat_d_appartenance(hotelDeVilleB(M)) = ETAT.OCCUPE ^
 						HotelVille::appartenance(hotelDeVilleA(M)) = HotelVille::appartenance(hotelDeVilleB(M))) V

@@ -1,5 +1,7 @@
 service: GestionCombat
 
+use: Villageois
+
 Observators:
 	attaquant : [GestionCombat] -> Villageois
 	defenseur : [GestionCombat] -> Villageois

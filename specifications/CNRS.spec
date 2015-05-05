@@ -3,16 +3,22 @@ service : CentreNationalRechercheSpeciale
 types: int, boolean, COMPETENCE{FORCE,PV,VITESSE,RIEN}
 
 Observators : 
-	const prixConstruction: [CentreNationalRechercheSpeciale] -> int
-	const prixRecherche: [CentreNationalRechercheSpeciale] -> int
-	const tempsDeConstruction : [CentreNationalRechercheSpeciale] -> int
-	const tempsDeRecherche : [CentreNationalRechercheSpeciale] -> int
-	tempsCourant : [CentreNationalRechercheSpeciale] -> int	
-	enConstruction : [CentreNationalRechercheSpeciale] -> boolean
-	constructionFinie : [CentreNationalRechercheSpeciale] -> boolean
-	rechercheCourante : [CentreNationalRechercheSpeciale] -> int
-	enRecherche : [CentreNationalRechercheSpeciale] -> boolean
-	rechercheFinie : [CentreNationalRechercheSpeciale] -> boolean 
+    const prixConstruction:     [CentreNationalRechercheSpeciale] -> int
+    const prixRecherche:        [CentreNationalRechercheSpeciale] -> int
+    const tempsDeConstruction:  [CentreNationalRechercheSpeciale] -> int
+    const tempsDeRecherche:     [CentreNationalRechercheSpeciale] -> int
+    tempsCourant:               [CentreNationalRechercheSpeciale] -> int
+    enConstruction:             [CentreNationalRechercheSpeciale] -> boolean
+    constructionFinie:          [CentreNationalRechercheSpeciale] -> boolean
+    rechercheCourante:          [CentreNationalRechercheSpeciale] -> int
+    enRecherche:                [CentreNationalRechercheSpeciale] -> boolean
+    rechercheFinie:             [CentreNationalRechercheSpeciale] -> boolean
+    competenceAugmente:			[CentreNationalRechercheSpeciale] -> COMPETENCE
+    	pre competenceAugmente(c)
+    		require rechercheFinie(c)
+    boost:						[CentreNationalRechercheSpeciale] -> int
+    	pre boost(c)
+    		require rechercheFinie(c)
 
 Constructors :
 	init : int x int x int x int -> [CentreNationalRechercheSpeciale]
@@ -36,18 +42,18 @@ Constructors :
 		pre recherche(c)
 			require ¬rechercheFinie(c)
 
-	ameliorerVillageois : [CentreNationalRechercheSpeciale] x COMPETENCE x val x Set<Villageois>-> [CentreNationalRechercheSpeciale]
-		pre ameliorerVillageois(c, competence, val, villageois)
-			require rechercheFinie(c) ^ val > 0 ^ villageois.size() > 0
-
 Observations :
 [invariants]
 	0<tempsCourant<=tempsDeConstruction
 	enConstruction(c) =(min)= (tempsCourant(c)>0)
 	constructionFinie(c) =(min)= (tempsCourant(c)==tempsDeConstruction)
+
 	0 < rechercheCourante <= tempsDeRecherche
-	enRecherche(c) =(min)=(rechercheCourante(c) > 0)
-	rechercheFinie(c) =(min)=(rechercheCourante(c) == tempsDeRecherche)
+	enRecherche(c) =(min)= (rechercheCourante(c) > 0)
+	rechercheFinie(c) =(min)= (rechercheCourante(c) == tempsDeRecherche)
+
+	competenceAugmente(c) =(min)= random(COMPETENCE)
+	boost(c) =(min)= random(10)
 	
 [init]
 	tempsDeConstruction(init(tempsC, tempsR,prixC,prixR)) == tempsC
@@ -73,4 +79,3 @@ Observations :
 	rechercheCourante(recherche(c)) == (rechercheCourante(c) + 1)
 	tempsCourant(recherche(c)) == tempsCourant(c)
 
-[ameliorerVillageois]

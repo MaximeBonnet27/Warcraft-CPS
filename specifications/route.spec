@@ -1,5 +1,7 @@
 service: Route
 
+types: int, double
+
 Observators:
     const largeur:          [Route] -> int
     const hauteur:          [Route] -> int

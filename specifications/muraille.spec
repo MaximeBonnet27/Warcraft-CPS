@@ -1,5 +1,7 @@
 service: Muraille
 
+types: int, boolean
+
 Observators:
 	const largeur: 	[Muraille] -> int
 	const hauteur: 	[Muraille] -> int
