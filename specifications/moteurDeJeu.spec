@@ -102,7 +102,6 @@ Observators:
 	
 	CNRSA: [MoteurJeu] -> CentreNationalRechercheSpeciale
 	CNRSB: [MoteurJeu] -> CentreNationalRechercheSpeciale
-	gestionCombat: [MoteurJeu] -> GestionCombat
 
 Constructors:                   
 	init : int x int x int -> [MoteurJeu]
@@ -228,7 +227,6 @@ villageoisSurMuraille(M,x,y,l,h,m) =(min)= collision(x,y,l,h,positionMurailleX(M
 
 	CNRSA(init(l,h,m)) = CentreNationalRechercheSpeciale::init(100, 25, 500, 100)
 	CNRSB(init(l,h,m)) = CentreNationalRechercheSpeciale::init(100, 25, 500, 100)
-	gestionCombat(init(l,h,m)) = GestionCombat::init()
 
 [pasJeu]
 	//pasJeuCourant
@@ -254,7 +252,9 @@ villageoisSurMuraille(M,x,y,l,h,m) =(min)= collision(x,y,l,h,positionMurailleX(M
 						getVillageois(M,i)
 
 				sinon si c1= COMMANDE.ATTAQUER, alors
-						GestionCombat::attaquant(GestionCombat::combat(gestionCombat(M),getVillageois(M,i),getVillageois(M,a1)))
+						GestionCombat::attaquant(GestionCombat::combat(GestionCombat::init(getVillageois(M,i),getVillageois(M,a1))))
+				sinon si c2 = COMMANDE.ATTAQUER ^ i == a2 alors
+					GestionCombat::defenseur(GestionCombat::combat(GestionCombat::initMultiple(S,getVillageois(M,i)))), avec pour tout v dans S il existe j dans s2, getVillagois(M,j)=v
 				sinon alors
 					getVillageois(M,i)
 				
@@ -274,10 +274,14 @@ villageoisSurMuraille(M,x,y,l,h,m) =(min)= collision(x,y,l,h,positionMurailleX(M
 					sinon, alors
 						getVillageois(M,i)
 
+		
 				sinon si c2= COMMANDE.ATTAQUER, alors
-						GestionCombat::attaquant(GestionCombat::combat(gestionCombat(M),getVillageois(M,i),getVillageois(M,a2)))
+						GestionCombat::attaquant(GestionCombat::combat(GestionCombat::init(getVillageois(M,i),getVillageois(M,a2))))
+				sinon si c1 = COMMANDE.ATTAQUER ^ i == a1 alors
+					GestionCombat::defenseur(GestionCombat::combat(GestionCombat::initMultiple(S,getVillageois(M,i)))), avec pour tout v dans S il existe j dans s1, getVillagois(M,j)=v
 				sinon alors
-					getVillageois(M,i)		
+					getVillageois(M,i)
+	
 			sinon si Villageois::enCorvee(getVillageois(M,i)), alors
 				si Villageois::corveeFini(getVillageois(M,i)), alors
 					si ¬Mine::estLaminee(getMineVillageois(M,i)), alors
@@ -497,12 +501,3 @@ villageoisSurMuraille(M,x,y,l,h,m) =(min)= collision(x,y,l,h,positionMurailleX(M
 
 			sinon, alors
 				CNRSB(M)
-
-
-
-
-
-
-
-
-
