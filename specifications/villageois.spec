@@ -33,12 +33,16 @@ Operators:
 		pre retraitOr(V,s)
 			require ¬estMort(V) ^ quantiteOr(V)-s≥0 ^ s≥0
 
-	commenceTravaille: [Villageois] -> [Villageois]
-		pre commenceTravaille(V) 
+	commenceTravail: [Villageois] -> [Villageois]
+		pre commenceTravail(V) 
 			require ¬estMort(V)
 
-	travaille: [Villageois] -> [Villageois]
-		pre travaille(V)
+	finirTravail: [Villageois] -> [Villageois]
+		pre finirTravail(V) 
+			require ¬estMort(V) ^ enCorvee(V)
+
+	travail: [Villageois] -> [Villageois]
+		pre travail(V)
 			require ¬estMort(V) ^ ¬corveeFini(V)
 
 	amelioration : [Villageois] x COMPETENCE x int -> [Villageois]
@@ -86,19 +90,26 @@ Observations:
     force(retraitOr(V,s))       	= force(V)
     vitesse(retraitOr(V,s))     	= vitesse(V)
 
-[commenceTravaille]
-	pointsDeVie(commenceTravaille(V))		= pointsDeVie(V)
-	quantiteOr(commenceTravaille(V))		= quantiteOr(V)
-	compteurCorvee(commenceTravaille(V))	= 1
-    force(commenceTravaille(V)      		= force(V)
-    vitesse(commenceTravaille(V)    		= vitesse(V)
+[commenceTravail]
+	pointsDeVie(commenceTravail(V))		= pointsDeVie(V)
+	quantiteOr(commenceTravail(V))		= quantiteOr(V)
+	compteurCorvee(commenceTravail(V))	= 1
+    force(commenceTravail(V))      		= force(V)
+    vitesse(commenceTravail(V))    		= vitesse(V)
 
-[travaille]
-	pointsDeVie(travaille(V))		= pointsDeVie(V)
-	quantiteOr(travaille(V))		= quantiteOr(V)
-	compteurCorvee(travaille(V))	= compteurCorvee(V) + 1
-    force(travaille(V))     		= force(V)
-    vitesse(travaille(V))   		= vitesse(V)
+[finirTravail]
+	pointsDeVie(finirTravail(V))		= pointsDeVie(V)
+	quantiteOr(finirTravail(V))		= quantiteOr(V)
+	compteurCorvee(finirTravail(V))	= 0
+    force(finirTravail(V) )     		= force(V)
+    vitesse(finirTravail(V))    		= vitesse(V)
+
+[travail]
+	pointsDeVie(travail(V))		= pointsDeVie(V)
+	quantiteOr(travail(V))		= quantiteOr(V)
+	compteurCorvee(travail(V))	= compteurCorvee(V) + 1
+    force(travail(V))     		= force(V)
+    vitesse(travail(V))   		= vitesse(V)
 
 [amelioration]
 	pointsDeVie(amelioration(V, comp, val)) == 

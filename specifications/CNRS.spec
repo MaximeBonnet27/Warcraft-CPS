@@ -25,22 +25,25 @@ Constructors :
 		pre init(tempsC, tempsR,prixC,prixR)
 			require tempsC>0 ^ tempsR > 0 ^ prixC>0 ^ prixR>0
 
-	commencerConstruction: [CentreNationalRechercheSpeciale] x int -> [CentreNationalRechercheSpeciale]
-		pre commencerConstruction(c,p)
-			require ¬enConstruction(c) ^ (p==prixConstruction(c))
+	commencerConstruction: [CentreNationalRechercheSpeciale] -> [CentreNationalRechercheSpeciale]
+		pre commencerConstruction(c)
+			require ¬enConstruction(c)
 
 	construire : [CentreNationalRechercheSpeciale] -> [CentreNationalRechercheSpeciale]
 		pre construire(c)
 			require ¬constructionFinie(c)
 
-	commencerRecherche : [CentreNationalRechercheSpeciale] x int -> [CentreNationalRechercheSpeciale]
-		pre recherche(c,p)
-			require constructionFinie(c) ^ (p==prixRecherche(c))
+	commencerRecherche : [CentreNationalRechercheSpeciale] -> [CentreNationalRechercheSpeciale]
+		pre recherche(c)
+			require constructionFinie(c)
 	
-
 	recherche : [CentreNationalRechercheSpeciale] -> [CentreNationalRechercheSpeciale]
 		pre recherche(c)
 			require ¬rechercheFinie(c)
+
+	finirRecherche: [CentreNationalRechercheSpeciale] -> [CentreNationalRechercheSpeciale]
+		pre finirRecherche(c)
+			require enRecherche(c)
 
 Observations :
 [invariants]
@@ -70,6 +73,10 @@ Observations :
 [construire]
 	tempsCourant(construire(c)) == (tempsCourant(c)+1)
 	rechercheCourante(constuire(c)) == rechercheCourante(c)
+
+[finirRecherche]
+	tempsCourant(finirConstruction(c)) == tempsCourant(c)
+	rechercheCourante(finirConstruction(c)) == 0
 
 [commencerRecherche]
 	rechercheCourante(commencerRecherche(c)) == 1

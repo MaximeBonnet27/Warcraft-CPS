@@ -162,7 +162,7 @@ public interface IMoteurJeuService {
 	 * 					 		positionHotelVilleXB, positionHotelVilleYB) <= 51
 	 * 							&&
 	 * 							getHotelVilleB().etat_d_appartenance() == ETAT.OCCUPE
-	 * 							=> getHotelVilleB().appartenance() == getVillageois(numVillageois).race()
+	 * 							=> getHotelVilleB<().appartenance() == getVillageois(numVillageois).race()
 	 *
 	 */ 
 	// Constructors
