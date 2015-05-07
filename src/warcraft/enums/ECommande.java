@@ -1,0 +1,8 @@
+/**
+ * 
+ */
+package warcraft.enums;
+
+public enum ECommande {
+	RIEN, DEPLACER, ENTRERMINE, ENTRERHOTELVILLE, CONSTRUIRECNRS, RECHERCHECNRS,APPLIQUER_RECHERCHE, ATTAQUER
+}

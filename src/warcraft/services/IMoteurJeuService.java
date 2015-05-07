@@ -5,6 +5,7 @@ package warcraft.services;
 
 import java.util.Set;
 
+import warcraft.enums.ECommande;
 import warcraft.enums.EResultat;
 
 public interface IMoteurJeuService {
@@ -266,12 +267,355 @@ public interface IMoteurJeuService {
 	 * 					getVillageois(i)@pre
 	 * 				\elseif i \in s1 \then
 	 * 					   \if c1 == ECommande.ENTRERMINE \then
-	 * 							peutEntrer(i, a1) => getVillageois()@pre.commenceTravail()
-	 * 							!peutEntrer(i, a1) => getVillageois()@pre
+	 * 							peutEntrer(i, a1)@pre => getVillageois()@pre.commenceTravail()
+	 * 							!peutEntrer(i, a1)@pre => getVillageois()@pre
 	 * 						\elseif c1 == ECommande.ENTRERHOTELVILLE \then
-	 * 							peutEntrerHotelVille(i, a1) => getVillageois(i)@pre.retraitOr(getVillageois(i)@pre.quantiteOr())
-	 * 							!peutEntrerHotelVille(i, a1) => getVillageois(i)@pre
-	 * 	 
+	 * 							peutEntrerHotelVille(i, a1)]@pre => getVillageois(i)@pre.retraitOr(getVillageois(i)@pre.quantiteOr())
+	 * 							!peutEntrerHotelVille(i, a1)@pre => getVillageois(i)@pre
+	 * 						\elseif c1 == ECommande.APPLIQUERRECHERCHE \then
+	 * 							\if (getHotel(a1)@pre == hotelDeVilleA()@pre  &&
+	 * 								 getHotel(a1)@pre.etat_d_appartenance()==EETAT.OCCUPE &&
+	 * 								 getHotel(a1)@pre.appartenance==getVillageois(s1.get(0))@pre.race() &&
+	 * 								 CNRSA()@pre.rechercheFinie()@pre) \then
+	 * 										getVillageois(i)@pre.amelioration(CNRSA()@pre.competenceAugmente(),CNRSA()@pre.boost()
+	 * 							\elsefi (getHotel(a1)@pre == hotelDeVilleB()@pre  &&
+	 * 								 getHotel(a1)@pre.etat_d_appartenance()==EETAT.OCCUPE &&
+	 * 								 getHotel(a1)@pre.appartenance==getVillageois(s1.get(0))@pre.race() &&
+	 * 								 CNRSB()@pre.rechercheFinie()@pre) \then
+	 * 										getVillageois(i)@pre.amelioration(CNRSB()@pre.competenceAugmente(),CNRSB()@pre.boost()
+	 *  						\else
+	 *  							getVillageois(i)@pre
+	 *  					\elseif c1 == ECommande.ATTAQUER \then
+	 *  						new GestionCombat().init(getVillageois(i)@pre,getVillageois(a1)).combat().attaquant()
+	 *  					\elseif c2 =ECommande.ATTAQUER && i==a2 \then
+	 *  						new GestionCombat().init(s2,getVillageois(i)@pre).combat().defenseur()
+	 * 	 					\else
+	 * 							getVillageois(i)@pre
+	 * 
+	 * 				\elseif i \in s2 \then
+	 * 					   \if c2 == ECommande.ENTRERMINE \then
+	 * 							peutEntrer(i, a2)@pre => getVillageois()@pre.commenceTravail()
+	 * 							!peutEntrer(i, a2)@pre => getVillageois()@pre
+	 * 						\elseif c2 == ECommande.ENTRERHOTELVILLE \then
+	 * 							peutEntrerHotelVille(i, a2)]@pre => getVillageois(i)@pre.retraitOr(getVillageois(i)@pre.quantiteOr())
+	 * 							!peutEntrerHotelVille(i, a2)@pre => getVillageois(i)@pre
+	 * 						\elseif c2 == ECommande.APPLIQUERRECHERCHE \then
+	 * 							\if (getHotel(a2)@pre == hotelDeVilleA()@pre  &&
+	 * 								 getHotel(a2)@pre.etat_d_appartenance()==EETAT.OCCUPE &&
+	 * 								 getHotel(a2)@pre.appartenance==getVillageois(s2.get(0))@pre.race() &&
+	 * 								 CNRSA()@pre.rechercheFinie()@pre) \then
+	 * 										getVillageois(i)@pre.amelioration(CNRSA()@pre.competenceAugmente(),CNRSA()@pre.boost()
+	 * 							\elsefi (getHotel(a2)@pre == hotelDeVilleB()@pre  &&
+	 * 								 getHotel(a2)@pre.etat_d_appartenance()==EETAT.OCCUPE &&
+	 * 								 getHotel(a2)@pre.appartenance==getVillageois(s2.get(0))@pre.race() &&
+	 * 								 CNRSB()@pre.rechercheFinie()@pre) \then
+	 * 										getVillageois(i)@pre.amelioration(CNRSB()@pre.competenceAugmente(),CNRSB()@pre.boost()
+	 *  						\else
+	 *  							getVillageois(i)@pre
+	 *  					\elseif c2 == ECommande.ATTAQUER \then
+	 *  						new GestionCombat().init(getVillageois(i)@pre,getVillageois(a2)).combat().attaquant()
+	 *  					\elseif c1 =ECommande.ATTAQUER && i==a1 \then
+	 *  						new GestionCombat().init(s1,getVillageois(i)@pre).combat().defenseur()
+	 * 	 					\else
+	 * 							getVillageois(i)@pre
+	 * 
+	 * 				\elseif getVillageois(i)@pre.enCorvee() \then
+	 * 					\if getVillageois(i)@pre.corveeFini() \then
+	 * 						\if !getMineVillagois()@pre.estlaminee() \then
+	 * 							getVillageois(i)@pre.finirTravail().ajouteOr()
+	 * 						\else
+	 * 							getVillageois(i)@pre.finirTravail()
+	 * 					\else
+	 * 						getVillageois(i)@pre.travail()
+	 * 				\else
+	 * 					getVillageois(i)@pre
+	 * 
+	 *  \post : \foreach i \in numeroesVillageois() :
+	 * 				positionVillageoisX()=
+	 * 					\if i \in s1 && c1==ECommande.DEPLACER \then
+	 * 						\if \exist num_route \with villageoisSurRoute(positionVillageoisX(i)@pre,
+	 * 																	positionVillageoisY(i)@pre,
+	 * 																	getVillageois(i)@pre.largeur(),
+	 * 																	getVillageois(i)@pre.hauteur(),
+	 * 																	num_route) \then
+	 * 							\if \exist num_muraille \with villageoisSurMuraille(positionVillageoisX(i)@pre+cos(a1)*getVillageois(i).vitesse()*getRoute(num_route).multiplicateur(),
+	 * 																				positionVillageoisY(i)@pre+sin(a1)*getVillageois(i).vitesse()*getRoute(num_route).multiplicateur(),
+	 * 																				getVillageois(i)@pre.largeur(),
+	 * 																				getVillageois(i)@pre.hauteur(),
+	 * 																				num_muraille) \then
+	 * 								positionVillageoisX()@pre
+	 * 							\else
+	 * 								positionVillageoisX()@pre+cos(a1)*getVillageois(i).vitesse()*getRoute(num_route).multiplicateur()
+	 * 						\else
+	 * 							\if \exist num_muraille \with villageoisSurMuraille(positionVillageoisX(i)@pre+cos(a1)*getVillageois(i).vitesse()),
+	 * 																				positionVillageoisY(i)@pre+sin(a1)*getVillageois(i).vitesse(),
+	 * 																				getVillageois(i)@pre.largeur(),
+	 * 																				getVillageois(i)@pre.hauteur(),
+	 * 																				num_muraille) \then
+	 * 								positionVillageoisX()@pre
+	 * 							\else
+	 * 								positionVillageoisX()@pre+cos(a1)*getVillageois(i).vitesse()
+	 * 
+	 *  \post : \foreach i \in numeroesVillageois() :
+	 * 				positionVillageoisY()=
+	 * 					\if i \in s1 && c1==ECommande.DEPLACER \then
+	 * 						\if \exist num_route \with villageoisSurRoute(positionVillageoisX(i)@pre,
+	 * 																	positionVillageoisY(i)@pre,
+	 * 																	getVillageois(i)@pre.largeur(),
+	 * 																	getVillageois(i)@pre.hauteur(),
+	 * 																	num_route) \then
+	 * 							\if \exist num_muraille \with villageoisSurMuraille(positionVillageoisX(i)@pre+cos(a1)*getVillageois(i).vitesse()*getRoute(num_route).multiplicateur(),
+	 * 																				positionVillageoisY(i)@pre+sin(a1)*getVillageois(i).vitesse()*getRoute(num_route).multiplicateur(),
+	 * 																				getVillageois(i)@pre.largeur(),
+	 * 																				getVillageois(i)@pre.hauteur(),
+	 * 																				num_muraille) \then
+	 * 								positionVillageoisY()@pre
+	 * 							\else
+	 * 								positionVillageoisY()@pre+sin(a1)*getVillageois(i).vitesse()*getRoute(num_route).multiplicateur()
+	 * 						\else
+	 * 							\if \exist num_muraille \with villageoisSurMuraille(positionVillageoisX(i)@pre+cos(a1)*getVillageois(i).vitesse()),
+	 * 																				positionVillageoisY(i)@pre+sin(a1)*getVillageois(i).vitesse(),
+	 * 																				getVillageois(i)@pre.largeur(),
+	 * 																				getVillageois(i)@pre.hauteur(),
+	 * 																				num_muraille) \then
+	 * 								positionVillageoisY()@pre
+	 * 							\else
+	 * 								positionVillageoisY()@pre+sin(a1)*getVillageois(i).vitesse()
+	 * 	\post : \foreach i \in numeroesVillageois() :
+	 * 				getMineVillageois(i)=
+	 * 					\if i \in s1 && c1==ECommmande.ENTRERMINE \then
+	 * 						peutEntrer(i,a1)@pre => getMine(a1)@pre.accueil(getVillageois(i)@pre.race())
+	 * 						!peutEntrer(i,a1)@pre => getMine(a1)@pre
+	 * 				
+	 * 					\elsif i \in s2 && c2==ECommmande.ENTRERMINE \then
+	 * 						peutEntrer(i,a2)@pre => getMine(a2)@pre.accueil(getVillageois(i)@pre.race())
+	 * 						!peutEntrer(i,a2)@pre => getMine(a2)@pre
+	 * 
+	 * 					\elseif getVillageois(i)@pre.enCorvee() \then
+	 * 						\if getVillageois(i)@pre.corveeFini() \then
+	 * 							\if getMineVillageois(i)@pre.estLaminne() \then
+	 * 								\if \exist n \in numeroesVilalgeois()@pre/i \with getMineVillageois(n)@pre = getMineVillageois(i)@pre \then
+	 * 									getMineVillageois(i)@pre.retrait(1)
+	 * 								\else
+	 * 									getMineVillageois(i)@pre.retrait(1).abandoned()
+	 * 							\elseif
+	 * 								\if \exist n \in numeroesVilalgeois()@pre/i \with getMineVillageois(n)@pre = getMineVillageois(i)@pre \then
+	 * 									getMineVillageois(i)@pre
+	 * 								\else
+	 * 									getMineVillageois(i)@pre.abandoned()
+	 * 		
+	 *  \post : \foreach i \in numeroesMine() :
+	 *  			getMine(i)=
+	 *  				\if getMine(i)@pre.etat_d_appartenance()=EEtat.OCCUPE \then
+	 *  					\foreach num \in numeroesVillagoies()@pre:
+	 *  						\if getMineVillageois(num)@pre = getMine(i)@pre \then
+	 *  							\if getVillageois(num)@pre.enCorvee() && getVillageois(num)@pre.corveeFini() \then
+	 *  								\if !getMineVillageois(num)@pre.estLaminee() \then
+	 *  									\if \exist n \in numeroesVillageois()@pre/i \with getMineVillageois(num)@pre==getMineVillageois(n)@pre \then
+	 *  										getMine(i)@pre.retrait(1)
+	 *  									\else
+	 *  										getMine(i)@pre.retrait(1).abandoned()
+	 *  								\else
+	 *  									\if \exist n \in numeroesVillageois()@pre/i \with getMineVillageois(num)@pre==getMineVillageois(n)@pre \then
+	 *  										getMine(i)@pre
+	 *  									\else
+	 *  										getMine(i)@pre.abandoned()
+	 *  							\else
+	 *  								getMine(i)@pre
+	 *  			\else
+	 *  				getMine(i)@pre
+	 *  
+	 *  \post: \foreach i \in numeroesRoute() :
+	 *  			getRoute(i)=getRoute(i)@pre
+	 *  
+	 *  \post: \foreach i \in numeroesMuraille() :
+	 *  			getMuraille(i)=getMuraille(i)@pre
+	 *  
+	 *  \post: hotelDeVilleA()=
+	 *  			\if getHotel(a1)@pre.etat_d_appartenance()==EEtat.OCCUPE \then
+	 *  				\if getHotel(a1)@pre.appartenance() == getVillageois(s1.get(0))@pre.race() \then
+	 *  					\if c1=ECommande.CONSTRUIRECNRS &&
+	 *  							!CNRSA()@pre.enConstruction() &&
+	 *  							getHotel(a1)@pre.orRestant() >= CNRSA()@pre.prixConstruction() &&
+	 *  							getHotel(a1)@pre==hotelDeVilleA()@pre \then
+	 *  						hotelDeVilleA()@pre.retrait(CNRSA()@pre.prixConstruction()).abandoned()
+	 *  					\elseif c1=ECommande.RECHERCHECNRS &&
+	 *  							!CNRSA()@pre.enRecherche() &&
+	 *  							!CNRSA()@pre.constructionFinie() &&
+	 *  							getHotel(a1)@pre.orRestant() >= CNRSA()@pre.prixRecherche() &&
+	 *  							getHotel(a1)@pre==hotelDeVilleA()@pre \then
+	 *  						hotelDeVilleA()@pre.retrait(CNRSA()@pre.prixRecherche()).abandoned()
+	 *  					\else
+	 *  						hotelDeVilleA()@pre.abandoned()
+	 *  
+	 *  				\elseif getHotel(a2)@pre.appartenance() == getVillageois(s2.get(0))@pre.race() \then
+	 *  					\if c2=ECommande.CONSTRUIRECNRS &&
+	 *  							!CNRSA()@pre.enConstruction() &&
+	 *  							getHotel(a2)@pre.orRestant() >= CNRSA()@pre.prixConstruction() &&
+	 *  							getHotel(a2)@pre==hotelDeVilleA()@pre \then
+	 *  						hotelDeVilleA()@pre.retrait(CNRSA()@pre.prixConstruction()).abandoned()
+	 *  					\elseif c2=ECommande.RECHERCHECNRS &&
+	 *  							!CNRSA()@pre.enRecherche() &&
+	 *  							!CNRSA()@pre.constructionFinie() &&
+	 *  							getHotel(a2)@pre.orRestant() >= CNRSA()@pre.prixRecherche() &&
+	 *  							getHotel(a2)@pre==hotelDeVilleA()@pre \then
+	 *  						hotelDeVilleA()@pre.retrait(CNRSA()@pre.prixRecherche()).abandoned()
+	 *  					\else
+	 *  						hotelDeVilleA()@pre.abandoned()
+	 *  
+	 *  				\else
+	 *  						hotelDeVilleA()@pre.abandoned()
+	 *  
+	 *  \post: hotelDeVilleB()=
+	 *  			\if getHotel(a1)@pre.etat_d_appartenance()==EEtat.OCCUPE \then
+	 *  				\if getHotel(a1)@pre.appartenance() == getVillageois(s1.get(0))@pre.race() \then
+	 *  					\if c1=ECommande.CONSTRUIRECNRS &&
+	 *  							!CNRSB()@pre.enConstruction() &&
+	 *  							getHotel(a1)@pre.orRestant() >= CNRSB()@pre.prixConstruction() &&
+	 *  							getHotel(a1)@pre==hotelDeVilleB()@pre \then
+	 *  						hotelDeVilleB()@pre.retrait(CNRSB()@pre.prixConstruction()).abandoned()
+	 *  					\elseif c1=ECommande.RECHERCHECNRS &&
+	 *  							!CNRSB()@pre.enRecherche() &&
+	 *  							!CNRSB()@pre.constructionFinie() &&
+	 *  							getHotel(a1)@pre.orRestant() >= CNRSB()@pre.prixRecherche() &&
+	 *  							getHotel(a1)@pre==hotelDeVilleB()@pre \then
+	 *  						hotelDeVilleB()@pre.retrait(CNRSB()@pre.prixRecherche()).abandoned()
+	 *  					\else
+	 *  						hotelDeVilleB()@pre.abandoned()
+	 *  
+	 *  				\elseif getHotel(a2)@pre.appartenance() == getVillageois(s2.get(0))@pre.race() \then
+	 *  					\if c2=ECommande.CONSTRUIRECNRS &&
+	 *  							!CNRSB()@pre.enConstruction() &&
+	 *  							getHotel(a2)@pre.orRestant() >= CNRSB()@pre.prixConstruction() &&
+	 *  							getHotel(a2)@pre==hotelDeVilleB()@pre \then
+	 *  						hotelDeVilleB()@pre.retrait(CNRSB()@pre.prixConstruction()).abandoned()
+	 *  					\elseif c2=ECommande.RECHERCHECNRS &&
+	 *  							!CNRSB()@pre.enRecherche() &&
+	 *  							!CNRSB()@pre.constructionFinie() &&
+	 *  							getHotel(a2)@pre.orRestant() >= CNRSB()@pre.prixRecherche() &&
+	 *  							getHotel(a2)@pre==hotelDeVilleB()@pre \then
+	 *  						hotelDeVilleB()@pre.retrait(CNRSB()@pre.prixRecherche()).abandoned()
+	 *  					\else
+	 *  						hotelDeVilleB()@pre.abandoned()
+	 *  
+	 *  				\else
+	 *  						hotelDeVilleB()@pre.abandoned()
+	 *  
+	 *  \post: CNRSA()=
+	 *  		\if getHotel(a1)@pre.etat_d_appartenance()==EEtat.OCCUPE \then
+	 *  				\if getHotel(a1)@pre.appartenance() == getVillageois(s1.get(0))@pre.race() \then
+	 *  					\if c1=ECommande.CONSTRUIRECNRS &&
+	 *  							!CNRSA()@pre.enConstruction() &&
+	 *  							getHotel(a1)@pre.orRestant() >= CNRSA()@pre.prixConstruction() &&
+	 *  							getHotel(a1)@pre==hotelDeVilleA()@pre \then
+	 *  						CNRSB()@pre.commencerConstruction()
+	 *  					\elseif c1=ECommande.RECHERCHECNRS &&
+	 *  							!CNRSA()@pre.enRecherche() &&
+	 *  							!CNRSA()@pre.constructionFinie() &&
+	 *  							getHotel(a1)@pre.orRestant() >= CNRSA()@pre.prixRecherche() &&
+	 *  							getHotel(a1)@pre==hotelDeVilleA()@pre \then
+	 *  						CNRSA()@pre.commencerRecherche()
+	 *  					\else
+	 *  						CNRSA()@pre
+	 *  		\elseif getHotel(a2)@pre.appartenance() == getVillageois(s2.get(0))@pre.race() \then
+	 *  					\if c2=ECommande.CONSTRUIRECNRS &&
+	 *  							!CNRSA()@pre.enConstruction() &&
+	 *  							getHotel(a2)@pre.orRestant() >= CNRSA()@pre.prixConstruction() &&
+	 *  							getHotel(a2)@pre==hotelDeVilleA()@pre \then
+	 *  						CNRSA()@pre.commencerConstruction()
+	 *  					\elseif c2=ECommande.RECHERCHECNRS &&
+	 *  							!CNRSA()@pre.enRecherche() &&
+	 *  							!CNRSA()@pre.constructionFinie() &&
+	 *  							getHotel(a2)@pre.orRestant() >= CNRSA()@pre.prixRecherche() &&
+	 *  							getHotel(a2)@pre==hotelDeVilleA()@pre \then
+	 *  						CNRSA()@pre.commencerConstruction()
+	 *  					\else
+	 *  						CNRSA()@pre
+	 *  
+	 *  		\elseif CNRSA()@pre.enConstruction() \then
+	 *  				\if !CNRSA()@pre.constructionFinie() \then
+	 *  					CNRSA()@pre.construire()
+	 *  				\else
+	 *  					CNRSA()@pre
+	 *  
+	 *  		\elseif CNRSA()@pre.enRecherche() \then
+	 *  				\if !CNRSA()@pre.rechercheFinie() \then
+	 *  					CNRSA()@pre.recherche()
+	 *  
+	 *  				\elseif c1== ECommande.APPLIQUER_RECHERCHE &&
+	 *  						getHotel(a1)@pre.etat_d_appartenance()==EEtat.OCCUPE &&
+	 *  						getHotel(a1)@pre.appartenance() == getVillageois(s1.get(0))@pre.race() &&
+	 *  						getHotel(a1)@pre==hotelDeVilleA() \then
+	 *  					CNRSA()@pre.finirRecherche()
+	 *  
+	 *  				\elseif c2== ECommande.APPLIQUER_RECHERCHE &&
+	 *  						getHotel(a2)@pre.etat_d_appartenance()==EEtat.OCCUPE &&
+	 *  						getHotel(a2)@pre.appartenance() == getVillageois(s2.get(0))@pre.race() &&
+	 *  						getHotel(a2)@pre==hotelDeVilleA() \then
+	 *  					CNRSA()@pre.finirRecherche()
+	 *  				
+	 *  				\else
+	 *  					CNRSA()@pre
+	 *  		\else
+	 *  			CNRSA()@pre
+	 *  
+	 *  \post: CNRSB()=
+	 *  		\if getHotel(a1)@pre.etat_d_appartenance()==EEtat.OCCUPE \then
+	 *  				\if getHotel(a1)@pre.appartenance() == getVillageois(s1.get(0))@pre.race() \then
+	 *  					\if c1=ECommande.CONSTRUIRECNRS &&
+	 *  							!CNRSB()@pre.enConstruction() &&
+	 *  							getHotel(a1)@pre.orRestant() >= CNRSB()@pre.prixConstruction() &&
+	 *  							getHotel(a1)@pre==hotelDeVilleB()@pre \then
+	 *  						CNRSB()@pre.commencerConstruction()
+	 *  					\elseif c1=ECommande.RECHERCHECNRS &&
+	 *  							!CNRSB()@pre.enRecherche() &&
+	 *  							!CNRSB()@pre.constructionFinie() &&
+	 *  							getHotel(a1)@pre.orRestant() >= CNRSB()@pre.prixRecherche() &&
+	 *  							getHotel(a1)@pre==hotelDeVilleB()@pre \then
+	 *  						CNRSB()@pre.commencerRecherche()
+	 *  					\else
+	 *  						CNRSB()@pre
+	 *  		\elseif getHotel(a2)@pre.appartenance() == getVillageois(s2.get(0))@pre.race() \then
+	 *  					\if c2=ECommande.CONSTRUIRECNRS &&
+	 *  							!CNRSB()@pre.enConstruction() &&
+	 *  							getHotel(a2)@pre.orRestant() >= CNRSB()@pre.prixConstruction() &&
+	 *  							getHotel(a2)@pre==hotelDeVilleB()@pre \then
+	 *  						CNRSB()@pre.commencerConstruction()
+	 *  					\elseif c2=ECommande.RECHERCHECNRS &&
+	 *  							!CNRSB()@pre.enRecherche() &&
+	 *  							!CNRSB()@pre.constructionFinie() &&
+	 *  							getHotel(a2)@pre.orRestant() >= CNRSB()@pre.prixRecherche() &&
+	 *  							getHotel(a2)@pre==hotelDeVilleB()@pre \then
+	 *  						CNRSB()@pre.commencerConstruction()
+	 *  					\else
+	 *  						CNRSB()@pre
+	 *  
+	 *  		\elseif CNRSB()@pre.enConstruction() \then
+	 *  				\if !CNRSB()@pre.constructionFinie() \then
+	 *  					CNRSB()@pre.construire()
+	 *  				\else
+	 *  					CNRSB()@pre
+	 *  
+	 *  		\elseif CNRSB()@pre.enRecherche() \then
+	 *  				\if !CNRSB()@pre.rechercheFinie() \then
+	 *  					CNRSB()@pre.recherche()
+	 *  
+	 *  				\elseif c1== ECommande.APPLIQUER_RECHERCHE &&
+	 *  						getHotel(a1)@pre.etat_d_appartenance()==EEtat.OCCUPE &&
+	 *  						getHotel(a1)@pre.appartenance() == getVillageois(s1.get(0))@pre.race() &&
+	 *  						getHotel(a1)@pre==hotelDeVilleB() \then
+	 *  					CNRSB()@pre.finirRecherche()
+	 *  
+	 *  				\elseif c2== ECommande.APPLIQUER_RECHERCHE &&
+	 *  						getHotel(a2)@pre.etat_d_appartenance()==EEtat.OCCUPE &&
+	 *  						getHotel(a2)@pre.appartenance() == getVillageois(s2.get(0))@pre.race() &&
+	 *  						getHotel(a2)@pre==hotelDeVilleB() \then
+	 *  					CNRSB()@pre.finirRecherche()
+	 *  				
+	 *  				\else
+	 *  					CNRSB()@pre
+	 *  		\else
+	 *  			CNRSB()@pre
 	 */
 	public void pasJeu(ECommande c1, Set<Integer> s1, int a1, ECommande c2, Set<Integer> s2, int a2);
 }

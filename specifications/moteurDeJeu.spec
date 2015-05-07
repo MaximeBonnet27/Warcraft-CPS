@@ -270,7 +270,7 @@ villageoisSurMuraille(M,x,y,l,h,m) =(min)= collision(x,y,l,h,positionMurailleX(M
 						GestionCombat::attaquant(GestionCombat::combat(GestionCombat::init(getVillageois(M,i),getVillageois(M,a1))))
 
 				sinon si c2 = COMMANDE.ATTAQUER ^ i == a2 alors
-					GestionCombat::defenseur(GestionCombat::combat(GestionCombat::initMultiple(S,getVillageois(M,i)))), avec pour tout v dans S il existe j dans s2, getVillagois(M,j)=v
+					GestionCombat::defenseur(GestionCombat::combat(GestionCombat::initMultiple(s2,getVillageois(M,i))))
 				sinon alors
 					getVillageois(M,i)
 				
@@ -402,17 +402,17 @@ villageoisSurMuraille(M,x,y,l,h,m) =(min)= collision(x,y,l,h,positionMurailleX(M
 			si HotelDeVille::etat_d_appartenance(getHotel(M, a1)) == ETAT.OCCUPE, alors
 				si HotelDeVille::appartenance(getHotel(M, a1)) == Villageois::race(getVillageois(M, s1[0]),alors
 					si c1 = COMMANDE.CONSTRUIRECNRS ^ ¬CentreNationalRechercheSpeciale::enConstruction(CNRSA(M)) ^ HotelDeVille::orRestant(getHotel(M, a1)) >= CentreNationalRechercheSpeciale::prixConstruction(CNRSA(M)) ^ (getHotel(M, a1) == hotelDeVilleA(M)),alors
-						HotelDeVille::abandoned(HotelDeVille::retrait(getHotel(M, a1), CentreNationalRechercheSpeciale::prixConstruction(CNRSA(M))))
+						HotelDeVille::abandoned(HotelDeVille::retrait(hotelDeVilleA(M), CentreNationalRechercheSpeciale::prixConstruction(CNRSA(M))))
 
 					sinon si c1 = COMMANDE.RECHERCHECNRS ^ ¬CentreNationalRechercheSpeciale::enRecherche(CNRSA(M))^ CentreNationalRechercheSpeciale::constructionFinie(CNRSA(M))^ HotelDeVille::orRestant(getHotel(M, a1)) >= CentreNationalRechercheSpeciale::prixRecherche(CNRSA(M)) ^ (getHotel(M, a1) == hotelDeVilleA(M)), alors
- 						HotelDeVille::abandoned(HotelDeVille::retrait(getHotel(M, a1), CentreNationalRechercheSpeciale::prixRecherche(CNRSA(M))))
+ 						HotelDeVille::abandoned(HotelDeVille::retrait(hotelDeVilleA(M), CentreNationalRechercheSpeciale::prixRecherche(CNRSA(M))))
 				
 				sinon si HotelDeVille::appartenance(getHotel(M, a2)) == Villageois::race(getVillageois(M, s2[0]),alors
 					si c2 = COMMANDE.CONSTRUIRECNRS ^ ¬CentreNationalRechercheSpeciale::enConstruction(CNRSA(M)) ^ HotelDeVille::orRestant(getHotel(M, a2)) >= CentreNationalRechercheSpeciale::prixConstruction(CNRSA(M)) ^ (getHotel(M, a2) == hotelDeVilleA(M)),alors
-						HotelDeVille::abandoned(HotelDeVille::retrait(getHotel(M, a2), CentreNationalRechercheSpeciale::prixConstruction(CNRSA(M))))
+						HotelDeVille::abandoned(HotelDeVille::retrait(hotelDeVilleA(M), CentreNationalRechercheSpeciale::prixConstruction(CNRSA(M))))
 
 					sinon si c2 = COMMANDE.RECHERCHECNRS ^ ¬CentreNationalRechercheSpeciale::enRecherche(CNRSA(M))^ CentreNationalRechercheSpeciale::constructionFinie(CNRSA(M))^ HotelDeVille::orRestant(getHotel(M, a2)) >= CentreNationalRechercheSpeciale::prixRecherche(CNRSA(M)) ^ (getHotel(M, a2) == hotelDeVilleA(M)), alors
-						HotelDeVille::abandoned(HotelDeVille::retrait(getHotel(M, a2), CentreNationalRechercheSpeciale::prixRecherche(CNRSA(M))))
+						HotelDeVille::abandoned(HotelDeVille::retrait(hotelDeVilleA(M), CentreNationalRechercheSpeciale::prixRecherche(CNRSA(M))))
 			sinon, alors
 				hotelDeVilleA(M)
 			
@@ -422,19 +422,19 @@ villageoisSurMuraille(M,x,y,l,h,m) =(min)= collision(x,y,l,h,positionMurailleX(M
 			si HotelDeVille::etat_d_appartenance(getHotel(M, a1)) == ETAT.OCCUPE, alors
 				si HotelDeVille::appartenance(getHotel(M, a1)) == Villageois::race(getVillageois(M, s1[0]),alors
 					si c1 = COMMANDE.CONSTRUIRECNRS ^ ¬CentreNationalRechercheSpeciale::enConstruction(CNRSB(M)) ^ HotelDeVille::orRestant(getHotel(M, a1)) >= CentreNationalRechercheSpeciale::prixConstruction(CNRSB(M)) ^ (getHotel(M, a1) == hotelDeVilleB(M)),alors
-						HotelDeVille::abandoned(HotelDeVille::retrait(getHotel(M, a1), CentreNationalRechercheSpeciale::prixConstruction(CNRSB(M))))
+						HotelDeVille::abandoned(HotelDeVille::retrait(hotelDeVilleB(M), CentreNationalRechercheSpeciale::prixConstruction(CNRSB(M))))
 
 					sinon si c1 = COMMANDE.RECHERCHECNRS ^ ¬CentreNationalRechercheSpeciale::enRecherche(CNRSB(M))^ CentreNationalRechercheSpeciale::constructionFinie(CNRSB(M))^ HotelDeVille::orRestant(getHotel(M, a1)) >= CentreNationalRechercheSpeciale::prixRecherche(CNRSB(M)) ^ (getHotel(M, a1) == hotelDeVilleB(M)), alors
- 						HotelDeVille::abandoned(HotelDeVille::retrait(getHotel(M, a1), CentreNationalRechercheSpeciale::prixRecherche(CNRSB(M))))
+ 						HotelDeVille::abandoned(HotelDeVille::retrait(hotelDeVilleB(M), CentreNationalRechercheSpeciale::prixRecherche(CNRSB(M))))
 				
 				sinon si HotelDeVille::appartenance(getHotel(M, a2)) == Villageois::race(getVillageois(M, s2[0]),alors
 					si c2 = COMMANDE.CONSTRUIRECNRS ^ ¬CentreNationalRechercheSpeciale::enConstruction(CNRSB(M)) ^ HotelDeVille::orRestant(getHotel(M, a2)) >= CentreNationalRechercheSpeciale::prixConstruction(CNRSB(M)) ^ (getHotel(M, a2) == hotelDeVilleB(M)),alors
-						HotelDeVille::abandoned(HotelDeVille::retrait(getHotel(M, a2), CentreNationalRechercheSpeciale::prixConstruction(CNRSB(M))))
+						HotelDeVille::abandoned(HotelDeVille::retrait(hotelDeVilleB(M), CentreNationalRechercheSpeciale::prixConstruction(CNRSB(M))))
 
 					sinon si c2 = COMMANDE.RECHERCHECNRS ^ ¬CentreNationalRechercheSpeciale::enRecherche(CNRSB(M))^ CentreNationalRechercheSpeciale::constructionFinie(CNRSB(M))^ HotelDeVille::orRestant(getHotel(M, a2)) >= CentreNationalRechercheSpeciale::prixRecherche(CNRSB(M)) ^ (getHotel(M, a2) == hotelDeVilleB(M)), alors
-						HotelDeVille::abandoned(HotelDeVille::retrait(getHotel(M, a2), CentreNationalRechercheSpeciale::prixRecherche(CNRSB(M))))
+						HotelDeVille::abandoned(HotelDeVille::retrait(hotelDeVilleB(M), CentreNationalRechercheSpeciale::prixRecherche(CNRSB(M))))
 			sinon, alors
-				hotelDeVilleA(M)
+				hotelDeVilleB(M)
 	
 
 	//CNRSA
