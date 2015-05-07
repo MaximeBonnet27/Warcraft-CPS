@@ -118,6 +118,10 @@ Operators:
 					(commandJ1=COMMANDE.DEPLACER => 0 ≤ argumentJ1 ≤ 360) ^
 					(commandJ1=COMMANDE.ENTRERMINE => (argumentJ1 ∈ numeroesMines(M) ^ peutEntrer(M,i,argumentJ1))) ^
 					(commandJ1=COMMANDE.ENTRERHOTELVILLE => ((argumentJ1 = 0 V argumentJ1 = 1) ^ peutEntrerHotelVille(M,i,argumentJ1))) ^
+					(commandJ1=COMMANDE.CONSTRUIRECNRS => ((argumentJ1 = 0 V argumentJ1 = 1) ^ HotelDeVille::etat_d_appartenance(getHotel(M, argumentJ1)) == ETAT.OCCUPE ^ HotelDeVille::appartenance(getHotel(M, argumentJ1)) == Villageois::race(getVillageois(M, i)))
+					(commandJ1=COMMANDE.RECHERCHECNRS => ((argumentJ1 = 0 V argumentJ1 = 1) ^ HotelDeVille::etat_d_appartenance(getHotel(M, argumentJ1)) == ETAT.OCCUPE ^ HotelDeVille::appartenance(getHotel(M, argumentJ1)) == Villageois::race(getVillageois(M, i)))
+					(commandJ1=COMMANDE.APPLIQUER_RECHERCHE =>((argumentJ1 = 0 V argumentJ1 = 1) ^ HotelDeVille::etat_d_appartenance(getHotel(M, argumentJ1)) == ETAT.OCCUPE ^ HotelDeVille::appartenance(getHotel(M, argumentJ1)) == Villageois::race(getVillageois(M, i)))
+					(commandJ1=COMMANDE.ATTAQUER => (100≤argumentJ1≤199))
 
 				Pour tout i dans numVillageoisJ2
 					i ∈ numeroesVillageois(M,i) ^
@@ -125,6 +129,12 @@ Operators:
 					(commandJ2=COMMANDE.DEPLACER => 0 ≤ argumentJ2 ≤ 360) ^
 					(commandJ2=COMMANDE.ENTRERMINE => (argumentJ2 ∈ numeroesMines(M) ^ peutEntrer(M,i,argumentJ2))) ^
 					(commandJ2=COMMANDE.ENTRERHOTELVILLE => ((argumentJ2 = 0 V argumentJ2 = 1) ^ peutEntrerHotelVille(M,i,argumentJ2)))
+					(commandJ2=COMMANDE.CONSTRUIRECNRS => ((argumentJ2 = 0 V argumentJ2 = 1) ^ HotelDeVille::etat_d_appartenance(getHotel(M, argumentJ2)) == ETAT.OCCUPE ^ HotelDeVille::appartenance(getHotel(M, argumentJ2)) == Villageois::race(getVillageois(M, i)))
+					(commandJ2=COMMANDE.RECHERCHECNRS => ((argumentJ2 = 0 V argumentJ2 = 1) ^ HotelDeVille::etat_d_appartenance(getHotel(M, argumentJ2)) == ETAT.OCCUPE ^ HotelDeVille::appartenance(getHotel(M, argumentJ2)) == Villageois::race(getVillageois(M, i)))
+					(commandJ2=COMMANDE.APPLIQUER_RECHERCHE =>((argumentJ2 = 0 V argumentJ2 = 1) ^ HotelDeVille::etat_d_appartenance(getHotel(M, argumentJ2)) == ETAT.OCCUPE ^ HotelDeVille::appartenance(getHotel(M, argumentJ2)) == Villageois::race(getVillageois(M, i)))
+					(commandJ12=COMMANDE.ATTAQUER => (0≤argumentJ2≤99))
+					
+
 
 Observations:                   
 [Invariants]
