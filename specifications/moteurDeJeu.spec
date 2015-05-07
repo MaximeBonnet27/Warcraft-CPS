@@ -235,13 +235,18 @@ villageoisSurMuraille(M,x,y,l,h,m) =(min)= collision(x,y,l,h,positionMurailleX(M
 	pour tout i dans numeroesVillageois(M):
 		// getVillageois
 		getVillageois(pasJeu(M, c1, s1, a1, c2, s2, a2),i) =
-			si i ∈ s1, alors
+			si Villageois::estMort(getVillageois(M,i)), alors
+				getVillageois(M,i)
+			
+			sinon si i ∈ s1, alors
 				si c1 = COMMANDE.ENTRERMINE, alors
 					peutEntrer(M,i,a1) => Villageois::commenceTravaille(getVillageois(M,i))
+					¬peutEntrer(M,i,a1)=> getVillageois(M,i)
 
 				sinon si c1 = COMMANDE.ENTRERHOTELVILLE, alors
 					peutEntrerHotelVille(M,i,a1) => Villageois::retraitOr(getVillageois(M,i),Villageois::quantiteOr(getVillageois(M,i))
-				
+					¬peutEntrerHotelVille(M,i,a1) => getVillageois(M,i)
+
 				sinon si c1= COMMANDE.APPLIQUER_RECHERCHE, alors
 					si getHotel(M, a1) == hotelDeVilleA(M) ^ HotelDeVille::etat_d_appartenance(getHotel(M, a1)) == ETAT.OCCUPE ^ HotelDeVille::appartenance(getHotel(M, a1)) == Villageois::race(getVillageois(M, s1[0]) ^ CentreNationalRechercheSpeciale::rechercheFinie(CNRSA(M)), alors
 						Villageois::amelioration(getVillageois(M,i),CentreNationalRechercheSpeciale::competenceAugmente(CNRSA(M)),CentreNationalRechercheSpeciale::boost(CNRSA(M)))
@@ -253,6 +258,7 @@ villageoisSurMuraille(M,x,y,l,h,m) =(min)= collision(x,y,l,h,positionMurailleX(M
 
 				sinon si c1= COMMANDE.ATTAQUER, alors
 						GestionCombat::attaquant(GestionCombat::combat(GestionCombat::init(getVillageois(M,i),getVillageois(M,a1))))
+
 				sinon si c2 = COMMANDE.ATTAQUER ^ i == a2 alors
 					GestionCombat::defenseur(GestionCombat::combat(GestionCombat::initMultiple(S,getVillageois(M,i)))), avec pour tout v dans S il existe j dans s2, getVillagois(M,j)=v
 				sinon alors
@@ -261,10 +267,12 @@ villageoisSurMuraille(M,x,y,l,h,m) =(min)= collision(x,y,l,h,positionMurailleX(M
 			sinon si i ∈ s2, alors
 				si c2 = COMMANDE.ENTRERMINE, alors
 					peutEntrer(M,i,a2) => Villageois::commenceTravaille(getVillageois(M,i))
+					¬peutEntrer(M,i,a2)=> getVillageois(M,i)
 
 				sinon si c2 = COMMANDE.ENTRERHOTELVILLE, alors
 					peutEntrerHotelVille(M,i,a2) => Villageois::retraitOr(getVillageois(M,i),Villageois::quantiteOr(getVillageois(M,i))
-				
+					¬peutEntrerHotelVille(M,i,a2) => getVillageois(M,i)
+
 				sinon si c2= COMMANDE.APPLIQUER_RECHERCHE, alors
 					si getHotel(M, a2) == hotelDeVilleA(M) ^ HotelDeVille::etat_d_appartenance(getHotel(M, a2)) == ETAT.OCCUPE ^ HotelDeVille::appartenance(getHotel(M, a2)) == Villageois::race(getVillageois(M, s2[0]) ^ CentreNationalRechercheSpeciale::rechercheFinie(CNRSA(M)), alors
 						Villageois::amelioration(getVillageois(M,i),CentreNationalRechercheSpeciale::competenceAugmente(CNRSA(M)),CentreNationalRechercheSpeciale::boost(CNRSA(M)))
@@ -273,12 +281,13 @@ villageoisSurMuraille(M,x,y,l,h,m) =(min)= collision(x,y,l,h,positionMurailleX(M
 						Villageois::amelioration(getVillageois(M,i),CentreNationalRechercheSpeciale::competenceAugmente(CNRSB(M)),CentreNationalRechercheSpeciale::boost(CNRSB(M)))	
 					sinon, alors
 						getVillageois(M,i)
-
 		
 				sinon si c2= COMMANDE.ATTAQUER, alors
 						GestionCombat::attaquant(GestionCombat::combat(GestionCombat::init(getVillageois(M,i),getVillageois(M,a2))))
+
 				sinon si c1 = COMMANDE.ATTAQUER ^ i == a1 alors
 					GestionCombat::defenseur(GestionCombat::combat(GestionCombat::initMultiple(S,getVillageois(M,i)))), avec pour tout v dans S il existe j dans s1, getVillagois(M,j)=v
+				
 				sinon alors
 					getVillageois(M,i)
 	
@@ -325,10 +334,12 @@ villageoisSurMuraille(M,x,y,l,h,m) =(min)= collision(x,y,l,h,positionMurailleX(M
 		// getMineVillageois
 		getMineVillageois(pasJeu(M, c1, s1, a1, c2, s2, a2), i)=
 			si i ∈ s1 ^ c1 = COMMANDE.ENTRERMINE, alors
-				Mine::accueil(getMine(M,a1),Villageois::race(getVillageois(M,i)))
-		
+				peutEntrer(M,i,a1) => Mine::accueil(getMine(M,a1),Villageois::race(getVillageois(M,i)))
+				¬peutEntrer(M,i,a1) => getMine(M,a1)
+
 			sinon si i ∈ s2 ^ c2 = COMMANDE.ENTRERMINE, alors
-				Mine::accueil(getMine(M,a2),Villageois::race(getVillageois(M,i)))
+				peutEntrer(M,i,a2) => Mine::accueil(getMine(M,a2),Villageois::race(getVillageois(M,i)))
+				¬peutEntrer(M,i,a2) => getMine(M,a2)
 
 			sinon si Villageois::enCorvee(getVillageois(M,i)), alors
 				si Villageois::corveeFini(getVillageois(M,i)), alors
@@ -351,18 +362,19 @@ villageoisSurMuraille(M,x,y,l,h,m) =(min)= collision(x,y,l,h,positionMurailleX(M
 			si Mine:etat_d_appartenance(getMine(M,i))==ETAT.OCCUPE, alors
 				pour tout num dans numeroesVillageois(M):
 			 		si getMineVillageois(M,num) = getMine(M,i), alors
-						 si Villageois::enCorvee(getVillageois(M,num)), alors
-							si Villageois::corveeFini(getVillageois(M,num)), alors
-								si ¬Mine::estLaminee(getMineVillageois(M,num)), alors
-									si exist n dans numeroesVillageois(M)/i telque  getMineVillageois(M, num) = getMineVillageois(M, n), alors
-										Mine::retrait(getMine(M, i), 1)
-									sinon, alors
-										Mine::abandoned(Mine::retrait(getMine(M, i), 1))				
+						 si Villageois::enCorvee(getVillageois(M,num)) ^ Villageois::corveeFini(getVillageois(M,num)), alors
+							si ¬Mine::estLaminee(getMineVillageois(M,num)), alors
+								si exist n dans numeroesVillageois(M)/i telque  getMineVillageois(M, num) = getMineVillageois(M, n), alors
+									Mine::retrait(getMine(M, i), 1)
+								sinon, alors
+									Mine::abandoned(Mine::retrait(getMine(M, i), 1))				
 							sinon, alors
 								si exist n dans numeroesVillageois(M)/i telque  getMineVillageois(M, num) = getMineVillageois(M, n), alors
 									getMine(M, i)
 								sinon, alors
-									Mine::abandoned(getMine(M, i))
+									Mine::abandoned(getMine(M, i)
+						sinon, alors
+							getMine(M,i)
 			sinon, alors
 				getMine(M, i)
 
@@ -383,7 +395,7 @@ villageoisSurMuraille(M,x,y,l,h,m) =(min)= collision(x,y,l,h,positionMurailleX(M
 						HotelDeVille::abandoned(HotelDeVille::retrait(getHotel(M, a1), CentreNationalRechercheSpeciale::prixConstruction(CNRSA(M))))
 
 					sinon si c1 = COMMANDE.RECHERCHECNRS ^ ¬CentreNationalRechercheSpeciale::enRecherche(CNRSA(M))^ CentreNationalRechercheSpeciale::constructionFinie(CNRSA(M))^ HotelDeVille::orRestant(getHotel(M, a1)) >= CentreNationalRechercheSpeciale::prixRecherche(CNRSA(M)) ^ (getHotel(M, a1) == hotelDeVilleA(M)), alors
- 						CentreNationalRechercheSpeciale::prixRecherche(CNRSA(M))))
+ 						HotelDeVille::abandoned(HotelDeVille::retrait(getHotel(M, a1), CentreNationalRechercheSpeciale::prixRecherche(CNRSA(M))))
 				
 				sinon si HotelDeVille::appartenance(getHotel(M, a2)) == Villageois::race(getVillageois(M, s2[0]),alors
 					si c2 = COMMANDE.CONSTRUIRECNRS ^ ¬CentreNationalRechercheSpeciale::enConstruction(CNRSA(M)) ^ HotelDeVille::orRestant(getHotel(M, a2)) >= CentreNationalRechercheSpeciale::prixConstruction(CNRSA(M)) ^ (getHotel(M, a2) == hotelDeVilleA(M)),alors
@@ -403,14 +415,14 @@ villageoisSurMuraille(M,x,y,l,h,m) =(min)= collision(x,y,l,h,positionMurailleX(M
 						HotelDeVille::abandoned(HotelDeVille::retrait(getHotel(M, a1), CentreNationalRechercheSpeciale::prixConstruction(CNRSB(M))))
 
 					sinon si c1 = COMMANDE.RECHERCHECNRS ^ ¬CentreNationalRechercheSpeciale::enRecherche(CNRSB(M))^ CentreNationalRechercheSpeciale::constructionFinie(CNRSB(M))^ HotelDeVille::orRestant(getHotel(M, a1)) >= CentreNationalRechercheSpeciale::prixRecherche(CNRSB(M)) ^ (getHotel(M, a1) == hotelDeVilleB(M)), alors
- 						CentreNationalRechercheSpeciale::prixRecherche(CNRSB(M))))
+ 						HotelDeVille::abandoned(HotelDeVille::retrait(getHotel(M, a1), CentreNationalRechercheSpeciale::prixRecherche(CNRSB(M))))
 				
 				sinon si HotelDeVille::appartenance(getHotel(M, a2)) == Villageois::race(getVillageois(M, s2[0]),alors
 					si c2 = COMMANDE.CONSTRUIRECNRS ^ ¬CentreNationalRechercheSpeciale::enConstruction(CNRSB(M)) ^ HotelDeVille::orRestant(getHotel(M, a2)) >= CentreNationalRechercheSpeciale::prixConstruction(CNRSB(M)) ^ (getHotel(M, a2) == hotelDeVilleB(M)),alors
 						HotelDeVille::abandoned(HotelDeVille::retrait(getHotel(M, a2), CentreNationalRechercheSpeciale::prixConstruction(CNRSB(M))))
 
 					sinon si c2 = COMMANDE.RECHERCHECNRS ^ ¬CentreNationalRechercheSpeciale::enRecherche(CNRSB(M))^ CentreNationalRechercheSpeciale::constructionFinie(CNRSB(M))^ HotelDeVille::orRestant(getHotel(M, a2)) >= CentreNationalRechercheSpeciale::prixRecherche(CNRSB(M)) ^ (getHotel(M, a2) == hotelDeVilleB(M)), alors
-						HotelDeVille::abandoned(HotelDeVille::retrait(getHotel(M, a2), CentreNationalRechercheSpeciale::prixRecherche(CNRSA(M))))
+						HotelDeVille::abandoned(HotelDeVille::retrait(getHotel(M, a2), CentreNationalRechercheSpeciale::prixRecherche(CNRSB(M))))
 			sinon, alors
 				hotelDeVilleA(M)
 	
@@ -490,7 +502,7 @@ villageoisSurMuraille(M,x,y,l,h,m) =(min)= collision(x,y,l,h,positionMurailleX(M
 							si getHotel(M, a1) == hotelDeVilleB(M) ^ HotelDeVille::etat_d_appartenance(getHotel(M, a1)) == ETAT.OCCUPE ^ HotelDeVille::appartenance(getHotel(M, a1)) == Villageois::race(getVillageois(M, s1[0]), alors
 						CentreNationalRechercheSpecial::finirRecherche(CNRSB(M))
 						
-						sinon si c2= COMMANDE.APPLIQUER_RECHERCHE, alors
+						sinon, si c2= COMMANDE.APPLIQUER_RECHERCHE, alors
 							si getHotel(M, a2) == hotelDeVilleB(M) ^ HotelDeVille::etat_d_appartenance(getHotel(M, a2)) == ETAT.OCCUPE ^ HotelDeVille::appartenance(getHotel(M, a1)) == Villageois::race(getVillageois(M, s2[0]), alors
 						CentreNationalRechercheSpecial::finirRecherche(CNRSB(M))
 						

@@ -98,7 +98,7 @@ public interface IVillageoisService {
 	 * \post : vitesse() == vitesse()@pre
 	 * \post : force() == force()@pre
 	 */
-
+	
 	public void retraitOr(int somme);
 
 	/**
