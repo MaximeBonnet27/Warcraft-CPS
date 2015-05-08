@@ -17,7 +17,7 @@ public interface IMineService {
 	/**
 	 * \pre: etat_d_appartenance()==ETAT.OCCUPE
 	 */
-	public ERace appartenance();
+	public ERace appartenance() throws Exception;
 
 
 	/*Invariant*/
@@ -38,7 +38,7 @@ public interface IMineService {
 	 * \post: orRestant() == 500
 	 * \post: compteurAbandon() == 51
 	 */
-	public void init(int largeur, int hauteur);
+	public void init(int largeur, int hauteur) throws Exception;
 
 	/*Operators*/
 
@@ -49,21 +49,23 @@ public interface IMineService {
 	 * \post: compteurAbandon() == compteurAbandon()@pre
 	 * \post: (etat_d_appartenance()@pre== ETAT.OCCUPE) ==> (appartenance()==appartenance()@pre)
 	 */
-	public void retrait(int s);
+	public void retrait(int s) throws Exception;
 
 	/**
 	 * \pre: etat_d_appartenance()==ETAT.OCCOPE ==> (race == appartenance())
 	 * \post: orRestant() == orRestant()@pre 
 	 * \post: compteurAbandon() == 0
 	 * \post: appartenance() == race
+	 * @throws Exception 
 	 */
-	public void accueil(ERace race);
+	public void accueil(ERace race) throws Exception;
 
 	/**
 	 * \pre: etat_d_appartenance() == ETAT.OCCUPE
 	 * \post: orRestant() == orRestant()@pre
 	 * \post: compteurAbandon() == (compteurAbandon()@pre + 1)
 	 * \post: appartenance() == appartenance()@pre
+	 * @throws Exception 
 	 */
-	public void abandoned();	
+	public void abandoned() throws Exception;	
 }

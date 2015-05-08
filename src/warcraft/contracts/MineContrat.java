@@ -66,7 +66,7 @@ public class MineContrat extends MineDelegator {
 	}
 
 	@Override
-	public ERace appartenance() {
+	public ERace appartenance() throws Exception {
 		// \pre: etat_d_appartenance()==ETAT.OCCUPE
 		assertTrue("\\pre: etat_d_appartenance()==ETAT.OCCUPE", super.etat_d_appartenance()==EETAT.OCCUPE);
 		
@@ -75,12 +75,12 @@ public class MineContrat extends MineDelegator {
 	}
 
 	@Override
-	public void init(int largeur, int hauteur) {
+	public void init(int largeur, int hauteur) throws Exception {
 		// \pre: largeur>0
-		assertTrue("\\pre: largeur>0", super.largeur()>0);
+		assertTrue("\\pre: largeur>0", largeur>0);
 		
 		// \pre: hauteur>0
-		assertTrue("\\pre: hauteur>0", super.hauteur()>0);
+		assertTrue("\\pre: hauteur>0", hauteur>0);
 		
 		super.init(largeur, hauteur);
 		checkInvariants();
@@ -99,7 +99,7 @@ public class MineContrat extends MineDelegator {
 	}
 
 	@Override
-	public void retrait(int s) {
+	public void retrait(int s) throws Exception {
 		//Captures
 		int oldOrRestant=super.orRestant();
 		int oldCompteurAbandon=super.compteurAbandon();
@@ -127,7 +127,7 @@ public class MineContrat extends MineDelegator {
 	}
 
 	@Override
-	public void accueil(ERace race) {
+	public void accueil(ERace race) throws Exception {
 		//Captures
 		int oldOrRestant=super.orRestant();
 		
@@ -149,7 +149,7 @@ public class MineContrat extends MineDelegator {
 	}
 
 	@Override
-	public void abandoned() {
+	public void abandoned() throws Exception {
 		//Captures
 		int oldOrRestant=super.orRestant();
 		int oldCompteurAbandon=super.compteurAbandon();

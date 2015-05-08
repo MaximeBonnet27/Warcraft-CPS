@@ -36,23 +36,23 @@ public abstract class MineDelegator implements IMineService {
 		return delegate.etat_d_appartenance();
 	}
 
-	public ERace appartenance() {
+	public ERace appartenance() throws Exception {
 		return delegate.appartenance();
 	}
 
-	public void init(int largeur, int hauteur) {
+	public void init(int largeur, int hauteur) throws Exception {
 		delegate.init(largeur, hauteur);
 	}
 
-	public void retrait(int s) {
+	public void retrait(int s) throws Exception {
 		delegate.retrait(s);
 	}
 
-	public void accueil(ERace race) {
+	public void accueil(ERace race) throws Exception {
 		delegate.accueil(race);
 	}
 
-	public void abandoned() {
+	public void abandoned() throws Exception {
 		delegate.abandoned();
 	}
 	

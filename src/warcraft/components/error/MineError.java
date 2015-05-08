@@ -1,16 +1,15 @@
-package warcraft.components.correct;
+package warcraft.components.error;
 
-import static org.junit.Assert.assertTrue;
 import warcraft.enums.EETAT;
 import warcraft.enums.ERace;
 import warcraft.services.IMineService;
 
-public class Mine implements IMineService {
+public class MineError implements IMineService {
 	
 	private int largeur,hauteur,orRestant,compteurAbandon;
 	private ERace appartenance;
 	
-	public Mine() {
+	public MineError() {
 	}
 	
 	@Override
@@ -46,9 +45,7 @@ public class Mine implements IMineService {
 	}
 
 	@Override
-	public ERace appartenance() throws Exception {
-		if(!(etat_d_appartenance()==EETAT.OCCUPE))
-			 throw new Exception("\\pre: etat_d_appartenance()==ETAT.OCCUPE");
+	public ERace appartenance() {
 		return appartenance;
 	}
 
@@ -57,38 +54,32 @@ public class Mine implements IMineService {
 		if(!(largeur>0))
 			throw new Exception("\\pre: largeur>0");
 		
-		if(!(hauteur>0))
-			throw new Exception("\\pre: hauteur>0");
-		
 		this.largeur=largeur;
 		this.hauteur=hauteur;
 		this.orRestant=500;
-		this.compteurAbandon=51;
+		this.compteurAbandon=50;//error
+		//this.compteurAbandon=51;
 	}
 
 	@Override
 	public void retrait(int s) throws Exception {
-		if(!((orRestant()-1)>=0))
-			throw new Exception("\\pre: orRestant()-s>=0");
 		if(!(s>=0))
 			throw new Exception("\\pre: s>=0");
 		
-		this.orRestant=orRestant()-s;
+		this.orRestant=orRestant()-1;//error
+		//this.orRestant=orRestant()-s;
 	}
 
 	@Override
-	public void accueil(ERace race) throws Exception {
-		if(!(!(etat_d_appartenance()==EETAT.OCCUPE) || (race==appartenance())))
-			throw new Exception("\\pre: etat_d_appartenance()==ETAT.OCCOPE) ==> (race == appartenance())");
+	public void accueil(ERace race) {
 		this.compteurAbandon=0;
-		this.appartenance=race;
+		//this.appartenance=race;//error
 	}
 
 	@Override
-	public void abandoned() throws Exception {
-		if(!(etat_d_appartenance()==EETAT.OCCUPE))
-			throw new Exception("\\pre: etat_d_appartenance() == ETAT.OCCUPE");
-		this.compteurAbandon=compteurAbandon()+1;
+	public void abandoned() {
+		this.compteurAbandon=51;//error
+		//this.compteurAbandon=compteurAbandon()+1;
 	}
 	
 }
