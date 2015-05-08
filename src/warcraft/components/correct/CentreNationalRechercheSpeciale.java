@@ -1,7 +1,7 @@
 /**
  * 
  */
-package warcraft.implem;
+package warcraft.components.correct;
 
 import warcraft.services.ICentreNationalRechercheSpecialeService;
 

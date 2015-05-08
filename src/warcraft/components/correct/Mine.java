@@ -1,4 +1,4 @@
-package warcraft.implem;
+package warcraft.components.correct;
 
 import warcraft.enums.EETAT;
 import warcraft.enums.ERace;
