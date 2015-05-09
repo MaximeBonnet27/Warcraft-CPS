@@ -64,7 +64,7 @@ public interface IMineService {
 	 * \pre: etat_d_appartenance() == ETAT.OCCUPE
 	 * \post: orRestant() == orRestant()@pre
 	 * \post: compteurAbandon() == (compteurAbandon()@pre + 1)
-	 * \post: appartenance() == appartenance()@pre
+	 * \post: (etat_d_appartenance()== ETAT.OCCUPE) ==> appartenance() == appartenance()@pre
 	 * @throws Exception 
 	 */
 	public void abandoned() throws Exception;	

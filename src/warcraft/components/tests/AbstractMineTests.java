@@ -50,7 +50,17 @@ public abstract class AbstractMineTests extends AssertionTests{
 	 * 	init(100,100)
 	 * 
 	 * Oracle:
-	 * 	Pas d'exception
+	 * 	Pas d'exception &&
+	 *	estLaminee() == (orRestant() == 0) &&
+	 *	(etat_d_appartenance() == ETAT.LIBRE) == (compteurAbandon()=51) &&
+	 *	(etat_d_appartenance() == ETAT.OCCUPE) == (compteurAbandon()<51)&&
+	 *	 orRestant()>=0 &&
+	 *	0<=compteurAbandon()<=51
+	 * 	largeur() == largeur &&
+	 *  hauteur() == hauteur &&
+	 *  orRestant() == 500 &&
+	 * 	compteurAbandon() == 51
+	 * 
 	 */
 	@Test
 	public void testInit1_0(){
@@ -164,52 +174,63 @@ public abstract class AbstractMineTests extends AssertionTests{
 	 * 	retrait(10)
 	 * 
 	 * Oracle:
-	 * 	Pas d'exception
+	 * 	Pas d'exception &&
+	 * 	estLaminee() == (orRestant() == 0) &&
+	 *	(etat_d_appartenance() == ETAT.LIBRE) == (compteurAbandon()=51) &&
+	 *	(etat_d_appartenance() == ETAT.OCCUPE) == (compteurAbandon()<51)&&
+	 *	 orRestant()>=0 &&
+	 *	0<=compteurAbandon()<=51 &&
+	 *	orRestant() == (orRestant()@pre-s) &&
+	 *	compteurAbandon() == compteurAbandon()@pre &&
+	 *	(etat_d_appartenance()@pre== ETAT.OCCUPE) ==> (appartenance()==appartenance()@pre)
 	 */
 	@Test
 	public void testRetrait2_0(){
 		String obj="Mine Test Objectif 2.0";
 		int s=10;
-		//Condition initial:
+
 		try {
+			//Condition initial:
 			mine.init(100, 100);
+
+			//Captures
+			int oldOrRestant=mine.orRestant();
+			int oldCompteurAbandon=mine.compteurAbandon();
+			EETAT oldEtat_d_appartenance=mine.etat_d_appartenance();
+			ERace oldAppartenance=null;
+
+			try {
+				oldAppartenance = mine.appartenance();
+			} catch (Exception e1) {
+			}
+
+			//Operation:
+			try {
+				mine.retrait(s);
+
+				//Oracle:
+				assertion(obj,true);
+			} catch (Exception e) {
+				assertion(obj+e.getMessage(),false);
+			}
+
+			checkInvariants(obj);
+
+			// \post: orRestant() == (orRestant()@pre-s)
+			assertion(obj+": \\post: orRestant() == (orRestant()@pre-s)", mine.orRestant()==(oldOrRestant-s));
+
+			// \post: compteurAbandon() == compteurAbandon()@pre
+			assertion(obj+": \\post: compteurAbandon() == compteurAbandon()@pre", mine.compteurAbandon()==(oldCompteurAbandon));
+
+			// \post: (etat_d_appartenance()@pre== ETAT.OCCUPE) ==> (appartenance()==appartenance()@pre)
+			try {
+				assertion(obj+": \\post: (etat_d_appartenance()@pre== ETAT.OCCUPE) ==> (appartenance()==appartenance()@pre)", !(oldEtat_d_appartenance==EETAT.OCCUPE) || (mine.appartenance()==oldAppartenance));
+			} catch (Exception e) {
+				assertion(obj+": \\post: (etat_d_appartenance()@pre== ETAT.OCCUPE) ==> (appartenance()==appartenance()@pre)", false);
+			}
+
 		} catch (Exception e1) {
-		}
-
-		//Captures
-		int oldOrRestant=mine.orRestant();
-		int oldCompteurAbandon=mine.compteurAbandon();
-		EETAT oldEtat_d_appartenance=mine.etat_d_appartenance();
-		ERace oldAppartenance=null;
-
-		try {
-			oldAppartenance = mine.appartenance();
-		} catch (Exception e1) {
-		}
-
-		//Operation:
-		try {
-			mine.retrait(s);
-
-			//Oracle:
-			assertion(obj,true);
-		} catch (Exception e) {
-			assertion(obj+e.getMessage(),false);
-		}
-
-		checkInvariants(obj);
-
-		// \post: orRestant() == (orRestant()@pre-s)
-		assertion(obj+": \\post: orRestant() == (orRestant()@pre-s)", mine.orRestant()==(oldOrRestant-s));
-
-		// \post: compteurAbandon() == compteurAbandon()@pre
-		assertion(obj+": \\post: compteurAbandon() == compteurAbandon()@pre", mine.compteurAbandon()==(oldCompteurAbandon));
-
-		// \post: (etat_d_appartenance()@pre== ETAT.OCCUPE) ==> (appartenance()==appartenance()@pre)
-		try {
-			assertion(obj+": \\post: (etat_d_appartenance()@pre== ETAT.OCCUPE) ==> (appartenance()==appartenance()@pre)", !(oldEtat_d_appartenance==EETAT.OCCUPE) || (mine.appartenance()==oldAppartenance));
-		} catch (Exception e) {
-			assertion(obj+": \\post: (etat_d_appartenance()@pre== ETAT.OCCUPE) ==> (appartenance()==appartenance()@pre)", false);
+			assertion(obj+": erreur durant l'initialisation du test: "+e1.getMessage(), false);
 		}
 	}
 
@@ -231,20 +252,27 @@ public abstract class AbstractMineTests extends AssertionTests{
 		String obj="Mine Test Objectif 2.1";
 		int s=1;
 
-		//Condition initial:
+
 		try {
+			//Condition initial:
 			mine.init(100, 100);
 			mine.retrait(500);
+
+			try {
+				//Operation:
+				mine.retrait(s);
+
+				//Oracle:
+				assertion(obj+": retrait devrait échouer", false);
+
+			} catch (Exception e) {
+				assertion(obj, true);
+			}
 		} catch (Exception e1) {
+			assertion(obj+": erreur durant l'initialisation du test: "+e1.getMessage(), false);
 		}
 
-		try {
-			mine.retrait(s);
-			assertion(obj+": retrait devrait échouer", false);
 
-		} catch (Exception e) {
-			assertion(obj, true);
-		}
 	}
 
 	/**
@@ -265,18 +293,24 @@ public abstract class AbstractMineTests extends AssertionTests{
 		String obj="Mine Test Objectif 2.2";
 		int s=-1;
 
-		//Condition initial:
+
 		try {
+			//Condition initial:
 			mine.init(100, 100);
+
+			try {
+				//Operation:
+				mine.retrait(s);
+
+				//Oracle:
+				assertion(obj+": retrait devrait échouer", false);
+
+			} catch (Exception e) {
+				assertion(obj, true);
+			}
+
 		} catch (Exception e1) {
-		}
-
-		try {
-			mine.retrait(s);
-			assertion(obj+": retrait devrait échouer", false);
-
-		} catch (Exception e) {
-			assertion(obj, true);
+			assertion(obj+": erreur durant l'initialisation du test: "+e1.getMessage(), false);
 		}
 	}
 
@@ -291,28 +325,46 @@ public abstract class AbstractMineTests extends AssertionTests{
 	 * acceuil(ERace.ORC)
 	 * 
 	 * Oracle:
-	 * appartenance=ERace.ORC
+	 * pas d'exception &&
+	 * estLaminee() == (orRestant() == 0) &&
+	 *	(etat_d_appartenance() == ETAT.LIBRE) == (compteurAbandon()=51) &&
+	 *	(etat_d_appartenance() == ETAT.OCCUPE) == (compteurAbandon()<51)&&
+	 *	orRestant()>=0 &&
+	 *	0<=compteurAbandon()<=51 &&
+	 *	orRestant() == orRestant()@pre &&
+	 *	compteurAbandon() == 0 &&
+	 * 	appartenance=ERace.ORC
 	 */
 	@Test
 	public void testAccueil3_0(){
 		String obj="Mine Test Objectif 3.0";
 		ERace race=ERace.ORC;
-		//Condition initial:
+
+		//Captures
+		int oldOrRestant=mine.orRestant();
 		try {
+			//Condition initial:
 			mine.init(100, 100);
+
+			//Operation
+			try {
+				mine.accueil(race);
+
+				//Oracle
+				checkInvariants(obj);
+				// \post: orRestant() == orRestant()@pre
+				assertTrue("\\post: orRestant() == orRestant()@pre", mine.orRestant()==oldOrRestant);
+
+				// \post: compteurAbandon() == 0
+				assertTrue("\\post: compteurAbandon() == 0", mine.compteurAbandon()==0);
+
+				// \post: appartenance() == r
+				assertTrue("\\post: appartenance() == race", mine.appartenance()==race);
+			} catch (Exception e) {
+				assertion(obj+e.getMessage(),false);
+			}
 		} catch (Exception e) {
-		}
-
-
-		//Operation
-		try {
-			mine.accueil(race);
-
-			//Oracle
-			assertion(obj, true);
-			assertion(obj,mine.appartenance()==race);
-		} catch (Exception e) {
-			assertion(obj+e.getMessage(),false);
+			assertion(obj+": erreur durant l'initialisation du test: "+e.getMessage(), false);
 		}
 	}
 
@@ -327,30 +379,48 @@ public abstract class AbstractMineTests extends AssertionTests{
 	 * acceuil(ERace.ORC)
 	 * 
 	 * Oracle:
-	 * appartenance=ERace.ORC
+	 * pas d'exception &&
+	 * estLaminee() == (orRestant() == 0) &&
+	 *	(etat_d_appartenance() == ETAT.LIBRE) == (compteurAbandon()=51) &&
+	 *	(etat_d_appartenance() == ETAT.OCCUPE) == (compteurAbandon()<51)&&
+	 *	orRestant()>=0 &&
+	 *	0<=compteurAbandon()<=51 &&
+	 *	orRestant() == orRestant()@pre &&
+	 *	compteurAbandon() == 0 &&
+	 * 	appartenance=ERace.ORC
 	 */
 	@Test
 	public void testAccueil3_1(){
 		String obj="Mine Test Objectif 3.1";
 		ERace race=ERace.ORC;
 
-		//Condition initial:
+		//Captures
+		int oldOrRestant=mine.orRestant();
+
 		try {
+			//Condition initial:
 			mine.init(100, 100);
 			mine.accueil(race);
+
+			//Operation
+			try {
+				mine.accueil(race);
+
+				//Oracle
+				checkInvariants(obj);
+				// \post: orRestant() == orRestant()@pre
+				assertTrue("\\post: orRestant() == orRestant()@pre", mine.orRestant()==oldOrRestant);
+
+				// \post: compteurAbandon() == 0
+				assertTrue("\\post: compteurAbandon() == 0", mine.compteurAbandon()==0);
+
+				// \post: appartenance() == r
+				assertTrue("\\post: appartenance() == race", mine.appartenance()==race);
+			} catch (Exception e) {
+				assertion(obj+e.getMessage(),false);
+			}
 		} catch (Exception e) {
-		}
-
-
-		//Operation
-		try {
-			mine.accueil(race);
-
-			//Oracle
-			assertion(obj, true);
-			assertion(obj,mine.appartenance()==race);
-		} catch (Exception e) {
-			assertion(obj+e.getMessage(),false);
+			assertion(obj+": erreur durant l'initialisation du test: "+e.getMessage(), false);
 		}
 	}
 
@@ -371,29 +441,29 @@ public abstract class AbstractMineTests extends AssertionTests{
 	public void testAccueil3_2(){
 		String obj="Mine Test Objectif 3.2";
 
-		//Condition initial:
 		try {
+			//Condition initial:
 			mine.init(100, 100);
 			mine.accueil(ERace.HUMAIN);
+
+			//Operation
+			try {
+				mine.accueil(ERace.ORC);
+
+				//Oracle
+				assertion(obj+": acceuil devrait echouer", false);
+			} catch (Exception e) {
+				assertion(obj, true);
+			}
 		} catch (Exception e) {
-		}
-
-
-		//Operation
-		try {
-			mine.accueil(ERace.ORC);
-
-			//Oracle
-			assertion(obj+": acceuil devrait echouer", false);
-		} catch (Exception e) {
-			assertion(obj, true);
+			assertion(obj+": erreur durant l'initialisation du test: "+e.getMessage(), false);
 		}
 	}
 
 	/**
 	 * Objectif 4: pre-condition abandoned
 	 * 
-	 * Cas 4_0: abandoned: positif
+	 * Cas 4_0: abandoned: positif reste occupe
 	 * Condition initial:
 	 * acceuil(init(100,100),ERace.HUMAIN)
 	 * 
@@ -401,35 +471,127 @@ public abstract class AbstractMineTests extends AssertionTests{
 	 * abandoned()
 	 * 
 	 * Oracle:
-	 * Exception pour abandoned
+	 * pas d'exception &&
+	 *  estLaminee() == (orRestant() == 0) &&
+	 *	(etat_d_appartenance() == ETAT.LIBRE) == (compteurAbandon()=51) &&
+	 *	(etat_d_appartenance() == ETAT.OCCUPE) == (compteurAbandon()<51)&&
+	 *	orRestant()>=0 &&
+	 *	0<=compteurAbandon()<=51 &&
+	 *	orRestant() == orRestant()@pre &&
+	 *	compteurAbandon() == (compteurAbandon()@pre + 1) &&
+	 * 	etat_d_appartenance()== ETAT.OCCUPE &&
+	 * 	appartenance() == appartenance()@pre
+	 *	
 	 */
 	@Test
-	public void testAccueil4_0(){
+	public void testAbandoned4_0(){
 		String obj="Mine Test Objectif 4.0";
 
-		//Condition initial:
+		int oldOrRestant=mine.orRestant();
+		int oldCompteurAbandon=mine.compteurAbandon();
 		try {
-			mine.init(100, 100);
-			mine.accueil(ERace.HUMAIN);
-		} catch (Exception e) {
-		}
+			ERace oldAppartenance=mine.appartenance();
 
 
-		//Operation
-		try {
-			mine.abandoned();
+			try {
+				//Condition initial:
+				mine.init(100, 100);
+				mine.accueil(ERace.HUMAIN);
 
-			//Oracle
-			assertion(obj, true);
-		} catch (Exception e) {
-			assertion(obj+e.getMessage(),false);
+				//Operation
+				try {
+					mine.abandoned();
+
+					//Oracle
+					checkInvariants(obj);
+					// \post: orRestant() == orRestant()@pre
+					assertTrue("\\post: orRestant() == orRestant()@pre", mine.orRestant()==oldOrRestant);
+
+					// \post: compteurAbandon() == (compteurAbandon()@pre + 1)
+					assertTrue("\\post: compteurAbandon() == (compteurAbandon()@pre + 1)", mine.compteurAbandon()==(oldCompteurAbandon+1));
+
+					// post: etat_d_appartenance()== ETAT.OCCUPE
+					assertion("\\post: etat_d_appartenance()== ETAT.OCCUPE", mine.etat_d_appartenance()== EETAT.OCCUPE);
+
+					// \post: 	appartenance() == appartenance()@pre
+					assertTrue("\\post: appartenance() == appartenance()@pre", mine.appartenance()==oldAppartenance);
+
+				} catch (Exception e) {
+					assertion(obj+e.getMessage(),false);
+				}
+			} catch (Exception e) {
+				assertion(obj+": erreur durant l'initialisation du test: "+e.getMessage(), false);
+			}
+		} catch (Exception e1) {
+			assertion(obj+": erreur durant l'initialisation du test: "+e1.getMessage(), false);
 		}
 	}
 
 	/**
 	 * Objectif 4: pre-condition abandoned
 	 * 
-	 * Cas 4_1: abandoned: error etat libre
+	 * Cas 4_1: abandoned: positif devient libre
+	 * Condition initial:
+	 * acceuil(init(100,100),ERace.HUMAIN)
+	 * for i in range 1 to 51
+	 * 	abandoned()
+	 * 
+	 * Operation:
+	 * abandoned()
+	 * 
+	 * Oracle:
+	 * pas d'exception &&
+	 *  estLaminee() == (orRestant() == 0) &&
+	 *	(etat_d_appartenance() == ETAT.LIBRE) == (compteurAbandon()=51) &&
+	 *	(etat_d_appartenance() == ETAT.OCCUPE) == (compteurAbandon()<51)&&
+	 *	orRestant()>=0 &&
+	 *	0<=compteurAbandon()<=51 &&
+	 *	orRestant() == orRestant()@pre &&
+	 *	compteurAbandon() == (compteurAbandon()@pre + 1) &&
+	 * 	etat_d_appartenance()== ETAT.LIBRE
+	 *	
+	 */
+	@Test
+	public void testAbandoned4_1(){
+		String obj="Mine Test Objectif 4.1";
+
+		int oldOrRestant=mine.orRestant();
+		int oldCompteurAbandon=mine.compteurAbandon();
+		try {
+			//Condition initial:
+			mine.init(100, 100);
+			mine.accueil(ERace.HUMAIN);
+			for(int i=0;i<51;i++){
+				mine.abandoned();
+			}
+
+			//Operation
+			try {
+				mine.abandoned();
+
+				//Oracle
+				checkInvariants(obj);
+				// \post: orRestant() == orRestant()@pre
+				assertTrue("\\post: orRestant() == orRestant()@pre", mine.orRestant()==oldOrRestant);
+
+				// \post: compteurAbandon() == (compteurAbandon()@pre + 1)
+				assertTrue("\\post: compteurAbandon() == (compteurAbandon()@pre + 1)", mine.compteurAbandon()==(oldCompteurAbandon+1));
+
+				// \post: etat_d_appartenance()== ETAT.LIBRE
+				assertTrue("\\post: etat_d_appartenance()== ETAT.LIBRE", mine.etat_d_appartenance()==EETAT.LIBRE);
+
+			} catch (Exception e) {
+				assertion(obj+e.getMessage(),false);
+			}
+		} catch (Exception e) {
+			assertion(obj+": erreur durant l'initialisation du test: "+e.getMessage(), false);
+		}
+	}
+
+	/**
+	 * Objectif 4: pre-condition abandoned
+	 * 
+	 * Cas 4_2: abandoned: error etat libre
 	 * 
 	 * Condition initial:
 	 * init(100,100)
@@ -441,94 +603,25 @@ public abstract class AbstractMineTests extends AssertionTests{
 	 * Exception pour abandoned
 	 */
 	@Test
-	public void testAccueil4_1(){
-		String obj="Mine Test Objectif 4.1";
+	public void testAbandoned4_2(){
+		String obj="Mine Test Objectif 4.2";
 
-		//Condition initial:
 		try {
+			//Condition initial:
 			mine.init(100, 100);
+
+			//Operation
+			try {
+				mine.abandoned();
+
+				//Oracle
+				assertion(obj+": abandoned devrait echouer", false);
+			} catch (Exception e) {
+				assertion(obj,true);
+			}
 		} catch (Exception e) {
-		}
-
-
-		//Operation
-		try {
-			mine.abandoned();
-
-			//Oracle
-			assertion(obj+": abandoned devrait echouer", false);
-		} catch (Exception e) {
-			assertion(obj,true);
+			assertion(obj+": erreur durant l'initialisation du test: "+e.getMessage(), false);
 		}
 	}
 
-	/**
-	 * Objectif 5: pre-condition appartenance
-	 * 
-	 * Cas 5_0: appartenance: positif
-	 * 
-	 * Condition initial:
-	 * acceuil(init(100,100),ERace.HUMAIN)
-	 * 
-	 * Operation:
-	 * appartenance()
-	 * 
-	 * Oracle:
-	 * Pas d'exception et valeur de retour = ERace.HUMAIN
-	 */
-	public void testappartenance5_0(){
-		String obj="Mine Test Objectif 5.0";
-
-		//Condition initial
-		try {
-			mine.init(100, 100);
-			mine.accueil(ERace.HUMAIN);
-		} catch (Exception e) {
-		}
-
-		//Operation
-		try {
-			ERace val = mine.appartenance();
-
-			//Oracle
-			assertion(obj, true);
-			assertion(obj, val==ERace.HUMAIN);
-		} catch (Exception e) {
-			assertion(obj+e.getMessage(), false);
-		}
-	}
-
-	/**
-	 * Objectif 5: pre-condition appartenance
-	 * 
-	 * Cas 5_1: appartenance: error non occupe 
-	 * 
-	 * Condition initial:
-	 * init(100,100)
-	 * 
-	 * Operation:
-	 * appartenance()
-	 * 
-	 * Oracle:
-	 * Exception pour apparetenance
-	 */
-	public void testappartenance5_1(){
-		String obj="Mine Test Objectif 5.1";
-
-		//Condition initial
-		try {
-			mine.init(100, 100);
-		} catch (Exception e) {
-		}
-
-		//Operation
-		try {
-			mine.appartenance();
-
-			//Oracle
-			assertion(obj+" appartenance ne devrai pas passer", false);
-		} catch (Exception e) {
-			assertion(obj, true);
-		}
-	}
 }

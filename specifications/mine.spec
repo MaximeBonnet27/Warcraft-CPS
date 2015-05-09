@@ -58,5 +58,5 @@ Observations:
 [abandoned]
 	orRestant(abandoned(M))				= orRestant(M)
 	compteurAbandon(abandoned(M))		= compteurAbandon(M) + 1
-	appartenance(abandoned(M))  		= appartenance(M)
+	etat_d_appartenance(abandoned(M))=ETAT.OCCUPE => appartenance(abandoned(M)) = appartenance(M)
 	
