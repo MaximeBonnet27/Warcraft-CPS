@@ -36,27 +36,27 @@ public abstract class HotelDeVilleDecorator implements IHotelDeVilleService {
 		return delegate.etat_d_appartenance();
 	}
 
-	public ERace appartenance() {
+	public ERace appartenance() throws Exception {
 		return delegate.appartenance();
 	}
 
-	public void init(int largeur, int hauteur, ERace race) {
+	public void init(int largeur, int hauteur, ERace race) throws Exception{
 		delegate.init(largeur, hauteur, race);
 	}
 
-	public void retrait(int s) {
+	public void retrait(int s)throws Exception {
 		delegate.retrait(s);
 	}
 
-	public void depot(int d) {
+	public void depot(int d)throws Exception {
 		delegate.depot(d);
 	}
 
-	public void accueil(ERace race) {
+	public void accueil(ERace race)throws Exception {
 		delegate.accueil(race);
 	}
 
-	public void abandoned() {
+	public void abandoned()throws Exception {
 		delegate.abandoned();
 	}
 	

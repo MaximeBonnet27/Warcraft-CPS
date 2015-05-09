@@ -7,7 +7,8 @@ import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
 @SuiteClasses({
-	MineTestsError.class
+	MineTestsError.class,
+	HotelDeVilleTestsError.class
 })
 
 public class AllTestsError {

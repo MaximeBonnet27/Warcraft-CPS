@@ -1,15 +1,15 @@
-package warcraft.components.correct;
+package warcraft.components.error;
 
 import warcraft.enums.EETAT;
 import warcraft.enums.ERace;
 import warcraft.services.IHotelDeVilleService;
 
-public class HotelDeVille implements IHotelDeVilleService {
+public class HotelDeVilleError implements IHotelDeVilleService {
 
 	private int largeur,hauteur,orRestant,compteurAbandon;
 	private ERace appartenance;
 	
-	public HotelDeVille() {
+	public HotelDeVilleError() {
 	}
 	
 	@Override
@@ -46,8 +46,9 @@ public class HotelDeVille implements IHotelDeVilleService {
 
 	@Override
 	public ERace appartenance() throws Exception {
-		if(!(etat_d_appartenance()==EETAT.OCCUPE))
-			throw new Exception("\\pre: etat_d_appartenance()==ETAT.OCCUPE");
+		//error
+		//if(!(etat_d_appartenance()==EETAT.OCCUPE))
+		//	throw new Exception("\\pre: etat_d_appartenance()==ETAT.OCCUPE");
 		return appartenance;
 	}
 
@@ -56,8 +57,9 @@ public class HotelDeVille implements IHotelDeVilleService {
 		if(!(largeur>0))
 			throw new Exception("\\pre: largeur>0");
 		
-		if(!(hauteur>0))
-			throw new Exception("\\pre: hauteur>0");
+		//error
+		//if(!(hauteur>0))
+		//	throw new Exception("\\pre: hauteur>0");
 		this.largeur=largeur;
 		this.hauteur=hauteur;
 		this.appartenance=race;
@@ -71,13 +73,14 @@ public class HotelDeVille implements IHotelDeVilleService {
 			throw new Exception("\\pre: orRestant()-s>=0");
 		if(!(s>=0))
 			throw new Exception("\\pre: s>=0");
-		this.orRestant=orRestant()-s;
+		this.orRestant=orRestant()+s;//error
 	}
 
 	@Override
 	public void depot(int d) throws Exception {
-		if(!(d>=0))
-			throw new Exception("\\pre: d>=0");
+		//error
+		//if(!(d>=0))
+		//	throw new Exception("\\pre: d>=0");
 		
 		this.orRestant=orRestant()+d;
 	}
@@ -86,7 +89,8 @@ public class HotelDeVille implements IHotelDeVilleService {
 	public void accueil(ERace race) throws Exception {
 		if(!(!(etat_d_appartenance()==EETAT.OCCUPE) || (race==appartenance())))
 			throw new Exception("\\pre: etat_d_appartenance()==ETAT.OCCOPE) ==> (race == appartenance())");
-		this.compteurAbandon=0;
+		//this.compteurAbandon=0;
+		//error
 		this.appartenance=race;
 	}
 
@@ -94,7 +98,7 @@ public class HotelDeVille implements IHotelDeVilleService {
 	public void abandoned() throws Exception {
 		if(!(etat_d_appartenance()==EETAT.OCCUPE))
 			throw new Exception("\\pre: etat_d_appartenance() == ETAT.OCCUPE");
-		this.compteurAbandon=compteurAbandon()+1;
+		this.compteurAbandon=compteurAbandon()+10;//error
 	}
 
 }

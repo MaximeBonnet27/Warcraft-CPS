@@ -9,7 +9,8 @@ import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
 @SuiteClasses({
-	MineTestsCorrect.class
+	MineTestsCorrect.class,
+	HotelDeVilleTestsCorrect.class
 })
 public class AllTestsCorrect {	
 

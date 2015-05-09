@@ -66,7 +66,7 @@ public class HotelDeVilleContrat extends HotelDeVilleDecorator {
 	}
 
 	@Override
-	public ERace appartenance() {
+	public ERace appartenance() throws Exception{
 		// \pre: etat_d_appartenance()==ETAT.OCCUPE
 		assertTrue("\\pre: etat_d_appartenance()==ETAT.OCCUPE", super.etat_d_appartenance()==EETAT.OCCUPE);
 
@@ -75,12 +75,12 @@ public class HotelDeVilleContrat extends HotelDeVilleDecorator {
 	}
 
 	@Override
-	public void init(int largeur, int hauteur, ERace race) {
+	public void init(int largeur, int hauteur, ERace race) throws Exception{
 		// \pre: largeur>0
-		assertTrue("\\pre: largeur>0", super.largeur()>0);
+		assertTrue("\\pre: largeur>0", largeur>0);
 
 		// \pre: hauteur>0
-		assertTrue("\\pre: hauteur>0", super.hauteur()>0);
+		assertTrue("\\pre: hauteur>0", hauteur>0);
 
 		super.init(largeur, hauteur, race);
 		checkInvariants();
@@ -102,7 +102,7 @@ public class HotelDeVilleContrat extends HotelDeVilleDecorator {
 	}
 
 	@Override
-	public void retrait(int s) {
+	public void retrait(int s) throws Exception{
 		//Captures
 		int oldOrRestant=super.orRestant();
 		int oldCompteurAbandon=super.compteurAbandon();
@@ -110,7 +110,7 @@ public class HotelDeVilleContrat extends HotelDeVilleDecorator {
 		ERace oldAppartenance=super.appartenance();
 
 		// \pre: orRestant()-s>=0
-		assertTrue("\\pre: orRestant()-s>=0",(super.orRestant()-1)>=0);
+		assertTrue("\\pre: orRestant()-s>=0",(super.orRestant()-s)>=0);
 
 		// \pre: s>=0
 		assertTrue("\\pre: s>=0", s>=0);
@@ -130,7 +130,7 @@ public class HotelDeVilleContrat extends HotelDeVilleDecorator {
 	}
 
 	@Override
-	public void depot(int d) {
+	public void depot(int d)throws Exception {
 		//Captures
 		int oldOrRestant=super.orRestant();
 		int oldCompteurAbandon=super.compteurAbandon();
@@ -155,7 +155,7 @@ public class HotelDeVilleContrat extends HotelDeVilleDecorator {
 	}
 
 	@Override
-	public void accueil(ERace race) {
+	public void accueil(ERace race) throws Exception{
 		//Captures
 		int oldOrRestant=super.orRestant();
 
@@ -177,7 +177,7 @@ public class HotelDeVilleContrat extends HotelDeVilleDecorator {
 	}
 
 	@Override
-	public void abandoned() {
+	public void abandoned() throws Exception{
 		//Captures
 		int oldOrRestant=super.orRestant();
 		int oldCompteurAbandon=super.compteurAbandon();
