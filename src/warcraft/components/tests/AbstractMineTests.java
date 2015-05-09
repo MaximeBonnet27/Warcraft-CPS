@@ -203,7 +203,7 @@ public abstract class AbstractMineTests extends AssertionTests{
 		assertion(obj+": \\post: orRestant() == (orRestant()@pre-s)", mine.orRestant()==(oldOrRestant-s));
 
 		// \post: compteurAbandon() == compteurAbandon()@pre
-		assertTrue(obj+": \\post: compteurAbandon() == compteurAbandon()@pre", mine.compteurAbandon()==(oldCompteurAbandon));
+		assertion(obj+": \\post: compteurAbandon() == compteurAbandon()@pre", mine.compteurAbandon()==(oldCompteurAbandon));
 
 		// \post: (etat_d_appartenance()@pre== ETAT.OCCUPE) ==> (appartenance()==appartenance()@pre)
 		try {
@@ -291,12 +291,12 @@ public abstract class AbstractMineTests extends AssertionTests{
 	 * acceuil(ERace.ORC)
 	 * 
 	 * Oracle:
-	 * Pas d'exception
+	 * appartenance=ERace.ORC
 	 */
 	@Test
 	public void testAccueil3_0(){
 		String obj="Mine Test Objectif 3.0";
-
+		ERace race=ERace.ORC;
 		//Condition initial:
 		try {
 			mine.init(100, 100);
@@ -306,10 +306,11 @@ public abstract class AbstractMineTests extends AssertionTests{
 
 		//Operation
 		try {
-			mine.accueil(ERace.ORC);
+			mine.accueil(race);
 
 			//Oracle
 			assertion(obj, true);
+			assertion(obj,mine.appartenance()==race);
 		} catch (Exception e) {
 			assertion(obj+e.getMessage(),false);
 		}
@@ -326,26 +327,28 @@ public abstract class AbstractMineTests extends AssertionTests{
 	 * acceuil(ERace.ORC)
 	 * 
 	 * Oracle:
-	 * Pas d'exception
+	 * appartenance=ERace.ORC
 	 */
 	@Test
 	public void testAccueil3_1(){
 		String obj="Mine Test Objectif 3.1";
+		ERace race=ERace.ORC;
 
 		//Condition initial:
 		try {
 			mine.init(100, 100);
-			mine.accueil(ERace.ORC);
+			mine.accueil(race);
 		} catch (Exception e) {
 		}
 
 
 		//Operation
 		try {
-			mine.accueil(ERace.ORC);
+			mine.accueil(race);
 
 			//Oracle
 			assertion(obj, true);
+			assertion(obj,mine.appartenance()==race);
 		} catch (Exception e) {
 			assertion(obj+e.getMessage(),false);
 		}
@@ -388,7 +391,7 @@ public abstract class AbstractMineTests extends AssertionTests{
 	}
 
 	/**
-	 * Objectif 4: pre-condition accueil
+	 * Objectif 4: pre-condition abandoned
 	 * 
 	 * Cas 4_0: abandoned: positif
 	 * Condition initial:
@@ -424,7 +427,7 @@ public abstract class AbstractMineTests extends AssertionTests{
 	}
 
 	/**
-	 * Objectif 4: pre-condition accueil
+	 * Objectif 4: pre-condition abandoned
 	 * 
 	 * Cas 4_1: abandoned: error etat libre
 	 * 
