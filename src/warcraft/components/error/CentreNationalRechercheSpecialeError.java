@@ -123,6 +123,9 @@ public class CentreNationalRechercheSpecialeError implements ICentreNationalRech
 
 	@Override
 	public void construire() throws Exception {
+		//error
+		//if(!(enConstruction()))
+		//	throw new Exception("\\pre : enConstruction()");
 		if(constructionFinie())
 			throw new Exception("\\pre : !constructionFinie()");
 		tempsCourant += 1;
@@ -139,6 +142,10 @@ public class CentreNationalRechercheSpecialeError implements ICentreNationalRech
 
 	@Override
 	public void recherche() throws Exception {
+		//error
+		//if(!(enRecherche()))
+		//	throw new Exception("\\pre : enRecherche()");
+		
 		//error
 		//if(rechercheFinie())
 		//	throw new Exception("\\pre : !rechercheFinie()");

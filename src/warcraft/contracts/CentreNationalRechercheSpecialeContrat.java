@@ -159,6 +159,8 @@ public class CentreNationalRechercheSpecialeContrat extends CentreNationalRecher
 		int oldTempsCourant = super.tempsCourant();
 		int oldRechercheCourante=super.rechercheCourante();
 
+		// \pre : enConstruction()
+		assertTrue("\\pre : enConstruction()", super.enConstruction());
 		// \pre : !constructionFinie()
 		assertTrue("\\pre : !constructionFinie()", !super.constructionFinie());
 
@@ -203,6 +205,8 @@ public class CentreNationalRechercheSpecialeContrat extends CentreNationalRecher
 		int oldRechercheCourante = super.rechercheCourante();
 		int oldTempsCourant = super.tempsCourant();
 
+		// \pre : enRecherche()
+		assertTrue("\\pre : enRecherche()", !super.enRecherche());
 		// \pre : !rechercheFinie()
 		assertTrue("\\pre : !rechercheFinie()", !super.rechercheFinie());
 
@@ -230,7 +234,6 @@ public class CentreNationalRechercheSpecialeContrat extends CentreNationalRecher
 
 		// \post : rechercheCourante() == 0
 		assertTrue("\\post : rechercheCourante() == 0", super.rechercheCourante()==0);
-
 
 		// \post : tempsCourant() == tempsCourant()@pre
 		assertTrue("\\post : tempsCourant() == tempsCourant()@pre ", super.tempsCourant() == oldTempsCourant);

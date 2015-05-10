@@ -73,7 +73,7 @@ public interface ICentreNationalRechercheSpecialeService {
 
   /**
    * \pre : !constructionFinie()
-   * 
+   * \pre : enConstruction()
    * \post : tempsCourant() == tempsCourant()@pre + 1
    * \post : rechercheCourante() == rechercheCourante()@pre
    */
@@ -90,7 +90,7 @@ public interface ICentreNationalRechercheSpecialeService {
 
   /**
    * \pre : !rechercheFinie()
-   * 
+   * \pre : enRecherche()
    * \post : rechercheCourante() == rechercheCourante()@pre + 1
    * \post : tempsCourant() == tempsCourant()@pre
    */
