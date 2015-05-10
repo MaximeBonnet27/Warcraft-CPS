@@ -14,7 +14,7 @@ public class HotelDeVilleContrat extends HotelDeVilleDecorator {
 
 	public void checkInvariants(){
 		// \inv: estLaminee() == (orRestant() == 0)
-		assertTrue("\\inv: estLaminee() == (orRestant() == 0)", super.estLaminne()==(super.orRestant()==0));
+		assertTrue("\\inv: estLaminee() == (orRestant() == 0)", super.estLaminee()==(super.orRestant()==0));
 
 		// \inv: (etat_d_appartenance() == ETAT.LIBRE) == (compteurAbandon()=51)
 		assertTrue("\\inv: (etat_d_appartenance() == ETAT.LIBRE) == (compteurAbandon()=51)", (super.etat_d_appartenance()==EETAT.LIBRE)==(super.compteurAbandon()==51));
@@ -48,9 +48,9 @@ public class HotelDeVilleContrat extends HotelDeVilleDecorator {
 	}
 
 	@Override
-	public boolean estLaminne() {
+	public boolean estLaminee() {
 		checkInvariants();
-		return super.estLaminne();
+		return super.estLaminee();
 	}
 
 	@Override

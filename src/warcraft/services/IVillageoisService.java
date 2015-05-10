@@ -140,6 +140,9 @@ public interface IVillageoisService {
 	 * \post : if(comptence == COMPETENCE.VITESSE)
 	 * then vitesse() == vitese()@pre + val
 	 * else vitesse() == vitesse()@pre
+	 * 
+	 * \post : quantiteOr() == quantiteOr()@pre
+	 * \post : compteurCorvee() == compteurCorvee()@pre
 	 */
 	public void amelioration(ECompetence competence, int val);
 	

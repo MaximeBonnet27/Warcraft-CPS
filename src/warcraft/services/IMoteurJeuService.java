@@ -429,7 +429,21 @@ public interface IMoteurJeuService {
 	 *  			getRoute(i)=getRoute(i)@pre
 	 *  
 	 *  \post: \foreach i \in numeroesMuraille() :
-	 *  			getMuraille(i)=getMuraille(i)@pre
+	 *  getMuraille(i)=
+	 *        \if c1 == ECommande.ATTAQUER_MURAILLE \then
+	 *         \if a1 == i \then
+	 *             \if s1.size() > 1 \then
+	 *             new GestionCombat().initMurailleMultiple(s1, getMuraille(i)).combatMurailleMultiple().getMuraille()
+	 *             \else
+	 *              new GestionCombat().initMuraille(s1[0], getMuraille(i)).combatMuraille().getMuraille()
+	 *         \if c2 == ECommande.ATTAQUER_MURAILLE \then
+   *          \if a2 == i \then
+   *             \if s2.size() > 1 \then
+   *             new GestionCombat().initMurailleMultiple(s2, getMuraille(i)).combatMurailleMultiple().getMuraille()
+   *             \else
+   *              new GestionCombat().initMuraille(s2[0], getMuraille(i)).combatMuraille().getMuraille()
+      \else
+	 *  			getMuraille(i)@pre
 	 *  
 	 *  \post: hotelDeVilleA()=
 	 *  			\if getHotel(a1)@pre.etat_d_appartenance()==EEtat.OCCUPE \then

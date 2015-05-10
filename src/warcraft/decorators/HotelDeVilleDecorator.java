@@ -24,8 +24,8 @@ public abstract class HotelDeVilleDecorator implements IHotelDeVilleService {
 		return delegate.orRestant();
 	}
 
-	public boolean estLaminne() {
-		return delegate.estLaminne();
+	public boolean estLaminee() {
+		return delegate.estLaminee();
 	}
 
 	public int compteurAbandon() {

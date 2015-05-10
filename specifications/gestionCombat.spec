@@ -9,6 +9,7 @@ Observators:
 	const setAttaquant : [GestionCombat] -> Villageois
 		pre setAttaquant(GC) require estCombatMultiple(GC)
 	muraille : [GestionCombat] -> Muraille
+		pre muraille(GC) require estCombatMuraille(GC)
 	const estCombatMultiple : [GestionCombat] -> boolean
 	const estCombatMuraille : [GestionCombat] -> boolean
 Constructors:

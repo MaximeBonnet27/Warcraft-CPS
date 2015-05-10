@@ -10,7 +10,7 @@ public interface IHotelDeVilleService {
 	public int largeur();
 	public int hauteur();
 	public int orRestant();
-	public boolean estLaminne();
+	public boolean estLaminee();
 	public int compteurAbandon();
 	public EETAT etat_d_appartenance();
 	

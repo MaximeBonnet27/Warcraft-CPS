@@ -398,15 +398,15 @@ villageoisSurMuraille(M,x,y,l,h,m) =(min)= collision(x,y,l,h,positionMurailleX(M
 				si c1 == COMMANDE.ATTAQUER_MURAILLE, alors
 					si a1 == i, alors
 						si s1.size > 1, alors
-							gestionCombat::combatMurailleMultiple(gestionCombat::initMurailleMultiple(s1, getMuraille(M, i)))
+							gestionCombat::muraille(gestionCombat::combatMurailleMultiple(gestionCombat::initMurailleMultiple(s1, getMuraille(M, i))))
 						sinon, alors
-							gestionCombat::combatMuraille(gestionCombat::initMuraille(s1[0], getMuraille(M,i)))
+							gestionCombat::muraille(gestionCombat::combatMuraille(gestionCombat::initMuraille(s1[0], getMuraille(M,i))))
 				sinon, si c2 == COMMANDE.ATTAQUER_MURAILLE, alors
 					si a2 == i, alors
 						si s2.size > 1, alors
-							gestionCombat::combatMurailleMultiple(gestionCombat::initMurailleMultiple(s2, getMuraille(M, i)))
+							gestionCombat::muraille(gestionCombat::combatMurailleMultiple(gestionCombat::initMurailleMultiple(s2, getMuraille(M, i))))
 						sinon, alors
-							gestionCombat::combatMuraille(gestionCombat::initMuraille(s2[0], getMuraille(M,i)))
+							gestionCombat::muraille(gestionCombat::combatMuraille(gestionCombat::initMuraille(s2[0], getMuraille(M,i))))
 				sinon,
 					 getMuraille(M,i)
 

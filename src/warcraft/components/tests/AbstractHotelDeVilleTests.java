@@ -24,7 +24,7 @@ public abstract class AbstractHotelDeVilleTests extends AssertionTests {
 
 	public void checkInvariants(String obj){
 		// \inv: estLaminee() == (orRestant() == 0)
-		assertion(obj+": \\inv: estLaminee() == (orRestant() == 0)", hotel.estLaminne()==(hotel.orRestant()==0));
+		assertion(obj+": \\inv: estLaminee() == (orRestant() == 0)", hotel.estLaminee()==(hotel.orRestant()==0));
 
 		// \inv: (etat_d_appartenance() == ETAT.LIBRE) == (compteurAbandon()=51)
 		assertion(obj+": \\inv: (etat_d_appartenance() == ETAT.LIBRE) == (compteurAbandon()=51)", (hotel.etat_d_appartenance()==EETAT.LIBRE)==(hotel.compteurAbandon()==51));

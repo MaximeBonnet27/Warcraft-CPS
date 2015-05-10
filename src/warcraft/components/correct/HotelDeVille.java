@@ -28,7 +28,7 @@ public class HotelDeVille implements IHotelDeVilleService {
 	}
 
 	@Override
-	public boolean estLaminne() {
+	public boolean estLaminee() {
 		return orRestant()==0;
 	}
 
