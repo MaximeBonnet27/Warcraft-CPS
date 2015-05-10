@@ -196,8 +196,8 @@ public class HotelDeVilleContrat extends HotelDeVilleDecorator {
 		// \post: compteurAbandon() == (compteurAbandon()@pre + 1)
 		assertTrue("\\post: compteurAbandon() == (compteurAbandon()@pre + 1)", super.compteurAbandon()==(oldCompteurAbandon+1));
 
-		// \post: appartenance() == appartenance()@pre
-		assertTrue("\\post: appartenance() == appartenance()@pre", super.appartenance()==oldAppartenance);
+		// \post:  (etat_d_appartenance()== ETAT.OCCUPE) ==>appartenance() == appartenance()@pre
+		assertTrue("\\post:  (etat_d_appartenance()== ETAT.OCCUPE) ==>appartenance() == appartenance()@pre",  !(super.etat_d_appartenance()==EETAT.OCCUPE) || (super.appartenance()==oldAppartenance));
 	}
 
 }

@@ -63,7 +63,7 @@ public interface IHotelDeVilleService {
 	* \pre: (etat_d_appartenance()==ETAT.OCCOPE) ==> (race == appartenance())
 	* \post: orRestant() == orRestant()@pre 
 	* \post: compteurAbandon() == 0
-	* \post: appartenance() == r
+	* \post: appartenance() == race
 	*/
 	public void accueil(ERace race) throws Exception;
 	
@@ -71,7 +71,7 @@ public interface IHotelDeVilleService {
 	* \pre: etat_d_appartenance() == ETAT.OCCUPE
 	* \post: orRestant() == orRestant()@pre
 	* \post: compteurAbandon() == (compteurAbandon()@pre + 1)
-	* \post: appartenance() == appartenance()@pre
+	* \post: (etat_d_appartenance()== ETAT.OCCUPE) ==> appartenance() == appartenance()@pre
 	*/
 	public void abandoned() throws Exception;
 }

@@ -56,7 +56,6 @@ public interface IMineService {
 	 * \post: orRestant() == orRestant()@pre 
 	 * \post: compteurAbandon() == 0
 	 * \post: appartenance() == race
-	 * @throws Exception 
 	 */
 	public void accueil(ERace race) throws Exception;
 
@@ -65,7 +64,6 @@ public interface IMineService {
 	 * \post: orRestant() == orRestant()@pre
 	 * \post: compteurAbandon() == (compteurAbandon()@pre + 1)
 	 * \post: (etat_d_appartenance()== ETAT.OCCUPE) ==> appartenance() == appartenance()@pre
-	 * @throws Exception 
 	 */
 	public void abandoned() throws Exception;	
 }

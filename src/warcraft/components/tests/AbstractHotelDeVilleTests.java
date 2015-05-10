@@ -40,7 +40,7 @@ public abstract class AbstractHotelDeVilleTests extends AssertionTests {
 	}
 
 	/**
-	 * Objectif 1: pre-condition init
+	 * Objectif 1: init
 	 * 
 	 * Cas 1.0: init: positif
 	 * Condition initial:
@@ -50,7 +50,17 @@ public abstract class AbstractHotelDeVilleTests extends AssertionTests {
 	 * 	init(100,100,ERace.HUMAIN)
 	 * 
 	 * Oracle:
-	 * 	Pas d'exception
+	 * 	Pas d'exception&&
+	 *	estLaminee() == (orRestant() == 0) &&
+	 *	(etat_d_appartenance() == ETAT.LIBRE) == (compteurAbandon()=51) &&
+	 *	(etat_d_appartenance() == ETAT.OCCUPE) == (compteurAbandon()<51)&&
+	 *	 orRestant()>=0 &&
+	 *	0<=compteurAbandon()<=51 &&
+	 * 	largeur() == largeur &&
+	 *  hauteur() == hauteur &&
+	 *  orRestant() == 16 &&
+	 * 	compteurAbandon() == 0 &&
+	 *  race()=ERace.HUMAIN
 	 */
 	@Test
 	public void testInit1_0(){
@@ -61,45 +71,40 @@ public abstract class AbstractHotelDeVilleTests extends AssertionTests {
 
 		//Condition initial:
 
-		//Operation:
 		try {
+			//Operation:
 			hotel.init(largeur, hauteur,race);
 
 
 			//Oracle:
-			assertion(obj,true);
+			checkInvariants(obj);
+
+			// \post: largeur() == largeur
+			assertion(obj+": \\post: largeur() == largeur", hotel.largeur()==largeur);
+
+			// \post: hauteur() == hauteur
+			assertion(obj+": \\post: hauteur() == hauteur", hotel.hauteur()==hauteur);
+
+			// \post: orRestant() == 500
+			assertion(obj+": \\post: orRestant() == 500", hotel.orRestant()==16);
+
+			// \post: compteurAbandon() == 51
+			assertion(obj+": \\post: compteurAbandon() == 0", hotel.compteurAbandon()==0);
+
+			// \post: appartenance() == race
+			try {
+				assertion("\\post: appartenance() == race", hotel.appartenance()==race);
+			} catch (Exception e) {
+				assertion(obj+": appartenance devrait passer", false);
+			}
 		} catch (Exception e) {
 			assertion(obj+e.getMessage(), false);
-		}
-
-
-
-
-		checkInvariants(obj);
-
-		// \post: largeur() == largeur
-		assertion(obj+": \\post: largeur() == largeur", hotel.largeur()==largeur);
-
-		// \post: hauteur() == hauteur
-		assertion(obj+": \\post: hauteur() == hauteur", hotel.hauteur()==hauteur);
-
-		// \post: orRestant() == 500
-		assertion(obj+": \\post: orRestant() == 500", hotel.orRestant()==16);
-
-		// \post: compteurAbandon() == 51
-		assertion(obj+": \\post: compteurAbandon() == 0", hotel.compteurAbandon()==0);
-
-		// \post: appartenance() == race
-		try {
-			assertion("\\post: appartenance() == race", hotel.appartenance()==race);
-		} catch (Exception e) {
-			assertion(obj+": appartenance devrait passer", false);
 		}
 	}
 
 
 	/**
-	 * Objectif 1: pre-condition init
+	 * Objectif 1: init
 	 * Cas 1.1: init: error largeur
 	 * Condition initial:
 	 *  aucune
@@ -126,12 +131,12 @@ public abstract class AbstractHotelDeVilleTests extends AssertionTests {
 			//Oracle:
 			assertion(obj+": init devrait échouer", false);
 		} catch (Exception e) {
-			assertion(obj+": init devrait échouer", true);
+			assertion(obj, true);
 		}
 	}
 
 	/**
-	 * Objectif 1: pre-condition init
+	 * Objectif 1:init
 	 * 
 	 * Cas 1.2: init: error hauteur
 	 * Condition initial:
@@ -152,19 +157,19 @@ public abstract class AbstractHotelDeVilleTests extends AssertionTests {
 
 		//Condition initial:
 
-		//Operation:
 		try {
+			//Operation:
 			hotel.init(largeur, hauteur,race);
 
 			//Oracle:
 			assertion(obj+": init devrait échouer", false);
 		} catch (Exception e) {
-			assertion(obj+": init devrait échouer", true);
+			assertion(obj, true);
 		}
 	}
 
 	/**
-	 * Objectif 2: pre-condition retrait
+	 * Objectif 2: retrait
 	 * 
 	 * Cas 2.0: retrait: positif
 	 * Condition initial:
@@ -174,62 +179,75 @@ public abstract class AbstractHotelDeVilleTests extends AssertionTests {
 	 * 	retrait(10)
 	 * 
 	 * Oracle:
-	 * 	Pas d'exception
+	 * 	Pas d'exception&&
+	 * 	estLaminee() == (orRestant() == 0) &&
+	 *	(etat_d_appartenance() == ETAT.LIBRE) == (compteurAbandon()=51) &&
+	 *	(etat_d_appartenance() == ETAT.OCCUPE) == (compteurAbandon()<51)&&
+	 *	 orRestant()>=0 &&
+	 *	0<=compteurAbandon()<=51 &&
+	 *	orRestant() == (orRestant()@pre-10) &&
+	 *	compteurAbandon() == compteurAbandon()@pre &&
+	 *	(etat_d_appartenance()@pre== ETAT.OCCUPE) ==> (appartenance()==appartenance()@pre)
 	 */
+
 	@Test
 	public void testRetrait2_0(){
 		String obj="HotelDeVille Test Objectif 2.0";
 		int s=10;
 
-		//Condition initial:
 		try {
+			//Condition initial:
 			hotel.init(100, 100,ERace.HUMAIN);
+
+			//Captures
+			int oldOrRestant=hotel.orRestant();
+			int oldCompteurAbandon=hotel.compteurAbandon();
+			EETAT oldEtat_d_appartenance=hotel.etat_d_appartenance();
+			ERace oldAppartenance=null;
+
+			try {
+				oldAppartenance = hotel.appartenance();
+
+				try {
+					//Operation:
+					hotel.retrait(s);
+
+					//Oracle:
+					assertion(obj,true);
+				} catch (Exception e) {
+					assertion(obj+e.getMessage(),false);
+				}
+
+				checkInvariants(obj);
+
+				// \post: orRestant() == (orRestant()@pre-s)
+				assertion(obj+": \\post: orRestant() == (orRestant()@pre-s)", hotel.orRestant()==(oldOrRestant-s));
+
+				// \post: compteurAbandon() == compteurAbandon()@pre
+				assertion(obj+": \\post: compteurAbandon() == compteurAbandon()@pre", hotel.compteurAbandon()==(oldCompteurAbandon));
+
+				// \post: (etat_d_appartenance()@pre== ETAT.OCCUPE) ==> (appartenance()==appartenance()@pre)
+				try {
+					assertion(obj+": \\post: (etat_d_appartenance()@pre== ETAT.OCCUPE) ==> (appartenance()==appartenance()@pre)", !(oldEtat_d_appartenance==EETAT.OCCUPE) || (hotel.appartenance()==oldAppartenance));
+				} catch (Exception e) {
+					assertion(obj+": \\post: (etat_d_appartenance()@pre== ETAT.OCCUPE) ==> (appartenance()==appartenance()@pre)", false);
+				}
+
+			} catch (Exception e1) {
+				assertion(obj+": erreur durant l'initialisation du test: "+e1.getMessage(), false);
+			}
+
 		} catch (Exception e1) {
-		}
-
-		//Captures
-		int oldOrRestant=hotel.orRestant();
-		int oldCompteurAbandon=hotel.compteurAbandon();
-		EETAT oldEtat_d_appartenance=hotel.etat_d_appartenance();
-		ERace oldAppartenance=null;
-
-		try {
-			oldAppartenance = hotel.appartenance();
-		} catch (Exception e1) {
-		}
-
-		//Operation:
-		try {
-			hotel.retrait(s);
-
-			//Oracle:
-			assertion(obj,true);
-		} catch (Exception e) {
-			assertion(obj+e.getMessage(),false);
-		}
-
-		checkInvariants(obj);
-
-		// \post: orRestant() == (orRestant()@pre-s)
-		assertion(obj+": \\post: orRestant() == (orRestant()@pre-s)", hotel.orRestant()==(oldOrRestant-s));
-
-		// \post: compteurAbandon() == compteurAbandon()@pre
-		assertion(obj+": \\post: compteurAbandon() == compteurAbandon()@pre", hotel.compteurAbandon()==(oldCompteurAbandon));
-
-		// \post: (etat_d_appartenance()@pre== ETAT.OCCUPE) ==> (appartenance()==appartenance()@pre)
-		try {
-			assertion(obj+": \\post: (etat_d_appartenance()@pre== ETAT.OCCUPE) ==> (appartenance()==appartenance()@pre)", !(oldEtat_d_appartenance==EETAT.OCCUPE) || (hotel.appartenance()==oldAppartenance));
-		} catch (Exception e) {
-			assertion(obj+": \\post: (etat_d_appartenance()@pre== ETAT.OCCUPE) ==> (appartenance()==appartenance()@pre)", false);
+			assertion(obj+": erreur durant l'initialisation du test: "+e1.getMessage(), false);
 		}
 	}
 
 	/**
-	 * Objectif 2: pre-condition retrait
+	 * Objectif 2: retrait
 	 * 
 	 * Cas 2.1: retrait: error pas assez d'or
 	 * Condition initial:
-	 *  retrait(init(100,100,ERace.HUMAIN),500)
+	 *  retrait(init(100,100,ERace.HUMAIN),16)
 	 *  
 	 * Operation:
 	 * 	retrait(1)
@@ -242,24 +260,28 @@ public abstract class AbstractHotelDeVilleTests extends AssertionTests {
 		String obj="HotelDeVille Test Objectif 2.1";
 		int s=1;
 
-		//Condition initial:
 		try {
+			//Condition initial:
 			hotel.init(100, 100,ERace.HUMAIN);
-			hotel.retrait(500);
+			hotel.retrait(16);
+
+			try {
+				//Operation:
+				hotel.retrait(s);
+
+				//Oracle:
+				assertion(obj+": retrait devrait échouer", false);
+
+			} catch (Exception e) {
+				assertion(obj, true);
+			}
 		} catch (Exception e1) {
-		}
-
-		try {
-			hotel.retrait(s);
-			assertion(obj+": retrait devrait échouer", false);
-
-		} catch (Exception e) {
-			assertion(obj, true);
+			assertion(obj+": erreur durant l'initialisation du test: "+e1.getMessage(), false);
 		}
 	}
 
 	/**
-	 * Objectif 2: pre-condition retrait
+	 * Objectif 2:  retrait
 	 * 
 	 * Cas 2.2: retrait: error s<0
 	 * Condition initial:
@@ -276,23 +298,28 @@ public abstract class AbstractHotelDeVilleTests extends AssertionTests {
 		String obj="HotelDeVille Test Objectif 2.2";
 		int s=-1;
 
-		//Condition initial:
 		try {
+			//Condition initial:
 			hotel.init(100, 100,ERace.HUMAIN);
+
+			try {
+				//Operation:
+				hotel.retrait(s);
+
+				//Oracle:
+				assertion(obj+": retrait devrait échouer", false);
+
+			} catch (Exception e) {
+				assertion(obj, true);
+			}
+
 		} catch (Exception e1) {
-		}
-
-		try {
-			hotel.retrait(s);
-			assertion(obj+": retrait devrait échouer", false);
-
-		} catch (Exception e) {
-			assertion(obj, true);
+			assertion(obj+": erreur durant l'initialisation du test: "+e1.getMessage(), false);
 		}
 	}
 
 	/**
-	 * Objectif 3: pre-condition accueil
+	 * Objectif 3: accueil
 	 * 
 	 * Cas 3_0: accueil: positif etat libre
 	 * Condition initial:
@@ -304,42 +331,51 @@ public abstract class AbstractHotelDeVilleTests extends AssertionTests {
 	 * acceuil(ERace.ORC)
 	 * 
 	 * Oracle:
-	 * appartenance==ERace.ORC
+	 * pas d'exception &&
+	 * estLaminee() == (orRestant() == 0) &&
+	 *	(etat_d_appartenance() == ETAT.LIBRE) == (compteurAbandon()=51) &&
+	 *	(etat_d_appartenance() == ETAT.OCCUPE) == (compteurAbandon()<51)&&
+	 *	orRestant()>=0 &&
+	 *	0<=compteurAbandon()<=51 &&
+	 *	orRestant() == orRestant()@pre &&
+	 *	compteurAbandon() == 0 &&
+	 * 	appartenance=ERace.ORC
 	 */
 	@Test
 	public void testAccueil3_0(){
 		String obj="HotelDeVille Test Objectif 3.0";
 		ERace race=ERace.ORC;
 
-		//Captures
-				int oldOrRestant=hotel.orRestant();
-				
-		//Condition initial:
+
 		try {
+			//Condition initial:
 			hotel.init(100, 100,ERace.HUMAIN);
 			for(int i=0;i<51;i++){
 				hotel.abandoned();
 			}
 
-			if(hotel.compteurAbandon()==51){
-				//Operation
-				try {
-					hotel.accueil(race);
+			//Captures:
+			int oldOrRestant=hotel.orRestant();
 
-					//Oracle
-					// \post: orRestant() == orRestant()@pre
-					assertion("\\post: orRestant() == orRestant()@pre", hotel.orRestant()==oldOrRestant);
+			//Operation
+			try {
+				hotel.accueil(race);
 
-					// \post: compteurAbandon() == 0
-					assertion("\\post: compteurAbandon() == 0", hotel.compteurAbandon()==0);
+				//Oracle
 
-					// \post: appartenance() == r
-					assertion("\\post: appartenance() == race", hotel.appartenance()==race);
-				} catch (Exception e) {
-					assertion(obj+e.getMessage(),false);
-				}
-			}else{
-				assertion(obj+"erreur lors de l'initialisation du test : ne passe pas a l'état LIBRE", false);
+				checkInvariants(obj);
+
+				// \post: orRestant() == orRestant()@pre
+				assertion(obj+"\\post: orRestant() == orRestant()@pre", hotel.orRestant()==oldOrRestant);
+
+				// \post: compteurAbandon() == 0
+				assertion(obj+"\\post: compteurAbandon() == 0", hotel.compteurAbandon()==0);
+
+				// \post: appartenance() == race
+				assertion(obj+"\\post: appartenance() == race", hotel.appartenance()==race);
+
+			} catch (Exception e) {
+				assertion(obj+e.getMessage(),false);
 			}
 		} catch (Exception e) {
 			assertion(obj+"erreur lors de l'initialisation du test ="+e.getMessage(), false);
@@ -347,7 +383,7 @@ public abstract class AbstractHotelDeVilleTests extends AssertionTests {
 	}
 
 	/**
-	 * Objectif 3: pre-condition accueil
+	 * Objectif 3: accueil
 	 * 
 	 * Cas 3_1: accueil: positif etat occupe par meme race
 	 * Condition initial:
@@ -357,47 +393,55 @@ public abstract class AbstractHotelDeVilleTests extends AssertionTests {
 	 * acceuil(ERace.ORC)
 	 * 
 	 * Oracle:
-	 * appartenance=ERace.ORC
+	 * pas d'exception &&
+	 * estLaminee() == (orRestant() == 0) &&
+	 *	(etat_d_appartenance() == ETAT.LIBRE) == (compteurAbandon()=51) &&
+	 *	(etat_d_appartenance() == ETAT.OCCUPE) == (compteurAbandon()<51)&&
+	 *	orRestant()>=0 &&
+	 *	0<=compteurAbandon()<=51 &&
+	 *	orRestant() == orRestant()@pre &&
+	 *	compteurAbandon() == 0 &&
+	 * 	appartenance=ERace.ORC
 	 */
 	@Test
 	public void testAccueil3_1(){
 		String obj="HotelDeVille Test Objectif 3.1";
 		ERace race=ERace.ORC;
-		
-		//Captures
-		int oldOrRestant=hotel.orRestant();
-		
-		//Condition initial:
+
 		try {
+			//Condition initial:
 			hotel.init(100, 100,race);
+
+			//Captures
+			int oldOrRestant=hotel.orRestant();
+
+			try {
+				//Operation
+				hotel.accueil(ERace.ORC);
+
+				//Oracle
+				// \post: orRestant() == orRestant()@pre
+				assertion(obj+"\\post: orRestant() == orRestant()@pre", hotel.orRestant()==oldOrRestant);
+
+				// \post: compteurAbandon() == 0
+				assertion(obj+"\\post: compteurAbandon() == 0", hotel.compteurAbandon()==0);
+
+				// \post: appartenance() == r
+				assertion(obj+"\\post: appartenance() == race", hotel.appartenance()==race);
+			} catch (Exception e) {
+				assertion(obj+e.getMessage(),false);
+			}
 		} catch (Exception e) {
-		}
-
-
-		//Operation
-		try {
-			hotel.accueil(ERace.ORC);
-
-			//Oracle
-			// \post: orRestant() == orRestant()@pre
-			assertion("\\post: orRestant() == orRestant()@pre", hotel.orRestant()==oldOrRestant);
-
-			// \post: compteurAbandon() == 0
-			assertion("\\post: compteurAbandon() == 0", hotel.compteurAbandon()==0);
-
-			// \post: appartenance() == r
-			assertion("\\post: appartenance() == race", hotel.appartenance()==race);
-		} catch (Exception e) {
-			assertion(obj+e.getMessage(),false);
+			assertion(obj+"erreur lors de l'initialisation du test ="+e.getMessage(), false);
 		}
 	}
 
 	/**
-	 * Objectif 3: pre-condition accueil
+	 * Objectif 3: accueil
 	 * 
 	 * Cas 3_2: accueil: error etat occupe par une autre race
 	 * Condition initial:
-	 * acceuil(init(100,100),ERace.HUMAIN)
+	 * init(100,100,ERace.HUMAIN)
 	 * 
 	 * Operation:
 	 * acceuil(ERace.ORC)
@@ -407,70 +451,164 @@ public abstract class AbstractHotelDeVilleTests extends AssertionTests {
 	 */
 	@Test
 	public void testAccueil3_2(){
-		String obj="Mine Test Objectif 3.2";
+		String obj="HotelDeVille Test Objectif 3.2";
 		ERace race=ERace.ORC;
-		
-		//Condition initial:
+
 		try {
+			//Condition initial:
 			hotel.init(100, 100,ERace.HUMAIN);
+
+			try {
+				//Operation
+				hotel.accueil(race);
+
+				//Oracle
+				assertion(obj+": acceuil devrait echouer", false);
+			} catch (Exception e) {
+				assertion(obj, true);
+			}
 		} catch (Exception e) {
-		}
-
-
-		//Operation
-		try {
-			hotel.accueil(race);
-
-			//Oracle
-			assertion(obj+": acceuil devrait echouer", false);
-		} catch (Exception e) {
-			assertion(obj, true);
+			assertion(obj+"erreur lors de l'initialisation du test ="+e.getMessage(), false);
 		}
 	}
 
 	/**
-	 * Objectif 4: pre-condition abandoned
+	 * Objectif 4: abandoned
 	 * 
 	 * Cas 4_0: abandoned: positif
 	 * Condition initial:
-	 * acceuil(init(100,100),ERace.HUMAIN)
+	 * init(100,100,ERace.HUMAIN)
 	 * 
 	 * Operation:
 	 * abandoned()
 	 * 
 	 * Oracle:
-	 * Exception pour abandoned
+	pas d'exception &&
+	 *  estLaminee() == (orRestant() == 0) &&
+	 *	(etat_d_appartenance() == ETAT.LIBRE) == (compteurAbandon()=51) &&
+	 *	(etat_d_appartenance() == ETAT.OCCUPE) == (compteurAbandon()<51)&&
+	 *	orRestant()>=0 &&
+	 *	0<=compteurAbandon()<=51 &&
+	 *	orRestant() == orRestant()@pre &&
+	 *	compteurAbandon() == (compteurAbandon()@pre + 1) &&
+	 * 	etat_d_appartenance()== ETAT.OCCUPE &&
+	 * 	appartenance() == appartenance()@pre
 	 */
 	@Test
 	public void testAccueil4_0(){
-		String obj="Mine Test Objectif 4.0";
+		String obj="HotelDeVille Test Objectif 4.0";
 
-		//Condition initial:
 		try {
-			mine.init(100, 100);
-			mine.accueil(ERace.HUMAIN);
-		} catch (Exception e) {
-		}
+			//Condition initial:
+			hotel.init(100, 100,ERace.HUMAIN);
+
+			//Captures:
+			int oldOrRestant=hotel.orRestant();
+			int oldCompteurAbandon=hotel.compteurAbandon();
+			try {
+				ERace oldAppartenance=hotel.appartenance();
 
 
-		//Operation
-		try {
-			mine.abandoned();
+				try {
+					//Operation
+					hotel.abandoned();
 
-			//Oracle
-			assertion(obj, true);
-		} catch (Exception e) {
-			assertion(obj+e.getMessage(),false);
+					//Oracle
+					checkInvariants(obj);
+					// \post: orRestant() == orRestant()@pre
+					assertTrue(obj+"\\post: orRestant() == orRestant()@pre", hotel.orRestant()==oldOrRestant);
+
+					// \post: compteurAbandon() == (compteurAbandon()@pre + 1)
+					assertTrue(obj+"\\post: compteurAbandon() == (compteurAbandon()@pre + 1)", hotel.compteurAbandon()==(oldCompteurAbandon+1));
+
+					// post: etat_d_appartenance()== ETAT.OCCUPE
+					assertion(obj+"\\post: etat_d_appartenance()== ETAT.OCCUPE", hotel.etat_d_appartenance()== EETAT.OCCUPE);
+
+					// \post: 	appartenance() == appartenance()@pre
+					assertTrue(obj+"\\post: appartenance() == appartenance()@pre", hotel.appartenance()==oldAppartenance);
+
+				} catch (Exception e) {
+					assertion(obj+e.getMessage(),false);
+				}
+			} catch (Exception e) {
+				assertion(obj+": erreur durant l'initialisation du test: "+e.getMessage(), false);
+			}
+		} catch (Exception e1) {
+			assertion(obj+": erreur durant l'initialisation du test: "+e1.getMessage(), false);
 		}
 	}
 
 	/**
-	 * Objectif 4: pre-condition abandoned
+	 * Objectif 4:abandoned
 	 * 
-	 * Cas 4_1: abandoned: error etat libre
+	 * Cas 4_1: abandoned: positif devient libre
+	 * Condition initial:
+	 * init(100,100,ERace.HUMAIN)
+	 * for i in range 1 to 51
+	 * 	abandoned()
+	 * 
+	 * Operation:
+	 * abandoned()
+	 * 
+	 * Oracle:
+	 * pas d'exception &&
+	 *  estLaminee() == (orRestant() == 0) &&
+	 *	(etat_d_appartenance() == ETAT.LIBRE) == (compteurAbandon()=51) &&
+	 *	(etat_d_appartenance() == ETAT.OCCUPE) == (compteurAbandon()<51)&&
+	 *	orRestant()>=0 &&
+	 *	0<=compteurAbandon()<=51 &&
+	 *	orRestant() == orRestant()@pre &&
+	 *	compteurAbandon() == (compteurAbandon()@pre + 1) &&
+	 * 	etat_d_appartenance()== ETAT.LIBRE
+	 *	
+	 */
+	@Test
+	public void testAbandoned4_1(){
+		String obj="HotelDeVille Test Objectif 4.1";
+
+		try {
+			//Condition initial:
+			hotel.init(100, 100,ERace.HUMAIN);
+			for(int i=0;i<50;i++){
+				hotel.abandoned();
+			}
+
+			//Captures:
+			int oldOrRestant=hotel.orRestant();
+			int oldCompteurAbandon=hotel.compteurAbandon();
+
+			//Operation
+			try {
+				hotel.abandoned();
+
+				//Oracle
+				checkInvariants(obj);
+				// \post: orRestant() == orRestant()@pre
+				assertTrue(obj+"\\post: orRestant() == orRestant()@pre", hotel.orRestant()==oldOrRestant);
+
+				// \post: compteurAbandon() == (compteurAbandon()@pre + 1)
+				assertTrue(obj+"\\post: compteurAbandon() == (compteurAbandon()@pre + 1)", hotel.compteurAbandon()==(oldCompteurAbandon+1));
+
+				// \post: etat_d_appartenance()== ETAT.LIBRE
+				assertTrue(obj+"\\post: etat_d_appartenance()== ETAT.LIBRE", hotel.etat_d_appartenance()==EETAT.LIBRE);
+
+			} catch (Exception e) {
+				assertion(obj+e.getMessage(),false);
+			}
+		} catch (Exception e) {
+			assertion(obj+": erreur durant l'initialisation du test: "+e.getMessage(), false);
+		}
+	}
+
+	/**
+	 * Objectif 4: abandoned
+	 * 
+	 * Cas 4_2: abandoned: error etat libre
 	 * 
 	 * Condition initial:
-	 * init(100,100)
+	 * init(100,100,ERace.HUMAIN)
+	 * for i in range 0 to 51
+	 * 	abandoned()
 	 * 
 	 * Operation:
 	 * abandoned()
@@ -479,94 +617,139 @@ public abstract class AbstractHotelDeVilleTests extends AssertionTests {
 	 * Exception pour abandoned
 	 */
 	@Test
-	public void testAccueil4_1(){
-		String obj="Mine Test Objectif 4.1";
+	public void testAbandoned4_2(){
+		String obj="HotelDeVille Test Objectif 4.2";
 
-		//Condition initial:
 		try {
-			mine.init(100, 100);
+			//Condition initial:
+			hotel.init(100, 100,ERace.HUMAIN);
+			for(int i=0;i<51;i++){
+				hotel.abandoned();
+			}
+
+			//Operation
+			try {
+				hotel.abandoned();
+
+				//Oracle
+				assertion(obj+": abandoned devrait echouer", false);
+			} catch (Exception e) {
+				assertion(obj,true);
+			}
 		} catch (Exception e) {
-		}
-
-
-		//Operation
-		try {
-			mine.abandoned();
-
-			//Oracle
-			assertion(obj+": abandoned devrait echouer", false);
-		} catch (Exception e) {
-			assertion(obj,true);
-		}
-	}
-
-	/**
-	 * Objectif 5: pre-condition appartenance
-	 * 
-	 * Cas 5_0: appartenance: positif
-	 * 
-	 * Condition initial:
-	 * acceuil(init(100,100),ERace.HUMAIN)
-	 * 
-	 * Operation:
-	 * appartenance()
-	 * 
-	 * Oracle:
-	 * Pas d'exception et valeur de retour = ERace.HUMAIN
-	 */
-	public void testappartenance5_0(){
-		String obj="Mine Test Objectif 5.0";
-
-		//Condition initial
-		try {
-			mine.init(100, 100);
-			mine.accueil(ERace.HUMAIN);
-		} catch (Exception e) {
-		}
-
-		//Operation
-		try {
-			ERace val = mine.appartenance();
-
-			//Oracle
-			assertion(obj, true);
-			assertion(obj, val==ERace.HUMAIN);
-		} catch (Exception e) {
-			assertion(obj+e.getMessage(), false);
+			assertion(obj+": erreur durant l'initialisation du test: "+e.getMessage(), false);
 		}
 	}
 
 	/**
-	 * Objectif 5: pre-condition appartenance
+	 * Objectif 5: depot
 	 * 
-	 * Cas 5_1: appartenance: error non occupe 
-	 * 
+	 * Cas 5.0: depot: positif
 	 * Condition initial:
-	 * init(100,100)
-	 * 
+	 *  init(100,100,ERace.HUMAIN)
+	 *  
 	 * Operation:
-	 * appartenance()
+	 * 	depot(10)
 	 * 
 	 * Oracle:
-	 * Exception pour apparetenance
+	 * 	Pas d'exception&&
+	 * 	estLaminee() == (orRestant() == 0) &&
+	 *	(etat_d_appartenance() == ETAT.LIBRE) == (compteurAbandon()=51) &&
+	 *	(etat_d_appartenance() == ETAT.OCCUPE) == (compteurAbandon()<51)&&
+	 *	 orRestant()>=0 &&
+	 *	0<=compteurAbandon()<=51 &&
+	 *	orRestant() == (orRestant()@pre+10) &&
+	 *	compteurAbandon() == compteurAbandon()@pre &&
+	 *	(etat_d_appartenance()@pre== ETAT.OCCUPE) ==> (appartenance()==appartenance()@pre)
 	 */
-	public void testappartenance5_1(){
-		String obj="Mine Test Objectif 5.1";
 
-		//Condition initial
+	@Test
+	public void testDepot5_0(){
+		String obj="HotelDeVille Test Objectif 5.0";
+		int d=10;
+
 		try {
-			mine.init(100, 100);
-		} catch (Exception e) {
+			//Condition initial:
+			hotel.init(100, 100,ERace.HUMAIN);
+
+			//Captures
+			int oldOrRestant=hotel.orRestant();
+			int oldCompteurAbandon=hotel.compteurAbandon();
+			EETAT oldEtat_d_appartenance=hotel.etat_d_appartenance();
+			ERace oldAppartenance=null;
+
+			try {
+				oldAppartenance = hotel.appartenance();
+
+				try {
+					//Operation:
+					hotel.depot(d);
+
+					//Oracle:
+					assertion(obj,true);
+				} catch (Exception e) {
+					assertion(obj+e.getMessage(),false);
+				}
+
+				checkInvariants(obj);
+
+				// \post: orRestant() == (orRestant()@pre-s)
+				assertion(obj+": \\post: orRestant() == (orRestant()@pre-s)", hotel.orRestant()==(oldOrRestant+d));
+
+				// \post: compteurAbandon() == compteurAbandon()@pre
+				assertion(obj+": \\post: compteurAbandon() == compteurAbandon()@pre", hotel.compteurAbandon()==(oldCompteurAbandon));
+
+				// \post: (etat_d_appartenance()@pre== ETAT.OCCUPE) ==> (appartenance()==appartenance()@pre)
+				try {
+					assertion(obj+": \\post: (etat_d_appartenance()@pre== ETAT.OCCUPE) ==> (appartenance()==appartenance()@pre)", !(oldEtat_d_appartenance==EETAT.OCCUPE) || (hotel.appartenance()==oldAppartenance));
+				} catch (Exception e) {
+					assertion(obj+": \\post: (etat_d_appartenance()@pre== ETAT.OCCUPE) ==> (appartenance()==appartenance()@pre)", false);
+				}
+
+			} catch (Exception e1) {
+				assertion(obj+": erreur durant l'initialisation du test: "+e1.getMessage(), false);
+			}
+
+		} catch (Exception e1) {
+			assertion(obj+": erreur durant l'initialisation du test: "+e1.getMessage(), false);
 		}
+	}
 
-		//Operation
+	/**
+	 * Objectif 5:  depot
+	 * 
+	 * Cas 5.1: depot: error d<0
+	 * Condition initial:
+	 *  init(100,100,ERace.HUMAIN)
+	 *  
+	 * Operation:
+	 * 	depot(-1)
+	 * 
+	 * Oracle:
+	 * 	Exception pour depot
+	 */
+	@Test
+	public void testDepot5_1(){
+		String obj="HotelDeVille Test Objectif 5.1";
+		int d=-1;
+
 		try {
-			mine.appartenance();
+			//Condition initial:
+			hotel.init(100, 100,ERace.HUMAIN);
 
-			//Oracle
-			assertion(obj+" appartenance ne devrai pas passer", false);
-		} catch (Exception e) {
-			assertion(obj, true);
+			try {
+				//Operation:
+				hotel.retrait(d);
+
+				//Oracle:
+				assertion(obj+": retrait devrait échouer", false);
+
+			} catch (Exception e) {
+				assertion(obj, true);
+			}
+
+		} catch (Exception e1) {
+			assertion(obj+": erreur durant l'initialisation du test: "+e1.getMessage(), false);
 		}
 	}
 }
