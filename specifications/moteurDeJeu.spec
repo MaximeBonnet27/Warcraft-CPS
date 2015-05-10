@@ -2,7 +2,7 @@ service: MoteurJeu
 
 use: Villageois, HotelVille, Mine, Route, Muraille, CentreNationalRechercheSpeciale, GestionCombat
 
-types: enum RACE{ORC, HUMAIN}, enum RESULTAT{ORC, HUMAIN, NULL}, enum COMMANDE{RIEN, DEPLACER, ENTRERMINE, ENTRERHOTELVILLE, CONSTRUIRECNRS, RECHERCHECNRS,APPLIQUER_RECHERCHE, ATTAQUER}, enum ETAT{OCCUPE,LIBRE}, int, boolean
+types: enum RACE{ORC, HUMAIN}, enum RESULTAT{ORC, HUMAIN, NULL}, enum COMMANDE{RIEN, DEPLACER, ENTRERMINE, ENTRERHOTELVILLE, CONSTRUIRECNRS, RECHERCHECNRS,APPLIQUER_RECHERCHE, ATTAQUER, ATTAQUER_MURAILLE}, enum ETAT{OCCUPE,LIBRE}, int, boolean
 
 Observators:                    
     const largeurTerrain:       [MoteurJeu] -> int
@@ -394,7 +394,21 @@ villageoisSurMuraille(M,x,y,l,h,m) =(min)= collision(x,y,l,h,positionMurailleX(M
 
    	// getMuraille
 		pour tout i dans  numeroesMuraile(pasJeu(M, c1, s1, a1, c2, s2, a2))
-			getMuraille(pasJeu(M, c1, s1, a1, c2, s2, a2),i) = getMuraille(M,i)
+			getMuraille(pasJeu(M, c1, s1, a1, c2, s2, a2),i) =
+				si c1 == COMMANDE.ATTAQUER_MURAILLE, alors
+					si a1 == i, alors
+						si s1.size > 1, alors
+							gestionCombat::combatMurailleMultiple(gestionCombat::initMurailleMultiple(s1, getMuraille(M, i)))
+						sinon, alors
+							gestionCombat::combatMuraille(gestionCombat::initMuraille(s1[0], getMuraille(M,i)))
+				sinon, si c2 == COMMANDE.ATTAQUER_MURAILLE, alors
+					si a2 == i, alors
+						si s2.size > 1, alors
+							gestionCombat::combatMurailleMultiple(gestionCombat::initMurailleMultiple(s2, getMuraille(M, i)))
+						sinon, alors
+							gestionCombat::combatMuraille(gestionCombat::initMuraille(s2[0], getMuraille(M,i)))
+				sinon,
+					 getMuraille(M,i)
 
 
 	// hotelDeVilleA
