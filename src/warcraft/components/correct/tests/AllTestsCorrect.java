@@ -10,7 +10,8 @@ import org.junit.runners.Suite.SuiteClasses;
 @RunWith(Suite.class)
 @SuiteClasses({
 	MineTestsCorrect.class,
-	HotelDeVilleTestsCorrect.class
+	HotelDeVilleTestsCorrect.class,
+	CentreNationalRechercheSpecialeTestsCorrect.class
 })
 public class AllTestsCorrect {	
 

@@ -19,13 +19,13 @@ public class CentreNationalRechercheSpecialeContrat extends CentreNationalRecher
 
 	public void checkInvariants(){
 		// \inv :  0 < tempsCourant() && tempsCourant() <= tempsDeConstruction()
-		assertTrue("\\inv :  0 < tempsCourant() && tempsCourant() <= tempsDeConstruction()",  0 < super.tempsCourant() && super.tempsCourant() <= super.tempsDeConstruction());
+		assertTrue("\\inv :  0 <= tempsCourant() && tempsCourant() <= tempsDeConstruction()",  0 <= super.tempsCourant() && super.tempsCourant() <= super.tempsDeConstruction());
 		// \inv : enConstruction() == (tempsCourant() > 0)
 		assertTrue("\\inv : enConstruction() == (tempsCourant() > 0)", super.enConstruction() == (super.tempsCourant() > 0));
 		// \inv : constructionFinie() == (tempsCourant() == tempsDeConstruction())
 		assertTrue("\\inv : constructionFinie() == (tempsCourant() == tempsDeConstruction())", super.constructionFinie() == (super.tempsCourant() == super.tempsDeConstruction()));
 		// \inv : 0 < rechercheCourante() && rechercheCourante() <= tempsDeRecherche()
-		assertTrue("\\inv : 0 < rechercheCourante() && rechercheCourante() <= tempsDeRecherche()", 0 < super.rechercheCourante() && super.rechercheCourante() <= super.tempsDeRecherche());
+		assertTrue("\\inv : 0 <= rechercheCourante() && rechercheCourante() <= tempsDeRecherche()", 0 <= super.rechercheCourante() && super.rechercheCourante() <= super.tempsDeRecherche());
 		// \inv : enRecherche() == (rechercheCourante() > 0)
 		assertTrue("\\inv : enRecherche() == (rechercheCourante() > 0)", super.enRecherche() == (super.rechercheCourante() > 0));
 		// \inv : rechercheFinie() == (rechercheCourante() == tempsDeRecherche())

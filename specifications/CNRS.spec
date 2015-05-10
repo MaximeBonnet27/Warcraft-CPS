@@ -47,11 +47,11 @@ Constructors :
 
 Observations :
 [invariants]
-	0<tempsCourant<=tempsDeConstruction
+	0<=tempsCourant<=tempsDeConstruction
 	enConstruction(c) =(min)= (tempsCourant(c)>0)
 	constructionFinie(c) =(min)= (tempsCourant(c)==tempsDeConstruction)
 
-	0 < rechercheCourante <= tempsDeRecherche
+	0 <= rechercheCourante <= tempsDeRecherche
 	enRecherche(c) =(min)= (rechercheCourante(c) > 0)
 	rechercheFinie(c) =(min)= (rechercheCourante(c) == tempsDeRecherche)
 

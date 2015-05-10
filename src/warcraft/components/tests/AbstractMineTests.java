@@ -114,7 +114,7 @@ public abstract class AbstractMineTests extends AssertionTests{
 	 * 	Exception pour init
 	 */
 	@Test
-	public void testInitError1_1(){
+	public void testInit1_1(){
 		String obj="Mine Test Objectif 1.1";
 		int largeur=-100;
 		int hauteur=100;
@@ -147,7 +147,7 @@ public abstract class AbstractMineTests extends AssertionTests{
 	 * 	Exception pour init
 	 */
 	@Test
-	public void testInitError1_2(){
+	public void testInit1_2(){
 		String obj="Mine Test Objectif 1.2";
 		int largeur=100;
 		int hauteur=-100;

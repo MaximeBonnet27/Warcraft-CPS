@@ -116,7 +116,7 @@ public abstract class AbstractHotelDeVilleTests extends AssertionTests {
 	 * 	Exception pour init
 	 */
 	@Test
-	public void testInitError1_1(){
+	public void testInit1_1(){
 		String obj="HotelDeVille Test Objectif 1.1";
 		int largeur=-100;
 		int hauteur=100;
@@ -149,7 +149,7 @@ public abstract class AbstractHotelDeVilleTests extends AssertionTests {
 	 * 	Exception pour init
 	 */
 	@Test
-	public void testInitError1_2(){
+	public void testInit1_2(){
 		String obj="HotelDeVille Test Objectif 1.2";
 		int largeur=100;
 		int hauteur=-100;
@@ -213,24 +213,22 @@ public abstract class AbstractHotelDeVilleTests extends AssertionTests {
 					hotel.retrait(s);
 
 					//Oracle:
-					assertion(obj,true);
+					checkInvariants(obj);
+
+					// \post: orRestant() == (orRestant()@pre-s)
+					assertion(obj+": \\post: orRestant() == (orRestant()@pre-s)", hotel.orRestant()==(oldOrRestant-s));
+
+					// \post: compteurAbandon() == compteurAbandon()@pre
+					assertion(obj+": \\post: compteurAbandon() == compteurAbandon()@pre", hotel.compteurAbandon()==(oldCompteurAbandon));
+
+					// \post: (etat_d_appartenance()@pre== ETAT.OCCUPE) ==> (appartenance()==appartenance()@pre)
+					try {
+						assertion(obj+": \\post: (etat_d_appartenance()@pre== ETAT.OCCUPE) ==> (appartenance()==appartenance()@pre)", !(oldEtat_d_appartenance==EETAT.OCCUPE) || (hotel.appartenance()==oldAppartenance));
+					} catch (Exception e) {
+						assertion(obj+": \\post: (etat_d_appartenance()@pre== ETAT.OCCUPE) ==> (appartenance()==appartenance()@pre)", false);
+					}
 				} catch (Exception e) {
 					assertion(obj+e.getMessage(),false);
-				}
-
-				checkInvariants(obj);
-
-				// \post: orRestant() == (orRestant()@pre-s)
-				assertion(obj+": \\post: orRestant() == (orRestant()@pre-s)", hotel.orRestant()==(oldOrRestant-s));
-
-				// \post: compteurAbandon() == compteurAbandon()@pre
-				assertion(obj+": \\post: compteurAbandon() == compteurAbandon()@pre", hotel.compteurAbandon()==(oldCompteurAbandon));
-
-				// \post: (etat_d_appartenance()@pre== ETAT.OCCUPE) ==> (appartenance()==appartenance()@pre)
-				try {
-					assertion(obj+": \\post: (etat_d_appartenance()@pre== ETAT.OCCUPE) ==> (appartenance()==appartenance()@pre)", !(oldEtat_d_appartenance==EETAT.OCCUPE) || (hotel.appartenance()==oldAppartenance));
-				} catch (Exception e) {
-					assertion(obj+": \\post: (etat_d_appartenance()@pre== ETAT.OCCUPE) ==> (appartenance()==appartenance()@pre)", false);
 				}
 
 			} catch (Exception e1) {

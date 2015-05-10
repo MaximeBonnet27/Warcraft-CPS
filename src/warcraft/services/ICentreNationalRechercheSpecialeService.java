@@ -35,10 +35,10 @@ public interface ICentreNationalRechercheSpecialeService {
   // Invariants
 
   /**
-   * \inv : 0 < tempsCourant() && tempsCourant() <= tempsDeConstruction()
+   * \inv : 0 <= tempsCourant() && tempsCourant() <= tempsDeConstruction()
    * \inv : enConstruction() == (tempsCourant() > 0)
    * \inv : constructionFinie() == (tempsCourant() == tempsDeConstruction())
-   * \inv : 0 < rechercheCourante() && rechercheCourante() <= tempsDeRecherche()
+   * \inv : 0 <= rechercheCourante() && rechercheCourante() <= tempsDeRecherche()
    * \inv : enRecherche() == (rechercheCourante() > 0)
    * \inv : rechercheFinie() == (rechercheCourante() == tempsDeRecherche())
    * \inv : competenceAugmentee() == ECompetence.random()
