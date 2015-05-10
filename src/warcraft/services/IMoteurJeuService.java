@@ -455,7 +455,7 @@ public interface IMoteurJeuService {
 	 *  						hotelDeVilleA()@pre.retrait(CNRSA()@pre.prixConstruction()).abandoned()
 	 *  					\elseif c1=ECommande.RECHERCHECNRS &&
 	 *  							!CNRSA()@pre.enRecherche() &&
-	 *  							!CNRSA()@pre.constructionFinie() &&
+	 *  							CNRSA()@pre.constructionFinie() &&
 	 *  							getHotel(a1)@pre.orRestant() >= CNRSA()@pre.prixRecherche() &&
 	 *  							getHotel(a1)@pre==hotelDeVilleA()@pre \then
 	 *  						hotelDeVilleA()@pre.retrait(CNRSA()@pre.prixRecherche()).abandoned()
@@ -470,7 +470,7 @@ public interface IMoteurJeuService {
 	 *  						hotelDeVilleA()@pre.retrait(CNRSA()@pre.prixConstruction()).abandoned()
 	 *  					\elseif c2=ECommande.RECHERCHECNRS &&
 	 *  							!CNRSA()@pre.enRecherche() &&
-	 *  							!CNRSA()@pre.constructionFinie() &&
+	 *  							CNRSA()@pre.constructionFinie() &&
 	 *  							getHotel(a2)@pre.orRestant() >= CNRSA()@pre.prixRecherche() &&
 	 *  							getHotel(a2)@pre==hotelDeVilleA()@pre \then
 	 *  						hotelDeVilleA()@pre.retrait(CNRSA()@pre.prixRecherche()).abandoned()
@@ -490,7 +490,7 @@ public interface IMoteurJeuService {
 	 *  						hotelDeVilleB()@pre.retrait(CNRSB()@pre.prixConstruction()).abandoned()
 	 *  					\elseif c1=ECommande.RECHERCHECNRS &&
 	 *  							!CNRSB()@pre.enRecherche() &&
-	 *  							!CNRSB()@pre.constructionFinie() &&
+	 *  							CNRSB()@pre.constructionFinie() &&
 	 *  							getHotel(a1)@pre.orRestant() >= CNRSB()@pre.prixRecherche() &&
 	 *  							getHotel(a1)@pre==hotelDeVilleB()@pre \then
 	 *  						hotelDeVilleB()@pre.retrait(CNRSB()@pre.prixRecherche()).abandoned()
@@ -505,7 +505,7 @@ public interface IMoteurJeuService {
 	 *  						hotelDeVilleB()@pre.retrait(CNRSB()@pre.prixConstruction()).abandoned()
 	 *  					\elseif c2=ECommande.RECHERCHECNRS &&
 	 *  							!CNRSB()@pre.enRecherche() &&
-	 *  							!CNRSB()@pre.constructionFinie() &&
+	 *  							CNRSB()@pre.constructionFinie() &&
 	 *  							getHotel(a2)@pre.orRestant() >= CNRSB()@pre.prixRecherche() &&
 	 *  							getHotel(a2)@pre==hotelDeVilleB()@pre \then
 	 *  						hotelDeVilleB()@pre.retrait(CNRSB()@pre.prixRecherche()).abandoned()
@@ -525,7 +525,7 @@ public interface IMoteurJeuService {
 	 *  						CNRSB()@pre.commencerConstruction()
 	 *  					\elseif c1=ECommande.RECHERCHECNRS &&
 	 *  							!CNRSA()@pre.enRecherche() &&
-	 *  							!CNRSA()@pre.constructionFinie() &&
+	 *  							CNRSA()@pre.constructionFinie() &&
 	 *  							getHotel(a1)@pre.orRestant() >= CNRSA()@pre.prixRecherche() &&
 	 *  							getHotel(a1)@pre==hotelDeVilleA()@pre \then
 	 *  						CNRSA()@pre.commencerRecherche()
@@ -539,7 +539,7 @@ public interface IMoteurJeuService {
 	 *  						CNRSA()@pre.commencerConstruction()
 	 *  					\elseif c2=ECommande.RECHERCHECNRS &&
 	 *  							!CNRSA()@pre.enRecherche() &&
-	 *  							!CNRSA()@pre.constructionFinie() &&
+	 *  							CNRSA()@pre.constructionFinie() &&
 	 *  							getHotel(a2)@pre.orRestant() >= CNRSA()@pre.prixRecherche() &&
 	 *  							getHotel(a2)@pre==hotelDeVilleA()@pre \then
 	 *  						CNRSA()@pre.commencerConstruction()
@@ -583,7 +583,7 @@ public interface IMoteurJeuService {
 	 *  						CNRSB()@pre.commencerConstruction()
 	 *  					\elseif c1=ECommande.RECHERCHECNRS &&
 	 *  							!CNRSB()@pre.enRecherche() &&
-	 *  							!CNRSB()@pre.constructionFinie() &&
+	 *  							CNRSB()@pre.constructionFinie() &&
 	 *  							getHotel(a1)@pre.orRestant() >= CNRSB()@pre.prixRecherche() &&
 	 *  							getHotel(a1)@pre==hotelDeVilleB()@pre \then
 	 *  						CNRSB()@pre.commencerRecherche()
@@ -597,7 +597,7 @@ public interface IMoteurJeuService {
 	 *  						CNRSB()@pre.commencerConstruction()
 	 *  					\elseif c2=ECommande.RECHERCHECNRS &&
 	 *  							!CNRSB()@pre.enRecherche() &&
-	 *  							!CNRSB()@pre.constructionFinie() &&
+	 *  							CNRSB()@pre.constructionFinie() &&
 	 *  							getHotel(a2)@pre.orRestant() >= CNRSB()@pre.prixRecherche() &&
 	 *  							getHotel(a2)@pre==hotelDeVilleB()@pre \then
 	 *  						CNRSB()@pre.commencerConstruction()

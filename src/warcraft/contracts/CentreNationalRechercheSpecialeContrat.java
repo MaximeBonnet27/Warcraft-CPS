@@ -3,7 +3,10 @@
  */
 package warcraft.contracts;
 
+import java.util.Random;
+
 import warcraft.decorators.CentreNationalRechercheSpecialeDecorator;
+import warcraft.enums.ECompetence;
 import warcraft.services.ICentreNationalRechercheSpecialeService;
 import static org.junit.Assert.assertTrue;
 
@@ -79,10 +82,24 @@ public class CentreNationalRechercheSpecialeContrat extends CentreNationalRecher
 	public boolean rechercheFinie() {
 		return super.rechercheFinie();
 	}
+
+	@Override
+	public ECompetence competenceAugmente() throws Exception{
+		assertTrue("\\pre rechercheFinie()", rechercheFinie());
+		return super.competenceAugmente();
+	}
+
+	@Override
+	public int boost() throws Exception {
+		assertTrue("\\pre rechercheFinie()", rechercheFinie());
+		return super.boost();
+	}
+
+
 	@Override
 	public void init(
 			int tempsDeConstruction, int tempsDeRecherche,
-			int prixConstruction, int prixRecherche) {
+			int prixConstruction, int prixRecherche) throws Exception {
 
 		// Pré-Conditions
 
@@ -95,16 +112,9 @@ public class CentreNationalRechercheSpecialeContrat extends CentreNationalRecher
 		// \pre : prixRecherche > 0
 		assertTrue("\\pre : prixRecherche > 0", prixRecherche > 0);
 
-
-		// Pas d'invariants avant initialisation
-
-		// Appel
 		super.init(tempsDeConstruction, tempsDeRecherche, prixConstruction, prixRecherche);
 
-		// Invariants
 		checkInvariants();
-
-		// Post-Conditions
 
 		// \post : tempsDeConstruction() == tempsDeConstruction
 		assertTrue("\\post : tempsDeConstruction() == tempsDeConstruction", super.tempsDeConstruction() == tempsDeConstruction);
@@ -122,79 +132,65 @@ public class CentreNationalRechercheSpecialeContrat extends CentreNationalRecher
 	}
 
 
+
 	@Override
-	public void commencerConstruction(
-			int prix) {
-		// Pré-Conditions
+	public void commencerConstruction() throws Exception {
+		//Captures
+		int oldRechercheCourante=super.rechercheCourante();
 
 		// \pre : !enConstruction()
 		assertTrue("\\pre : !enConstruction()", !super.enConstruction());
-		// \pre : prix == prixConstruction()
-		assertTrue("\\pre : prix == prixConstruction()", prix == super.prixConstruction());
 
-		// Invariants
+		checkInvariants();
+		super.commencerConstruction();
 		checkInvariants();
 
-		// Appel
-		super.commencerConstruction(prix);
-
-		// Invariants
-		checkInvariants();
-
-		// Post-Conditions
 		// \post : tempsCourant() == 1
 		assertTrue("\\post : tempsCourant() == 1", super.tempsCourant() == 1);
 
+		// \post : rechercheCourante() == rechercheCourante()@pre
+		assertTrue("\\post : rechercheCourante() == rechercheCourante()@pre", super.rechercheCourante()==oldRechercheCourante);
 	}
-	/**
-	 * \post : tempsCourant() == tempsCourant()@pre + 1
-	 */
+
+
 	@Override
-	public void construire() {
+	public void construire() throws Exception {
 		// Capture
 		int oldTempsCourant = super.tempsCourant();
-
-		// Pré-Conditions
+		int oldRechercheCourante=super.rechercheCourante();
 
 		// \pre : !constructionFinie()
 		assertTrue("\\pre : !constructionFinie()", !super.constructionFinie());
 
-		// Invariants
 		checkInvariants();
-		// Appel
 		super.construire();
-
-		// Invariants
 		checkInvariants();
-
-		// Post-Conditions
 
 		// \post : tempsCourant() == tempsCourant()@pre + 1
 		assertTrue("\\post : tempsCourant() == tempsCourant()@pre + 1", super.tempsCourant() == oldTempsCourant + 1);
 
+		// \post : rechercheCourante() == rechercheCourante()@pre
+		assertTrue("\\post : rechercheCourante() == rechercheCourante()@pre", super.rechercheCourante()==oldRechercheCourante);
 	}
 
 
 	@Override
-	public void commencerRecherche(int prix) {
-		// Pré-Conditions
+	public void commencerRecherche() throws Exception {
+		// Capture
+		int oldTempsCourant = super.tempsCourant();
 
 		// \pre : constructionFinie()
 		assertTrue("\\pre : constructionFinie()", super.constructionFinie());
-		// \pre : prix == prixRecherche()
-		assertTrue("\\pre : prix == prixRecherche()", prix == super.prixRecherche());
 
-		// Invariants
+		// \pre : !enRecherche()
+		assertTrue("\\pre : !enRecherche()", !super.enRecherche());
+
+		checkInvariants();
+		super.commencerRecherche();
 		checkInvariants();
 
-		// Appel
-		super.commencerRecherche(prix);
-
-		// Invariants
-		checkInvariants();
-
-		// Post-Conditions
-
+		// \post : tempsCourant() == tempsCourant()@pre
+		assertTrue("\\post : tempsCourant() == tempsCourant()@pre", super.tempsCourant() == oldTempsCourant);
 		// \post : rechercheCourante() == 1
 		assertTrue("\\post : rechercheCourante() == 1", super.rechercheCourante() == 1);
 
@@ -202,29 +198,45 @@ public class CentreNationalRechercheSpecialeContrat extends CentreNationalRecher
 
 
 	@Override
-	public void recherche() {
+	public void recherche() throws Exception {
 		// Capture
 		int oldRechercheCourante = super.rechercheCourante();
-
-		// Pré-Conditions
+		int oldTempsCourant = super.tempsCourant();
 
 		// \pre : !rechercheFinie()
 		assertTrue("\\pre : !rechercheFinie()", !super.rechercheFinie());
 
-		// Invariants
 		checkInvariants();
-
-		// Appel
 		super.recherche();
-
-		// Invariants
 		checkInvariants();
 
-		// Post-Conditions
 		// \post : rechercheCourante() == rechercheCourante()@pre + 1
 		assertTrue("\\post : rechercheCourante() == rechercheCourante()@pre + 1", super.rechercheCourante() == oldRechercheCourante + 1);
+		// \post : tempsCourant() == tempsCourant()@pre
+		assertTrue("\\post : tempsCourant() == tempsCourant()@pre", super.tempsCourant() == oldTempsCourant);
+	}
+
+	@Override
+	public void finirRecherche() throws Exception {
+		// Capture
+		int oldTempsCourant = super.tempsCourant();
+
+		// \pre : enRecherche()
+		assertTrue("\\pre : enRecherche()", super.enRecherche());
+
+		checkInvariants();
+		super.finirRecherche();
+		checkInvariants();
+
+		// \post : rechercheCourante() == 0
+		assertTrue("\\post : rechercheCourante() == 0", super.rechercheCourante()==0);
+
+
+		// \post : tempsCourant() == tempsCourant()@pre
+		assertTrue("\\post : tempsCourant() == tempsCourant()@pre ", super.tempsCourant() == oldTempsCourant);
 
 	}
+
 
 
 

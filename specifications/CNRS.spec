@@ -35,7 +35,7 @@ Constructors :
 
 	commencerRecherche : [CentreNationalRechercheSpeciale] -> [CentreNationalRechercheSpeciale]
 		pre recherche(c)
-			require constructionFinie(c)
+			require constructionFinie(c) ^ ¬enRecherche(c)
 	
 	recherche : [CentreNationalRechercheSpeciale] -> [CentreNationalRechercheSpeciale]
 		pre recherche(c)

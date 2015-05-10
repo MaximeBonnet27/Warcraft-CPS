@@ -1,7 +1,7 @@
 /**
  * 
  */
-package warcraft.components.correct;
+package warcraft.components.error;
 
 import java.util.Random;
 
@@ -12,7 +12,7 @@ import warcraft.services.ICentreNationalRechercheSpecialeService;
  * @author 3100381
  *
  */
-public class CentreNationalRechercheSpeciale implements ICentreNationalRechercheSpecialeService{
+public class CentreNationalRechercheSpecialeError implements ICentreNationalRechercheSpecialeService{
 
 	private int prixConstruction;
 	private int prixRecherche;
@@ -48,7 +48,8 @@ public class CentreNationalRechercheSpeciale implements ICentreNationalRecherche
 
 	@Override
 	public boolean enConstruction() {
-		return tempsCourant > 0;
+		//error
+		return tempsCourant == 0;
 	}
 
 	@Override
@@ -73,8 +74,9 @@ public class CentreNationalRechercheSpeciale implements ICentreNationalRecherche
 	
 	@Override
 	public ECompetence competenceAugmente() throws Exception{
-		if(!(rechercheFinie()))
-			throw new Exception("\\pre rechercheFinie()");
+		//error
+		//if(!(rechercheFinie()))
+		//	throw new Exception("\\pre rechercheFinie()");
 		Random rand=new Random();
 		int i=rand.nextInt(ECompetence.values().length);
 		return ECompetence.values()[i];
@@ -93,8 +95,9 @@ public class CentreNationalRechercheSpeciale implements ICentreNationalRecherche
 			if(!(tempsDeConstruction>0))
 				throw new Exception("\\pre : tempsDeConstruction > 0");
 			
-			if(!(tempsDeRecherche>0))
-				throw new Exception("\\pre : tempsDeRecherche > 0");
+			//error
+			//if(!(tempsDeRecherche>0))
+			//	throw new Exception("\\pre : tempsDeRecherche > 0");
 			
 			if(!(prixConstruction>0))
 				throw new Exception("\\pre : prixConstruction > 0");
@@ -106,7 +109,7 @@ public class CentreNationalRechercheSpeciale implements ICentreNationalRecherche
 			this.tempsDeRecherche = tempsDeRecherche;
 			this.prixConstruction = prixConstruction;
 			this.prixRecherche = prixRecherche;
-			this.tempsCourant = 0;
+			this.tempsCourant = 10; 		//error
 			this.rechercheCourante = 0;
 	}
 
@@ -115,7 +118,7 @@ public class CentreNationalRechercheSpeciale implements ICentreNationalRecherche
 		if(enConstruction())
 			throw new Exception("\\pre : !enConstruction()");
 		
-		tempsCourant = 1;
+		tempsCourant = 0;		//error
 	}
 
 	@Override
@@ -131,13 +134,14 @@ public class CentreNationalRechercheSpeciale implements ICentreNationalRecherche
 			throw new Exception("\\pre : constructionFinie()");
 		if(enRecherche())
 			throw new Exception("\\pre : !enRecherche()");
-		rechercheCourante = 1;
+		//rechercheCourante = 1;		//error
 	}
 
 	@Override
 	public void recherche() throws Exception {
-		if(rechercheFinie())
-			throw new Exception("\\pre : !rechercheFinie()");
+		//error
+		//if(rechercheFinie())
+		//	throw new Exception("\\pre : !rechercheFinie()");
 		rechercheCourante += 1;
 	}
 

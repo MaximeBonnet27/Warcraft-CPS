@@ -26,11 +26,11 @@ public interface ICentreNationalRechercheSpecialeService {
   /**
    * \pre rechercheFinie(); 
    */
-  public ECompetence competenceAugmente();
+  public ECompetence competenceAugmente() throws Exception;
   /**
    * \pre rechercheFinie(); 
    */
-  public int boost();
+  public int boost() throws Exception;
 
   // Invariants
 
@@ -59,7 +59,7 @@ public interface ICentreNationalRechercheSpecialeService {
    * \post : tempsCourant() == 0
    * \post : rechercheCourante() == 0
    */
-  public void init(int tempsDeConstruction, int tempsDeRecherche, int prixConstruction, int prixRecherche);
+  public void init(int tempsDeConstruction, int tempsDeRecherche, int prixConstruction, int prixRecherche) throws Exception;
 
   // Operators
 
@@ -69,7 +69,7 @@ public interface ICentreNationalRechercheSpecialeService {
    * \post : tempsCourant() == 1
    * \post : rechercheCourante() == rechercheCourante()@pre
    */
-  public void commencerConstruction();
+  public void commencerConstruction() throws Exception;
 
   /**
    * \pre : !constructionFinie()
@@ -77,15 +77,16 @@ public interface ICentreNationalRechercheSpecialeService {
    * \post : tempsCourant() == tempsCourant()@pre + 1
    * \post : rechercheCourante() == rechercheCourante()@pre
    */
-  public void construire();
+  public void construire() throws Exception;
 
   /**
    * \pre : constructionFinie()
+   * \pre : !enRecherche()
    * 
    * \post : tempsCourant() == tempsCourant()@pre
    * \post : rechercheCourante() == 1
    */
-  public void commencerRecherche();
+  public void commencerRecherche() throws Exception;
 
   /**
    * \pre : !rechercheFinie()
@@ -93,14 +94,14 @@ public interface ICentreNationalRechercheSpecialeService {
    * \post : rechercheCourante() == rechercheCourante()@pre + 1
    * \post : tempsCourant() == tempsCourant()@pre
    */
-  public void recherche();
+  public void recherche() throws Exception;
   
   /**
    * \pre : enRecherche()
    * 
-   * rechercheCourante() == 0
+   * \post : rechercheCourante() == 0
    * \post : tempsCourant() == tempsCourant()@pre
    */
-   public void finirRecherche();
+   public void finirRecherche() throws Exception;
 
 }

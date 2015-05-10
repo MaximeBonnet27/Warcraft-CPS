@@ -3,12 +3,9 @@
  */
 package warcraft.decorators;
 
+import warcraft.enums.ECompetence;
 import warcraft.services.ICentreNationalRechercheSpecialeService;
 
-/**
- * @author 3100381
- *
- */
 public abstract class CentreNationalRechercheSpecialeDecorator implements ICentreNationalRechercheSpecialeService{
 
 	private ICentreNationalRechercheSpecialeService delegate;
@@ -20,9 +17,25 @@ public abstract class CentreNationalRechercheSpecialeDecorator implements ICentr
 		this.delegate = delegate;
 	}
 
+	
 	public int prixConstruction() {
 		return delegate.prixConstruction();
 	}
+
+	public ECompetence competenceAugmente() throws Exception {
+		return delegate.competenceAugmente();
+	}
+
+
+	public int boost() throws Exception {
+		return delegate.boost();
+	}
+
+
+	public void finirRecherche() throws Exception {
+		delegate.finirRecherche();
+	}
+
 
 	public int prixRecherche() {
 		return delegate.prixRecherche();
@@ -61,24 +74,24 @@ public abstract class CentreNationalRechercheSpecialeDecorator implements ICentr
 	}
 
 	public void init(int tempsDeConstruction, int tempsDeRecherche,
-			int prixConstruction, int prixRecherche) {
+			int prixConstruction, int prixRecherche) throws Exception {
 		delegate.init(tempsDeConstruction, tempsDeRecherche, prixConstruction,
 				prixRecherche);
 	}
 
-	public void commencerConstruction(int prix) {
-		delegate.commencerConstruction(prix);
+	public void commencerConstruction() throws Exception {
+		delegate.commencerConstruction();
 	}
 
-	public void construire() {
+	public void construire() throws Exception {
 		delegate.construire();
 	}
 
-	public void commencerRecherche(int prix) {
-		delegate.commencerRecherche(prix);
+	public void commencerRecherche() throws Exception {
+		delegate.commencerRecherche();
 	}
 
-	public void recherche() {
+	public void recherche() throws Exception {
 		delegate.recherche();
 	}
 	
