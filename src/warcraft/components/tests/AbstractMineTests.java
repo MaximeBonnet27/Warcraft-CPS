@@ -203,31 +203,31 @@ public abstract class AbstractMineTests extends AssertionTests{
 			ERace oldAppartenance=null;
 
 			try {
-				oldAppartenance = mine.appartenance();
+				if(mine.etat_d_appartenance()==EETAT.OCCUPE)
+					oldAppartenance = mine.appartenance();
 				try {
 					//Operation:
 					mine.retrait(s);
 
 					//Oracle:
-					assertion(obj,true);
+					checkInvariants(obj);
+
+					// \post: orRestant() == (orRestant()@pre-s)
+					assertion(obj+": \\post: orRestant() == (orRestant()@pre-s)", mine.orRestant()==(oldOrRestant-s));
+
+					// \post: compteurAbandon() == compteurAbandon()@pre
+					assertion(obj+": \\post: compteurAbandon() == compteurAbandon()@pre", mine.compteurAbandon()==(oldCompteurAbandon));
+
+					// \post: (etat_d_appartenance()@pre== ETAT.OCCUPE) ==> (appartenance()==appartenance()@pre)
+					try {
+						assertion(obj+": \\post: (etat_d_appartenance()@pre== ETAT.OCCUPE) ==> (appartenance()==appartenance()@pre)", !(oldEtat_d_appartenance==EETAT.OCCUPE) || (mine.appartenance()==oldAppartenance));
+					} catch (Exception e) {
+						assertion(obj+": \\post: (etat_d_appartenance()@pre== ETAT.OCCUPE) ==> (appartenance()==appartenance()@pre)", false);
+					}
 				} catch (Exception e) {
 					assertion(obj+e.getMessage(),false);
 				}
 
-				checkInvariants(obj);
-
-				// \post: orRestant() == (orRestant()@pre-s)
-				assertion(obj+": \\post: orRestant() == (orRestant()@pre-s)", mine.orRestant()==(oldOrRestant-s));
-
-				// \post: compteurAbandon() == compteurAbandon()@pre
-				assertion(obj+": \\post: compteurAbandon() == compteurAbandon()@pre", mine.compteurAbandon()==(oldCompteurAbandon));
-
-				// \post: (etat_d_appartenance()@pre== ETAT.OCCUPE) ==> (appartenance()==appartenance()@pre)
-				try {
-					assertion(obj+": \\post: (etat_d_appartenance()@pre== ETAT.OCCUPE) ==> (appartenance()==appartenance()@pre)", !(oldEtat_d_appartenance==EETAT.OCCUPE) || (mine.appartenance()==oldAppartenance));
-				} catch (Exception e) {
-					assertion(obj+": \\post: (etat_d_appartenance()@pre== ETAT.OCCUPE) ==> (appartenance()==appartenance()@pre)", false);
-				}
 			} catch (Exception e1) {
 				assertion(obj+": erreur durant l'initialisation du test: "+e1.getMessage(), false);
 			}

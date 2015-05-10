@@ -58,7 +58,7 @@ Observations:
 [depot]
 	orRestant(depot(H,d))				= orRestant(H) + d
 	compteurAbandon(depot(H,d))			= compteurAbandon(H)
-	appartenance(depot(H,d)) 			= appartenance(H)
+	etat_d_appartenance(H)=ETAT.OCCUPE  => appartenance(depot(H,d))= appartenance(H)
 
 [accueil]
 	orRestant(accueil(H,r)) 		= orRestant(H)
