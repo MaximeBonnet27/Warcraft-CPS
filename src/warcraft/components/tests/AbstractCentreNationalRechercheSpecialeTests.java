@@ -84,15 +84,15 @@ public abstract class AbstractCentreNationalRechercheSpecialeTests extends Asser
 			// \post : tempsDeConstruction() == tempsDeConstruction
 			assertion(obj+": \\post : tempsDeConstruction() == tempsDeConstruction", cnrs.tempsDeConstruction() == tempsDeConstruction);
 			// \post : tempsDeRecherche() == tempsDeRecherche
-			assertion(obj+":\\post : tempsDeRecherche() == tempsDeRecherche",cnrs.tempsDeRecherche() == tempsDeRecherche);
+			assertion(obj+": \\post : tempsDeRecherche() == tempsDeRecherche",cnrs.tempsDeRecherche() == tempsDeRecherche);
 			// \post : prixConstruction() == prixConstruction
-			assertion(obj+":\\post : prixConstruction() == prixConstruction", cnrs.prixConstruction() == prixConstruction);
+			assertion(obj+": \\post : prixConstruction() == prixConstruction", cnrs.prixConstruction() == prixConstruction);
 			// \post : prixRecherche() == prixRecherche
-			assertion(obj+":\\post : prixRecherche() == prixRecherche", cnrs.prixRecherche() == prixRecherche);
+			assertion(obj+": \\post : prixRecherche() == prixRecherche", cnrs.prixRecherche() == prixRecherche);
 			// \post : tempsCourant() == 0
-			assertion(obj+":\\post : tempsCourant() == 0", cnrs.tempsCourant() == 0);
+			assertion(obj+": \\post : tempsCourant() == 0", cnrs.tempsCourant() == 0);
 			// \post : rechercheCourante() == 0
-			assertion(obj+":\\post : rechercheCourante() == 0", cnrs.rechercheCourante() == 0);
+			assertion(obj+": \\post : rechercheCourante() == 0", cnrs.rechercheCourante() == 0);
 
 		} catch (Exception e) {
 			assertion(obj+e.getMessage(), false);
@@ -267,10 +267,10 @@ public abstract class AbstractCentreNationalRechercheSpecialeTests extends Asser
 				checkInvariants(obj);
 
 				// \post : tempsCourant() == 1
-				assertion("\\post : tempsCourant() == 1", cnrs.tempsCourant() == 1);
+				assertion(obj+": \\post : tempsCourant() == 1", cnrs.tempsCourant() == 1);
 
 				// \post : rechercheCourante() == rechercheCourante()@pre
-				assertion("\\post : rechercheCourante() == rechercheCourante()@pre", cnrs.rechercheCourante()==oldRechercheCourante);
+				assertion(obj+": \\post : rechercheCourante() == rechercheCourante()@pre", cnrs.rechercheCourante()==oldRechercheCourante);
 			}catch(Exception e){
 				assertion(obj+": "+e.getMessage(), false);
 			}
@@ -360,10 +360,10 @@ public abstract class AbstractCentreNationalRechercheSpecialeTests extends Asser
 				//Oracle
 				checkInvariants(obj);
 				// \post : tempsCourant() == tempsCourant()@pre + 1
-				assertion("\\post : tempsCourant() == tempsCourant()@pre + 1", cnrs.tempsCourant() == oldTempsCourant + 1);
+				assertion(obj+": \\post : tempsCourant() == tempsCourant()@pre + 1", cnrs.tempsCourant() == oldTempsCourant + 1);
 
 				// \post : rechercheCourante() == rechercheCourante()@pre
-				assertion("\\post : rechercheCourante() == rechercheCourante()@pre", cnrs.rechercheCourante()==oldRechercheCourante);
+				assertion(obj+": \\post : rechercheCourante() == rechercheCourante()@pre", cnrs.rechercheCourante()==oldRechercheCourante);
 			}catch(Exception e){
 				assertion(obj+": "+e.getMessage(),false);
 			}
@@ -491,9 +491,9 @@ public abstract class AbstractCentreNationalRechercheSpecialeTests extends Asser
 				//Oracle
 				checkInvariants(obj);
 				// \post : tempsCourant() == tempsCourant()@pre
-				assertion("\\post : tempsCourant() == tempsCourant()@pre", cnrs.tempsCourant() == oldTempsCourant);
+				assertion(obj+": \\post : tempsCourant() == tempsCourant()@pre", cnrs.tempsCourant() == oldTempsCourant);
 				// \post : rechercheCourante() == 1
-				assertion("\\post : rechercheCourante() == 1", cnrs.rechercheCourante() == 1);
+				assertion(obj+": \\post : rechercheCourante() == 1", cnrs.rechercheCourante() == 1);
 			}catch(Exception e){
 				assertion(obj+": "+e.getMessage(), false);
 			}
@@ -532,7 +532,7 @@ public abstract class AbstractCentreNationalRechercheSpecialeTests extends Asser
 				cnrs.commencerRecherche();
 
 				//Oracle
-				assertion("commencerRecherche devrait echouer", false);
+				assertion(obj+": commencerRecherche devrait echouer", false);
 			}catch(Exception e){
 				assertion(obj, true);
 			}
@@ -573,7 +573,7 @@ public abstract class AbstractCentreNationalRechercheSpecialeTests extends Asser
 				cnrs.commencerRecherche();
 
 				//Oracle
-				assertion("commencerRecherche devrait echouer", false);
+				assertion(obj+": commencerRecherche devrait echouer", false);
 			}catch(Exception e){
 				assertion(obj, true);
 			}
@@ -629,9 +629,9 @@ public abstract class AbstractCentreNationalRechercheSpecialeTests extends Asser
 				//Oracle
 				checkInvariants(obj);
 				// \post : rechercheCourante() == rechercheCourante()@pre + 1
-				assertion("\\post : rechercheCourante() == rechercheCourante()@pre + 1", cnrs.rechercheCourante() == oldRechercheCourante + 1);
+				assertion(obj+": \\post : rechercheCourante() == rechercheCourante()@pre + 1", cnrs.rechercheCourante() == oldRechercheCourante + 1);
 				// \post : tempsCourant() == tempsCourant()@pre
-				assertion("\\post : tempsCourant() == tempsCourant()@pre", cnrs.tempsCourant() == oldTempsCourant);
+				assertion(obj+": \\post : tempsCourant() == tempsCourant()@pre", cnrs.tempsCourant() == oldTempsCourant);
 			}catch(Exception e){
 				assertion(obj+": "+e.getMessage(), false);
 			}
@@ -764,14 +764,12 @@ public abstract class AbstractCentreNationalRechercheSpecialeTests extends Asser
 				//Oracle
 				checkInvariants(obj);
 				
-				
+				// \post : rechercheCourante() == 0
+				assertion(obj+": \\post : rechercheCourante() == 0", cnrs.rechercheCourante()==0);
+				// \post : tempsCourant() == tempsCourant()@pre
+				assertion(obj+": \\post : tempsCourant() == tempsCourant()@pre ", cnrs.tempsCourant() == oldTempsCourant);
 			}catch(Exception e){
 				assertion(obj+": "+e.getMessage(), false);
-				// \post : rechercheCourante() == 0
-				assertTrue("\\post : rechercheCourante() == 0", cnrs.rechercheCourante()==0);
-				// \post : tempsCourant() == tempsCourant()@pre
-				assertTrue("\\post : tempsCourant() == tempsCourant()@pre ", cnrs.tempsCourant() == oldTempsCourant);
-
 			}
 		}catch(Exception e){
 			assertion(obj+": erreur durant l'initialisation du test: "+e.getMessage(), false);
@@ -806,7 +804,7 @@ public abstract class AbstractCentreNationalRechercheSpecialeTests extends Asser
 				cnrs.finirRecherche();
 				
 				//Oracle
-				assertion("finirRecherche devrait echouer", false);				
+				assertion(obj+": finirRecherche devrait echouer", false);				
 			}catch(Exception e){
 				assertion(obj, true);
 			}

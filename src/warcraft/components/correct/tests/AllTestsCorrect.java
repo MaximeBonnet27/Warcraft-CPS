@@ -12,7 +12,8 @@ import org.junit.runners.Suite.SuiteClasses;
 	MineTestsCorrect.class,
 	HotelDeVilleTestsCorrect.class,
 	CentreNationalRechercheSpecialeTestsCorrect.class,
-	RouteTestsCorrect.class
+	RouteTestsCorrect.class,
+	MurailleTestsCorrect.class
 })
 public class AllTestsCorrect {	
 

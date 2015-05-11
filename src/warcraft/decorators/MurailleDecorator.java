@@ -27,11 +27,11 @@ public abstract class MurailleDecorator  implements IMurailleService{
     return delegate.estDetruite();
   }
 
-public void init(int largeur, int hauteur, int pv) {
+public void init(int largeur, int hauteur, int pv) throws Exception {
 	delegate.init(largeur, hauteur, pv);
 }
 
-public void taper(int degats) {
+public void taper(int degats) throws Exception {
 	delegate.taper(degats);
 }
 

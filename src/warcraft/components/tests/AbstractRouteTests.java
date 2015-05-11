@@ -49,11 +49,11 @@ public abstract class AbstractRouteTests extends AssertionTests {
 
 			//Oracle
 			// \post: largeur() == largeur
-			assertion("\\post : largeur() == 2", route.largeur() == 2);
+			assertion(obj+": \\post : largeur() == 2", route.largeur() == 2);
 			// \post : hauteur() == hauteur
-			assertion("\\post : hauteur() == 2", route.hauteur() == 2);
+			assertion(obj+"\\post : hauteur() == 2", route.hauteur() == 2);
 			// \post : multiplicateur() == mult
-			assertion("\\post : multiplicateur() == 2", route.multiplicateur() == 2);
+			assertion(obj+"\\post : multiplicateur() == 2", route.multiplicateur() == 2);
 
 		} catch (Exception e) {
 			assertion(obj+": "+e.getMessage(),false);

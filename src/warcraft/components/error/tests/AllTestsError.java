@@ -10,7 +10,8 @@ import org.junit.runners.Suite.SuiteClasses;
 	MineTestsError.class,
 	HotelDeVilleTestsError.class,
 	CentreNationalRechercheSpecialeTestsError.class,
-	RouteTestsError.class
+	RouteTestsError.class,
+	MurailleTestsError.class
 })
 
 public class AllTestsError {

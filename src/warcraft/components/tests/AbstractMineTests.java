@@ -356,13 +356,13 @@ public abstract class AbstractMineTests extends AssertionTests{
 				//Oracle
 				checkInvariants(obj);
 				// \post: orRestant() == orRestant()@pre
-				assertTrue(obj+"\\post: orRestant() == orRestant()@pre", mine.orRestant()==oldOrRestant);
+				assertion(obj+": \\post: orRestant() == orRestant()@pre", mine.orRestant()==oldOrRestant);
 
 				// \post: compteurAbandon() == 0
-				assertTrue(obj+"\\post: compteurAbandon() == 0", mine.compteurAbandon()==0);
+				assertion(obj+": \\post: compteurAbandon() == 0", mine.compteurAbandon()==0);
 
 				// \post: appartenance() == r
-				assertTrue(obj+"\\post: appartenance() == race", mine.appartenance()==race);
+				assertion(obj+": \\post: appartenance() == race", mine.appartenance()==race);
 			} catch (Exception e) {
 				assertion(obj+e.getMessage(),false);
 			}
@@ -415,13 +415,13 @@ public abstract class AbstractMineTests extends AssertionTests{
 				checkInvariants(obj);
 
 				// \post: orRestant() == orRestant()@pre
-				assertTrue(obj+"\\post: orRestant() == orRestant()@pre", mine.orRestant()==oldOrRestant);
+				assertion(obj+": \\post: orRestant() == orRestant()@pre", mine.orRestant()==oldOrRestant);
 
 				// \post: compteurAbandon() == 0
-				assertTrue(obj+"\\post: compteurAbandon() == 0", mine.compteurAbandon()==0);
+				assertion(obj+": \\post: compteurAbandon() == 0", mine.compteurAbandon()==0);
 
 				// \post: appartenance() == r
-				assertTrue(obj+"\\post: appartenance() == race", mine.appartenance()==race);
+				assertion(obj+": \\post: appartenance() == race", mine.appartenance()==race);
 			} catch (Exception e) {
 				assertion(obj+e.getMessage(),false);
 			}
@@ -513,16 +513,16 @@ public abstract class AbstractMineTests extends AssertionTests{
 					//Oracle
 					checkInvariants(obj);
 					// \post: orRestant() == orRestant()@pre
-					assertTrue(obj+"\\post: orRestant() == orRestant()@pre", mine.orRestant()==oldOrRestant);
+					assertion(obj+": \\post: orRestant() == orRestant()@pre", mine.orRestant()==oldOrRestant);
 
 					// \post: compteurAbandon() == (compteurAbandon()@pre + 1)
-					assertTrue(obj+"\\post: compteurAbandon() == (compteurAbandon()@pre + 1)", mine.compteurAbandon()==(oldCompteurAbandon+1));
+					assertion(obj+": \\post: compteurAbandon() == (compteurAbandon()@pre + 1)", mine.compteurAbandon()==(oldCompteurAbandon+1));
 
 					// post: etat_d_appartenance()== ETAT.OCCUPE
-					assertion(obj+"\\post: etat_d_appartenance()== ETAT.OCCUPE", mine.etat_d_appartenance()== EETAT.OCCUPE);
+					assertion(obj+": \\post: etat_d_appartenance()== ETAT.OCCUPE", mine.etat_d_appartenance()== EETAT.OCCUPE);
 
 					// \post: 	appartenance() == appartenance()@pre
-					assertTrue(obj+"\\post: appartenance() == appartenance()@pre", mine.appartenance()==oldAppartenance);
+					assertion(obj+": \\post: appartenance() == appartenance()@pre", mine.appartenance()==oldAppartenance);
 
 				} catch (Exception e) {
 					assertion(obj+e.getMessage(),false);
@@ -581,13 +581,13 @@ public abstract class AbstractMineTests extends AssertionTests{
 				//Oracle
 				checkInvariants(obj);
 				// \post: orRestant() == orRestant()@pre
-				assertTrue(obj+"\\post: orRestant() == orRestant()@pre", mine.orRestant()==oldOrRestant);
+				assertion(obj+": \\post: orRestant() == orRestant()@pre", mine.orRestant()==oldOrRestant);
 
 				// \post: compteurAbandon() == (compteurAbandon()@pre + 1)
-				assertTrue(obj+"\\post: compteurAbandon() == (compteurAbandon()@pre + 1)", mine.compteurAbandon()==(oldCompteurAbandon+1));
+				assertion(obj+": \\post: compteurAbandon() == (compteurAbandon()@pre + 1)", mine.compteurAbandon()==(oldCompteurAbandon+1));
 
 				// \post: etat_d_appartenance()== ETAT.LIBRE
-				assertTrue(obj+"\\post: etat_d_appartenance()== ETAT.LIBRE", mine.etat_d_appartenance()==EETAT.LIBRE);
+				assertion(obj+": \\post: etat_d_appartenance()== ETAT.LIBRE", mine.etat_d_appartenance()==EETAT.LIBRE);
 
 			} catch (Exception e) {
 				assertion(obj+e.getMessage(),false);

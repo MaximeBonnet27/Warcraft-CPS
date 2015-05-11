@@ -37,7 +37,7 @@ public class MurailleContrat extends MurailleDecorator{
 	}
 
 	@Override
-	public void init(int largeur, int hauteur, int pv) {
+	public void init(int largeur, int hauteur, int pv) throws Exception {
 		// Pre-Conditions
 		
 		// \pre : largeur > 0
@@ -64,7 +64,7 @@ public class MurailleContrat extends MurailleDecorator{
 	}
 
 	@Override
-	public void taper(int degats) {
+	public void taper(int degats) throws Exception {
 		// Capture
 		int oldPointsDeVie = pointsDeVie();
 

@@ -22,7 +22,7 @@ public interface IMurailleService {
 	 * \post :hauteur() == hauteur
 	 * \post :pointsDeVie() == pv
 	 */
-	public void init(int largeur, int hauteur, int pv);
+	public void init(int largeur, int hauteur, int pv) throws Exception;
 
 	// Operators
 	/**
@@ -31,6 +31,6 @@ public interface IMurailleService {
 	 * \post : pointsDeVie() = pointsDeVie()@pre - degats
 	 */
 
-	public void taper(int degats);
+	public void taper(int degats) throws Exception;
 
 }

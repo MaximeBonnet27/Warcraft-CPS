@@ -93,7 +93,7 @@ public abstract class AbstractHotelDeVilleTests extends AssertionTests {
 
 			// \post: appartenance() == race
 			try {
-				assertion("\\post: appartenance() == race", hotel.appartenance()==race);
+				assertion(obj+": \\post: appartenance() == race", hotel.appartenance()==race);
 			} catch (Exception e) {
 				assertion(obj+": appartenance devrait passer", false);
 			}
@@ -364,13 +364,13 @@ public abstract class AbstractHotelDeVilleTests extends AssertionTests {
 				checkInvariants(obj);
 
 				// \post: orRestant() == orRestant()@pre
-				assertion(obj+"\\post: orRestant() == orRestant()@pre", hotel.orRestant()==oldOrRestant);
+				assertion(obj+": \\post: orRestant() == orRestant()@pre", hotel.orRestant()==oldOrRestant);
 
 				// \post: compteurAbandon() == 0
-				assertion(obj+"\\post: compteurAbandon() == 0", hotel.compteurAbandon()==0);
+				assertion(obj+": \\post: compteurAbandon() == 0", hotel.compteurAbandon()==0);
 
 				// \post: appartenance() == race
-				assertion(obj+"\\post: appartenance() == race", hotel.appartenance()==race);
+				assertion(obj+": \\post: appartenance() == race", hotel.appartenance()==race);
 
 			} catch (Exception e) {
 				assertion(obj+e.getMessage(),false);
@@ -514,16 +514,16 @@ public abstract class AbstractHotelDeVilleTests extends AssertionTests {
 					//Oracle
 					checkInvariants(obj);
 					// \post: orRestant() == orRestant()@pre
-					assertTrue(obj+"\\post: orRestant() == orRestant()@pre", hotel.orRestant()==oldOrRestant);
+					assertion(obj+": \\post: orRestant() == orRestant()@pre", hotel.orRestant()==oldOrRestant);
 
 					// \post: compteurAbandon() == (compteurAbandon()@pre + 1)
-					assertTrue(obj+"\\post: compteurAbandon() == (compteurAbandon()@pre + 1)", hotel.compteurAbandon()==(oldCompteurAbandon+1));
+					assertion(obj+": \\post: compteurAbandon() == (compteurAbandon()@pre + 1)", hotel.compteurAbandon()==(oldCompteurAbandon+1));
 
 					// post: etat_d_appartenance()== ETAT.OCCUPE
-					assertion(obj+"\\post: etat_d_appartenance()== ETAT.OCCUPE", hotel.etat_d_appartenance()== EETAT.OCCUPE);
+					assertion(obj+": \\post: etat_d_appartenance()== ETAT.OCCUPE", hotel.etat_d_appartenance()== EETAT.OCCUPE);
 
 					// \post: 	appartenance() == appartenance()@pre
-					assertTrue(obj+"\\post: appartenance() == appartenance()@pre", hotel.appartenance()==oldAppartenance);
+					assertion(obj+": \\post: appartenance() == appartenance()@pre", hotel.appartenance()==oldAppartenance);
 
 				} catch (Exception e) {
 					assertion(obj+e.getMessage(),false);
@@ -582,13 +582,13 @@ public abstract class AbstractHotelDeVilleTests extends AssertionTests {
 				//Oracle
 				checkInvariants(obj);
 				// \post: orRestant() == orRestant()@pre
-				assertTrue(obj+"\\post: orRestant() == orRestant()@pre", hotel.orRestant()==oldOrRestant);
+				assertion(obj+": \\post: orRestant() == orRestant()@pre", hotel.orRestant()==oldOrRestant);
 
 				// \post: compteurAbandon() == (compteurAbandon()@pre + 1)
-				assertTrue(obj+"\\post: compteurAbandon() == (compteurAbandon()@pre + 1)", hotel.compteurAbandon()==(oldCompteurAbandon+1));
+				assertion(obj+": \\post: compteurAbandon() == (compteurAbandon()@pre + 1)", hotel.compteurAbandon()==(oldCompteurAbandon+1));
 
 				// \post: etat_d_appartenance()== ETAT.LIBRE
-				assertTrue(obj+"\\post: etat_d_appartenance()== ETAT.LIBRE", hotel.etat_d_appartenance()==EETAT.LIBRE);
+				assertion(obj+": \\post: etat_d_appartenance()== ETAT.LIBRE", hotel.etat_d_appartenance()==EETAT.LIBRE);
 
 			} catch (Exception e) {
 				assertion(obj+e.getMessage(),false);
