@@ -30,7 +30,7 @@ public class RouteContrat extends RouteDecorator {
 	}
 
 	@Override
-	public void init(int largeur, int hauteur, double mult) {
+	public void init(int largeur, int hauteur, double mult) throws Exception {
 		// Pre-Conditions
 
 		// \pre : largeur > 0

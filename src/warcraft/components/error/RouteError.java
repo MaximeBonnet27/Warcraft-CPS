@@ -1,14 +1,14 @@
-package warcraft.components.correct;
+package warcraft.components.error;
 
 import warcraft.services.IRouteService;
 
-public class Route implements IRouteService{
+public class RouteError implements IRouteService{
 
 	private int largeur, hauteur;
 	private double multiplicateur;
 
 
-	public Route() {
+	public RouteError() {
 	}
 
 	@Override
@@ -28,16 +28,20 @@ public class Route implements IRouteService{
 
 	@Override
 	public void init(int largeur, int hauteur, double mult) throws Exception {
-		if(!(largeur>0))
-			throw new Exception("\\pre : largeur > 0");
-		if(!(hauteur>0))
-			throw new Exception("\\pre : hauteur > 0");
-		if(!(mult>=1))
-			throw new Exception("\\pre : multiplicateur >= 1");
+		//error
+		//if(!(largeur>0))
+		//	throw new Exception("\\pre : largeur > 0");
+		//error
+		//if(!(hauteur>0))
+		//	throw new Exception("\\pre : hauteur > 0");
+		//error
+		//if(!(multiplicateur>=1))
+		//	throw new Exception("\\pre : multiplicateur >= 1");
 
 		this.largeur = largeur;
 		this.hauteur = hauteur;
-		this.multiplicateur = mult;
+		//error
+		this.multiplicateur = 0;
 	}
 
 }

@@ -9,7 +9,8 @@ import org.junit.runners.Suite.SuiteClasses;
 @SuiteClasses({
 	MineTestsError.class,
 	HotelDeVilleTestsError.class,
-	CentreNationalRechercheSpecialeTestsError.class
+	CentreNationalRechercheSpecialeTestsError.class,
+	RouteTestsError.class
 })
 
 public class AllTestsError {

@@ -11,7 +11,8 @@ import org.junit.runners.Suite.SuiteClasses;
 @SuiteClasses({
 	MineTestsCorrect.class,
 	HotelDeVilleTestsCorrect.class,
-	CentreNationalRechercheSpecialeTestsCorrect.class
+	CentreNationalRechercheSpecialeTestsCorrect.class,
+	RouteTestsCorrect.class
 })
 public class AllTestsCorrect {	
 
