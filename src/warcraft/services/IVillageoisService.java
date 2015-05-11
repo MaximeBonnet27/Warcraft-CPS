@@ -60,7 +60,7 @@ public interface IVillageoisService {
 	 * \post : compteurCorvee() == 0
 	 */
 	public void init(ERace race, int largeur, int hauteur, int force,
-			double vitesse, int pointsDeVie);
+			double vitesse, int pointsDeVie) throws Exception;
 
 	// Operators
 	/**
@@ -73,7 +73,7 @@ public interface IVillageoisService {
 	 * \post : vitesse() == vitesse()@pre
 	 * \post : force() == force()@pre
 	 */
-	public void retraitPV(int degats);
+	public void retraitPV(int degats) throws Exception;
 
 	/**
 	 * \pre : !estMort() 
@@ -85,7 +85,7 @@ public interface IVillageoisService {
 	 * \post : vitesse() == vitesse()@pre
 	 * \post : force() == force()@pre
 	 */
-	public void ajouterOr(int somme);
+	public void ajouterOr(int somme) throws Exception;
 
 	/**
 	 * \pre : !estMort() 
@@ -99,7 +99,7 @@ public interface IVillageoisService {
 	 * \post : force() == force()@pre
 	 */
 	
-	public void retraitOr(int somme);
+	public void retraitOr(int somme) throws Exception;
 
 	/**
 	 * \pre : !estMort() 
@@ -111,8 +111,20 @@ public interface IVillageoisService {
 	 * \post : force() == force()@pre
 	 */
 
-	public void commenceTravaille();
+	public void commenceTravaille() throws Exception;
 
+	/**
+	 * \pre: !estMort()
+	 * \pre: enCorvee()
+	 * 
+	 * \post: pointsDeVie() == pointsDeVie()@pre
+	 * \post: quantiteOr() == quantiteOr()@pre
+	 * \post: compteurCorvee() == 0
+	 * \post: force() == force()@pre
+	 * \post: vitesse() == vitesse()@pre
+	 */
+	public void finirTravail() throws Exception;
+	
 	/**
 	 * \pre : !estMort() 
 	 * \pre : !corveeFinie()
@@ -124,7 +136,7 @@ public interface IVillageoisService {
 	 * \post : force() == force()@pre
 	 */
 
-	public void travaille();
+	public void travaille() throws Exception;
 	/**
 	 * \pre : !estMort() 
 	 * \pre : val > 0
@@ -144,6 +156,6 @@ public interface IVillageoisService {
 	 * \post : quantiteOr() == quantiteOr()@pre
 	 * \post : compteurCorvee() == compteurCorvee()@pre
 	 */
-	public void amelioration(ECompetence competence, int val);
+	public void amelioration(ECompetence competence, int val) throws Exception;
 	
 }

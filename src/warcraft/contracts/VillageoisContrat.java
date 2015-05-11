@@ -84,7 +84,7 @@ public class VillageoisContrat extends VillageoisDecorator{
 
 	@Override
 	public void init(ERace race, int largeur, int hauteur, int force,
-			double vitesse, int pointsDeVie) {
+			double vitesse, int pointsDeVie) throws Exception {
 		// Pre-Conditions
 
 		// \pre : largeur>0 
@@ -127,7 +127,7 @@ public class VillageoisContrat extends VillageoisDecorator{
 	}
 
 	@Override
-	public void retraitPV(int degats) {
+	public void retraitPV(int degats) throws Exception {
 		// Capture
 		int oldPointsDeVie = super.pointsDeVie();
 		int oldQuantiteOr = super.quantiteOr();
@@ -140,7 +140,7 @@ public class VillageoisContrat extends VillageoisDecorator{
 		// \pre : !estMort() 
 		assertTrue("\\pre : !estMort()", !super.estMort() );
 		// \pre : degats>0
-		assertTrue("degats>0", degats>0);
+		assertTrue("\\pre degats>0", degats>0);
 
 		// Invariants
 		checkInvariants();
@@ -167,7 +167,7 @@ public class VillageoisContrat extends VillageoisDecorator{
 	}
 
 	@Override
-	public void ajouterOr(int somme) {
+	public void ajouterOr(int somme) throws Exception {
 		// Capture
 		int oldPointsDeVie = super.pointsDeVie();
 		int oldQuantiteOr = super.quantiteOr();
@@ -207,7 +207,7 @@ public class VillageoisContrat extends VillageoisDecorator{
 	}
 
 	@Override
-	public void retraitOr(int somme) {
+	public void retraitOr(int somme) throws Exception {
 		// Capture
 		int oldPointsDeVie = super.pointsDeVie();
 		int oldQuantiteOr = super.quantiteOr();
@@ -248,7 +248,7 @@ public class VillageoisContrat extends VillageoisDecorator{
 	}
 
 	@Override
-	public void commenceTravaille() {
+	public void commenceTravaille() throws Exception {
 		// Capture
 		int oldPointsDeVie = super.pointsDeVie();
 		int oldQuantiteOr = super.quantiteOr();
@@ -283,8 +283,39 @@ public class VillageoisContrat extends VillageoisDecorator{
 
 	}
 
+
 	@Override
-	public void travaille() {
+	public void finirTravail() throws Exception {
+		//Capture
+		int oldPointsDeVie = super.pointsDeVie();
+		int oldQuantiteOr = super.quantiteOr();
+		int oldForce = super.force();
+		double oldVitesse = super.vitesse();
+
+		// \pre : !estMort() 
+		assertTrue("\\pre : !estMort()", !super.estMort() );
+		// \pre : !corveeFinie()
+		assertTrue("\\pre : enCorvee()", enCorvee());
+
+		checkInvariants();
+		super.finirTravail();
+		checkInvariants();
+
+		// \post : pointsDeVie() == pointsDeVie()@pre
+		assertTrue("\\post : pointsDeVie() == pointsDeVie()@pre", super.pointsDeVie() == oldPointsDeVie);
+
+		// \post : quantiteOr() == quantiteOr()@pre 
+		assertTrue("\\post : quantiteOr() == quantiteOr()@pre", super.quantiteOr() == oldQuantiteOr);
+		// \post : compteurCorvee() == compteurCorvee()@pre + 1
+		assertTrue("\\post : compteurCorvee() == 0", super.compteurCorvee() == 0);
+		// \post : force() == force()@pre
+		assertTrue("\\post : force() == force()@pre", super.force() == oldForce);
+		// \post : vitesse() == vitesse()@pre
+		assertTrue("\\post : vitesse() == vitesse()@pre", super.vitesse() == oldVitesse);
+	}
+	
+	@Override
+	public void travaille() throws Exception {
 		// Capture
 		int oldPointsDeVie = super.pointsDeVie();
 		int oldQuantiteOr = super.quantiteOr();
@@ -323,7 +354,7 @@ public class VillageoisContrat extends VillageoisDecorator{
 
 	}
 	@Override
-	public void amelioration(ECompetence competence, int val) {
+	public void amelioration(ECompetence competence, int val) throws Exception {
 		// Capture
 		int oldPointsDeVie = super.pointsDeVie();
 		int oldQuantiteOr = super.quantiteOr();

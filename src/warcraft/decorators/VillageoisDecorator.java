@@ -58,31 +58,35 @@ public abstract class VillageoisDecorator implements IVillageoisService{
 	}
 
 	public void init(ERace race, int largeur, int hauteur, int force,
-			double vitesse, int pointsDeVie) {
+			double vitesse, int pointsDeVie) throws Exception {
 		delegate.init(race, largeur, hauteur, force, vitesse, pointsDeVie);
 	}
 
-	public void retraitPV(int degats) {
+	public void retraitPV(int degats) throws Exception {
 		delegate.retraitPV(degats);
 	}
 
-	public void ajouterOr(int somme) {
+	public void ajouterOr(int somme) throws Exception {
 		delegate.ajouterOr(somme);
 	}
 
-	public void retraitOr(int somme) {
+	public void retraitOr(int somme) throws Exception {
 		delegate.retraitOr(somme);
 	}
 
-	public void commenceTravaille() {
+	public void commenceTravaille() throws Exception {
 		delegate.commenceTravaille();
 	}
+	
+	public void finirTravail() throws Exception {
+		delegate.finirTravail();
+	}
 
-	public void travaille() {
+	public void travaille() throws Exception {
 		delegate.travaille();
 	}
 
-	public void amelioration(ECompetence competence, int val) {
+	public void amelioration(ECompetence competence, int val) throws Exception {
 		delegate.amelioration(competence, val);
 	}
 
