@@ -452,7 +452,7 @@ public abstract class AbstractCentreNationalRechercheSpecialeTests extends Asser
 	 * Cas 4_0: commencerRecherche positif
 	 * 
 	 * Condition initial:
-	 * init(10,20,200,50)
+	 * construire(commencerConstruction(init(2,20,200,50)))
 	 * 
 	 * Operation:
 	 * commencerRecherche()
@@ -474,18 +474,20 @@ public abstract class AbstractCentreNationalRechercheSpecialeTests extends Asser
 	@Test
 	public void testCommencerRecherche4_0(){
 		String obj="CNRS Test Objectif 4.0";
-		
+
 		try {
 			//Condition initial
-			cnrs.init(10, 20, 200, 50);
-			
+			cnrs.init(2, 20, 200, 50);
+			cnrs.commencerConstruction();
+			cnrs.construire();
+
 			//Capture
 			int oldTempsCourant=cnrs.tempsCourant();
-			
+
 			try{
 				//Operation
-				cnrs.commencerRecherche(); //finir la construction
-				
+				cnrs.commencerRecherche();
+
 				//Oracle
 				checkInvariants(obj);
 				// \post : tempsCourant() == tempsCourant()@pre
@@ -503,58 +505,314 @@ public abstract class AbstractCentreNationalRechercheSpecialeTests extends Asser
 
 	/**
 	 * Objectif 4: commencerRecherche
+	 * 
+	 * Cas 4_1: commencerRecherche: error construction pas fini
+	 * 
+	 * Condition initial:
+	 * commencerConstruction(init(2,20,200,50))
+	 * 
+	 * Operation:
+	 * commencerRecherche()
+	 * 
+	 * Oracle:
+	 *  Exception pour commencerRecherche
+	 * 
 	 */
 	@Test
 	public void testCommencerRecherche4_1(){
+		String obj="CNRS Test Objectif 4.1";
+
+		try {
+			//Condition initial
+			cnrs.init(2, 20, 200, 50);
+			cnrs.commencerConstruction();
+
+			try{
+				//Operation
+				cnrs.commencerRecherche();
+
+				//Oracle
+				assertion("commencerRecherche devrait echouer", false);
+			}catch(Exception e){
+				assertion(obj, true);
+			}
+		} catch (Exception e) {
+			assertion(obj+": erreur durant l'initialisation du test: "+e.getMessage(), false);
+		}
 
 	}
 
 	/**
 	 * Objectif 4: commencerRecherche
+	 * 
+	 * Cas 4_2: commencerRecherche: error recherche deja en cours
+	 * 
+	 * Condition initial:
+	 * commencerRecherche(construire(commencerConstruction(init(2,20,200,50))))
+	 * 
+	 * Operation:
+	 * commencerRecherche()
+	 * 
+	 * Oracle:
+	 *  Exception pour commencerRecherche
+	 * 
 	 */
 	@Test
 	public void testCommencerRecherche4_2(){
+		String obj="CNRS Test Objectif 4.2";
+
+		try {
+			//Condition initial
+			cnrs.init(2, 20, 200, 50);
+			cnrs.commencerConstruction();
+			cnrs.construire();
+			cnrs.commencerRecherche();
+
+			try{
+				//Operation
+				cnrs.commencerRecherche();
+
+				//Oracle
+				assertion("commencerRecherche devrait echouer", false);
+			}catch(Exception e){
+				assertion(obj, true);
+			}
+		} catch (Exception e) {
+			assertion(obj+": erreur durant l'initialisation du test: "+e.getMessage(), false);
+		}
 
 	}
 
 	/**
 	 * Objectif 5: recherche
+	 * 
+	 * Cas 5_0: recherche positif
+	 * 
+	 * Condition initial:
+	 * commencerRecherche(construire(commencerConstruction(init(2,20,200,50))))
+	 * 
+	 * Operation:
+	 * rechercher()
+	 * 
+	 * Oracle:
+	 *  Pas d'exception &&
+	 *  0 < tempsCourant() &&
+	 *  tempsCourant() <= tempsDeConstruction() &&
+	 *  enConstruction() == (tempsCourant() > 0) &&
+	 *  constructionFinie() == (tempsCourant() == tempsDeConstruction()) &&
+	 *  0 < rechercheCourante() &&
+	 *  rechercheCourante() <= tempsDeRecherche() &&
+	 *  enRecherche() == (rechercheCourante() > 0)  &&
+	 *  rechercheFinie() == (rechercheCourante() == tempsDeRecherche()) &&
+	 *  rechercheCourante() == rechercheCourante()@pre + 1 &&
+	 *  tempsCourant() == tempsCourant()@pre
 	 */
 	@Test
 	public void testRecherche5_0(){
+		String obj="CNRS Test Objectif 5.0";
 
+		try {
+			//Condition initial
+			cnrs.init(2, 20, 200, 50);
+			cnrs.commencerConstruction();
+			cnrs.construire();
+			cnrs.commencerRecherche();
+
+			//Capture
+			int oldTempsCourant=cnrs.tempsCourant();
+			int oldRechercheCourante=cnrs.rechercheCourante();
+
+			try{
+				//Operation
+				cnrs.recherche();
+
+				//Oracle
+				checkInvariants(obj);
+				// \post : rechercheCourante() == rechercheCourante()@pre + 1
+				assertion("\\post : rechercheCourante() == rechercheCourante()@pre + 1", cnrs.rechercheCourante() == oldRechercheCourante + 1);
+				// \post : tempsCourant() == tempsCourant()@pre
+				assertion("\\post : tempsCourant() == tempsCourant()@pre", cnrs.tempsCourant() == oldTempsCourant);
+			}catch(Exception e){
+				assertion(obj+": "+e.getMessage(), false);
+			}
+		} catch (Exception e) {
+			assertion(obj+": erreur durant l'initialisation du test: "+e.getMessage(), false);
+		}
 	}
 
 	/**
 	 * Objectif 5: recherche
+	 * 
+	 * Cas 5_1: recherche: error pas en recherche
+	 * 
+	 * Condition initial:
+	 * construire(commencerConstruction(init(2,20,200,50)))
+	 * 
+	 * Operation:
+	 * rechercher()
+	 * 
+	 * Oracle:
+	 * Exception pour recherche
 	 */
 	@Test
 	public void testRecherche5_1(){
+		String obj="CNRS Test Objectif 5.1";
+
+		try {
+			//Condition initial
+			cnrs.init(2, 20, 200, 50);
+			cnrs.commencerConstruction();
+			cnrs.construire();
+
+			try{
+				//Operation
+				cnrs.recherche();
+				
+				//Oracle
+				assertion(obj+": recherche devrait echouer",false);
+			}catch(Exception e){
+				assertion(obj,true);
+			}
+		}catch (Exception e) {
+			assertion(obj+": erreur durant l'initialisation du test: "+e.getMessage(), false);
+		}
 
 	}
 
 	/**
 	 * Objectif 5: recherche
+	 * 
+	 * Cas 5_2: recherche error recherche deja fini
+	 * 
+	 * Condition initial:
+	 * recherche(commencerRecherche(construire(commencerConstruction(init(2,2,200,50)))))
+	 * 
+	 * Operation:
+	 * rechercher()
+	 * 
+	 * Oracle:
+	 *  Exception pour recherche
 	 */
 	@Test
 	public void testRecherche5_2(){
+		String obj="CNRS Test Objectif 5.2";
+
+		try {
+			//Condition initial
+			cnrs.init(2, 2, 200, 50);
+			cnrs.commencerConstruction();
+			cnrs.construire();
+			cnrs.commencerRecherche();
+			cnrs.recherche();
+
+			try{
+				//Operation
+				cnrs.recherche();
+				
+				//Oracle
+				assertion(obj+": recherche devrait echouer",false);
+			}catch(Exception e){
+				assertion(obj,true);
+			}
+		}catch (Exception e) {
+			assertion(obj+": erreur durant l'initialisation du test: "+e.getMessage(), false);
+		}
 
 	}
 
 	/**
 	 * Objectif 6: finirRecherche
+	 * 
+	 * Cas 6: finirRecherche positif
+	 * 
+	 * Condition initial:
+	 * commencerRecherche(construire(commencerConstruction(init(2,2,200,50)))))
+	 * 
+	 * Operation:
+	 * finirRecherche()
+	 * 
+	 * Oracle:
+	 * Pas d'exception &&
+	 *  0 < tempsCourant() &&
+	 *  tempsCourant() <= tempsDeConstruction() &&
+	 *  enConstruction() == (tempsCourant() > 0) &&
+	 *  constructionFinie() == (tempsCourant() == tempsDeConstruction()) &&
+	 *  0 < rechercheCourante() &&
+	 *  rechercheCourante() <= tempsDeRecherche() &&
+	 *  enRecherche() == (rechercheCourante() > 0)  &&
+	 *  rechercheFinie() == (rechercheCourante() == tempsDeRecherche()) &&
+	 *   rechercheCourante() == 0 &&
+	 *  tempsCourant() == tempsCourant()@pre
 	 */
 	@Test
 	public void testFinirRecherche6_0(){
+		String obj="CNRS Test Objectif 6.0";
 
+		try {
+			//Condition initial
+			cnrs.init(2, 2, 200, 50);
+			cnrs.commencerConstruction();
+			cnrs.construire();
+			cnrs.commencerRecherche();
+			
+			//Capture
+			int oldTempsCourant=cnrs.tempsCourant();
+			try{
+				//Operation
+				cnrs.finirRecherche();
+				
+				//Oracle
+				checkInvariants(obj);
+				
+				
+			}catch(Exception e){
+				assertion(obj+": "+e.getMessage(), false);
+				// \post : rechercheCourante() == 0
+				assertTrue("\\post : rechercheCourante() == 0", cnrs.rechercheCourante()==0);
+				// \post : tempsCourant() == tempsCourant()@pre
+				assertTrue("\\post : tempsCourant() == tempsCourant()@pre ", cnrs.tempsCourant() == oldTempsCourant);
+
+			}
+		}catch(Exception e){
+			assertion(obj+": erreur durant l'initialisation du test: "+e.getMessage(), false);
+		}
 	}
 
 	/**
 	 * Objectif 6: finirRecherche
+	 * 
+	 * Cas 6: finirRecherche: error pas en recherche
+	 * 
+	 * Condition initial:
+	 * construire(commencerConstruction(init(2,2,200,50))))
+	 * 
+	 * Operation:
+	 * finirRecherche()
+	 * 
+	 * Oracle:
+	 * Exception pour finirRecherche
 	 */
 	@Test
 	public void testFinirRecherche6_1(){
+		String obj="CNRS Test Objectif 6.1";
 
+		try {
+			//Condition initial
+			cnrs.init(2, 2, 200, 50);
+			cnrs.commencerConstruction();
+			cnrs.construire();
+			try{
+				//Operation
+				cnrs.finirRecherche();
+				
+				//Oracle
+				assertion("finirRecherche devrait echouer", false);				
+			}catch(Exception e){
+				assertion(obj, true);
+			}
+		}catch(Exception e){
+			assertion(obj+": erreur durant l'initialisation du test: "+e.getMessage(), false);
+		}
 	}
 
 }
