@@ -34,4 +34,6 @@ public abstract class AbstractVillageoisTests extends AssertionTests {
 		// \inv : vitesse() > 0
 		assertion(obj+": vitesse() > 0", villageois.vitesse() > 0);
 	}
+	
+	
 }

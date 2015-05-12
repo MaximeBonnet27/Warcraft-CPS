@@ -1,11 +1,13 @@
-/**
- * 
- */
 package warcraft.contracts;
 
 import static org.junit.Assert.assertTrue;
+
+import java.util.ArrayList;
+import java.util.Set;
+
 import warcraft.decorators.GestionCombatDecorator;
 import warcraft.services.IGestionCombatService;
+import warcraft.services.IMurailleService;
 import warcraft.services.IVillageoisService;
 
 public class GestionCombatContrat extends GestionCombatDecorator{
@@ -20,75 +22,301 @@ public class GestionCombatContrat extends GestionCombatDecorator{
 	}
 
 	@Override
-	public IVillageoisService attaquant() {
+	public IVillageoisService attaquant()  throws Exception{
+		// \pre: !estCombatMultiple()
+		assertTrue("\\pre: !estCombatMultiple()", !super.estCombatMultiple());
+
 		return super.attaquant();
 	}
 
 	@Override
-	public IVillageoisService defenseur() {
+	public IVillageoisService defenseur()  throws Exception{
+		// \pre: !estCombatMuraille()
+		assertTrue("\\pre: !estCombatMuraille()", !super.estCombatMuraille());
 		return super.defenseur();
 	}
 
-
 	@Override
-	public void init(IVillageoisService attaquant,
-			IVillageoisService defenseur) {
-		// Pré-Conditions
-
-		// \pre : !attaquant.estMort()
-		assertTrue("\\pre : !attaquant.estMort()", !attaquant.estMort());
-		// \pre : !defenseur.estMort()
-		assertTrue("\\pre : !defenseur.estMort()", !defenseur.estMort());
-
-		// Pas d'invariants avant initialisation
-
-		// Appel
-		super.init(attaquant, defenseur);
-
-		// Invariants
-		checkInvariants();
-
-		// Post-Conditions
-
-		// \post : attaquant() == attaquant
-		assertTrue("\\post : attaquant() == attaquant", super.attaquant() == attaquant);
-		// \post : defenseur() == defenseur
-		assertTrue("\\post : defenseur() == defenseur", super.defenseur() == defenseur);
-
+	public ArrayList<IVillageoisService> setAttaquant() throws Exception{
+		// \pre: estCombatMultiple()
+		assertTrue("\\pre: estCombatMultiple()", super.estCombatMultiple());
+		return super.setAttaquant();
 	}
 
 	@Override
-	public void combat() {
+	public IMurailleService muraille() throws Exception{
+		// \pre: estCombatMuraille()
+		assertTrue("\\pre: estCombatMuraille()", super.estCombatMuraille());
+
+		return super.muraille();
+	}
+
+	@Override
+	public boolean estCombatMultiple(){
+		return  super.estCombatMultiple();
+	}
+
+	@Override
+	public boolean estCombatMuraille(){
+		return super.estCombatMuraille();
+	}
+
+	@Override
+	public void init(IVillageoisService attaquant,IVillageoisService defenseur) {
+		super.init(attaquant, defenseur);
+
+		checkInvariants();
+
+		// \post : attaquant() == attaquant
+		try {
+			assertTrue("\\post : attaquant() == attaquant", super.attaquant() == attaquant);
+		} catch (Exception e) {
+			assertTrue("\\post : attaquant() == attaquant",false);
+		}
+		// \post : defenseur() == defenseur
+		try {
+			assertTrue("\\post : defenseur() == defenseur", super.defenseur() == defenseur);
+		} catch (Exception e) {
+			assertTrue("\\post : defenseur() == defenseur",false);
+		}
+		// \post: estCombatMultiple() == false
+		assertTrue("\\post: estCombatMultiple() == false", super.estCombatMultiple()==false);
+		// \post: estCombatMuraille() == false
+		assertTrue("\\post: estCombatMuraille() == false", super.estCombatMuraille()==false);
+	}
+
+	public void initMultiple(Set<IVillageoisService> attaquants, IVillageoisService defenseur){
+		super.initMultiple(attaquants, defenseur);
+
+		checkInvariants();
+
+		// \post : setAttaquant() == attaquants
+		try {
+			assertTrue("\\post : setAttaquant() == attaquants", super.setAttaquant().equals(attaquants));
+		} catch (Exception e) {
+			assertTrue("\\post : setAttaquant() == attaquants",false);
+		}
+
+		// \post : defenseur() == defenseur
+		try {
+			assertTrue("\\post : defenseur() == defenseur", super.defenseur() == defenseur);
+		} catch (Exception e) {
+			assertTrue("\\post : defenseur() == defenseur",false);
+		}
+
+		// \post : estCombatMultiple() == true
+		assertTrue("\\post: estCombatMultiple() == true", super.estCombatMultiple()==true);
+		// \post : estCombatMuraille() == false
+		assertTrue("\\post: estCombatMuraille() == false", super.estCombatMuraille()==false);
+	}
+
+	public void initMuraille(IVillageoisService attaquant, IMurailleService muraille){
+		super.initMuraille(attaquant, muraille);
+
+		checkInvariants();
+
+		// \post : attaquant() == attaquant
+		try {
+			assertTrue("\\post : attaquant() == attaquant", super.attaquant() == attaquant);
+		} catch (Exception e) {
+			assertTrue("\\post : attaquant() == attaquant",false);
+		}
+		// \post : muraille() == muraille
+		try {
+			assertTrue("\\post : muraille() == muraille", super.muraille() == muraille);
+		} catch (Exception e) {
+			assertTrue("\\post : muraille() == muraille",false);
+		}
+		// \post: estCombatMultiple() == false
+		assertTrue("\\post: estCombatMultiple() == false", super.estCombatMultiple()==false);
+		// \post: estCombatMuraille() == true
+		assertTrue("\\post: estCombatMuraille() == true", super.estCombatMuraille()==true);
+	}
+
+	public void initMurailleMultiple(Set<IVillageoisService> attaquants, IMurailleService muraille){
+		super.initMurailleMultiple(attaquants, muraille);
+
+		checkInvariants();
+
+		// \post : setAttaquant() == attaquants
+		try {
+			assertTrue("\\post : setAttaquant() == attaquants", super.setAttaquant().equals(attaquants));
+		} catch (Exception e) {
+			assertTrue("\\post : setAttaquant() == attaquants",false);
+		}
+
+		// \post : muraille() == muraille
+		try {
+			assertTrue("\\post : muraille() == muraille", super.muraille() == muraille);
+		} catch (Exception e) {
+			assertTrue("\\post : muraille() == muraille",false);
+		}
+
+		// \post : estCombatMultiple() == true
+		assertTrue("\\post: estCombatMultiple() == true", super.estCombatMultiple()==true);
+		// \post: estCombatMuraille() == true
+		assertTrue("\\post: estCombatMuraille() == true", super.estCombatMuraille()==true);
+	}
+
+	@Override
+	public void combat()  throws Exception{
 
 		// Captures
 		int oldAttaquant_PointsDeVie = super.attaquant().pointsDeVie();
 		int oldAttaquant_Force = super.attaquant().force();
 		int oldDefenseur_PointsDeVie = super.defenseur().pointsDeVie();
+
 		// Pré-Conditions
 
 		// \pre : !attaquant.estMort()
-		assertTrue("\\pre : !attaquant.estMort()", !super.attaquant().estMort());
+		assertTrue("\\pre : !attaquant().estMort()", !super.attaquant().estMort());
 		// \pre : !defenseur.estMort()
-		assertTrue("\\pre : !defenseur.estMort()", !super.defenseur().estMort());
+		assertTrue("\\pre : !defenseur().estMort()", !super.defenseur().estMort());
+		// \pre: !estCombatMultiple()
+		assertTrue("\\pre: !estCombatMultiple()", !super.estCombatMultiple());
+		// \pre: !estCombatMuraille()
+		assertTrue("\\pre: !estCombatMuraille()", !super.estCombatMuraille());
 
 		// Invariants
 		checkInvariants();
-		
+
 		// Appel
 		super.combat();
-		
+
 		// Invariants
 		checkInvariants();
-		
+
 		// Post-Conditions
-		
-		// \post : attaquant().pointsDeVie() == attaquant().pointsDeVie()@pre
-		assertTrue("attaquant().pointsDeVie() == attaquant().pointsDeVie()@pre", super.attaquant().pointsDeVie() == oldAttaquant_PointsDeVie);
-		// \post : defenseur().pointsDeVie() == defenseur().pointsDeVie()@pre - attaquant().force()@pre
-		assertTrue("defenseur().pointsDeVie() == defenseur().pointsDeVie()@pre - attaquant().force()", super.defenseur().pointsDeVie() == oldDefenseur_PointsDeVie - oldAttaquant_Force);
-		
+
+		try{
+			// \post : attaquant().pointsDeVie() == attaquant().pointsDeVie()@pre
+			assertTrue("\\post: attaquant().pointsDeVie() == attaquant().pointsDeVie()@pre", super.attaquant().pointsDeVie() == oldAttaquant_PointsDeVie);
+		}catch(Exception e){
+			assertTrue("\\post: attaquant().pointsDeVie() == attaquant().pointsDeVie()@pre",false);
+		}
+
+		try{
+			// \post : defenseur().pointsDeVie() == defenseur().pointsDeVie()@pre - attaquant().force()@pre
+			assertTrue("\\post: defenseur().pointsDeVie() == defenseur().pointsDeVie()@pre - attaquant().force()", super.defenseur().pointsDeVie() == oldDefenseur_PointsDeVie - oldAttaquant_Force);
+		}catch(Exception e){
+			assertTrue("\\post: defenseur().pointsDeVie() == defenseur().pointsDeVie()@pre - attaquant().force()", false);
+		}
 	}
 
+	public void combatMultiple() throws Exception{
+
+		//Capture
+		ArrayList<Integer> oldPointsDeVie=new ArrayList<Integer>();
+		for(IVillageoisService v: setAttaquant()){
+			oldPointsDeVie.add(v.pointsDeVie());
+		}
+
+		// Pré-Conditions
+
+		// \pre : \forall attaquant \in setAttaquant() : !attaquant.estMort()
+		for(IVillageoisService v: setAttaquant())
+			assertTrue("\\pre : \\forall attaquant \\in setAttaquant() : !attaquant.estMort()", !v.estMort());
+
+		// \pre : !defenseur().estMort()
+		assertTrue("\\pre : !defenseur.()estMort()", !super.defenseur().estMort());
+		// \pre: estCombatMultiple()
+		assertTrue("\\pre: estCombatMultiple()", super.estCombatMultiple());
+		// \pre: !estCombatMuraille()
+		assertTrue("\\pre: !estCombatMuraille()", !super.estCombatMuraille());
+
+		checkInvariants();
+		super.combatMultiple();
+		checkInvariants();
+
+		// \post : \forall attaquant \in setAttaquant() : attaquant.pointsDeVie() == attaquant.pointsDeVie()@pre
+		for(int i=0;i<super.setAttaquant().size();i++){
+			assertTrue("\\post : \\forall attaquant \\in setAttaquant() : attaquant.pointsDeVie() == attaquant.pointsDeVie()@pre", oldPointsDeVie.get(i)==super.setAttaquant().get(i).pointsDeVie());
+		}
+
+		//\post : defenseur() ==  defenseur()@pre.retraitPV(\sum \forall attaquant in setAttaquant()@pre : attaquant.force())
+		//Fait dans super.combatMultiple();
+
+	}
+
+	@Override
+	public void combatMuraille()  throws Exception{
+
+		// Captures
+		int oldAttaquant_PointsDeVie = super.attaquant().pointsDeVie();
+		int oldAttaquant_Force = super.attaquant().force();
+		int oldMuraille_PointsDeVie = super.muraille().pointsDeVie();
+
+		// Pré-Conditions
+
+		// \pre : !attaquant().estMort()
+		assertTrue("\\pre : !attaquant().estMort()", !super.attaquant().estMort());
+		// \pre : !muraille().estDetruite()
+		assertTrue("\\pre : !muraille().estDetruite()", !super.muraille().estDetruite());
+		// \pre: !estCombatMultiple()
+		assertTrue("\\pre: !estCombatMultiple()", !super.estCombatMultiple());
+		// \pre: estCombatMuraille()
+		assertTrue("\\pre: estCombatMuraille()", super.estCombatMuraille());
+
+		// Invariants
+		checkInvariants();
+
+		// Appel
+		super.combatMuraille();
+
+		// Invariants
+		checkInvariants();
+
+		// Post-Conditions
+
+		try{
+			// \post : attaquant().pointsDeVie() == attaquant().pointsDeVie()@pre
+			assertTrue("\\post: attaquant().pointsDeVie() == attaquant().pointsDeVie()@pre", super.attaquant().pointsDeVie() == oldAttaquant_PointsDeVie);
+		}catch(Exception e){
+			assertTrue("\\post: attaquant().pointsDeVie() == attaquant().pointsDeVie()@pre",false);
+		}
+
+		try{
+			// \post : muraille().pointsDeVie() == muraille()@pre.taper(attaquant()@pre.force())
+			assertTrue("\\post : muraille().pointsDeVie() == muraille()@pre.taper(attaquant()@pre.force())", super.muraille().pointsDeVie() == oldMuraille_PointsDeVie - oldAttaquant_Force);
+		}catch(Exception e){
+			assertTrue("\\post : muraille().pointsDeVie() == muraille()@pre.taper(attaquant()@pre.force())", false);
+		}
+	}
+
+	public void combatMurailleMultiple() throws Exception{
+
+		//Capture
+		ArrayList<Integer> oldPointsDeVie=new ArrayList<Integer>();
+		for(IVillageoisService v: setAttaquant()){
+			oldPointsDeVie.add(v.pointsDeVie());
+		}
+
+		// Pré-Conditions
+
+		// \pre : \forall attaquant \in setAttaquant() : !attaquant.estMort()
+		for(IVillageoisService v: setAttaquant())
+			assertTrue("\\pre : \\forall attaquant \\in setAttaquant() : !attaquant.estMort()", !v.estMort());
+
+		// \pre : !muraille().estDetruite()
+		assertTrue("\\pre : !muraille().estDetruite()", !super.muraille().estDetruite());
+		// \pre: estCombatMultiple()
+		assertTrue("\\pre: estCombatMultiple()", super.estCombatMultiple());
+		// \pre: estCombatMuraille()
+		assertTrue("\\pre: estCombatMuraille()", super.estCombatMuraille());
+
+		checkInvariants();
+		super.combatMurailleMultiple();
+		checkInvariants();
+
+		// \post : \forall attaquant \in setAttaquant() : attaquant.pointsDeVie() == attaquant.pointsDeVie()@pre
+		for(int i=0;i<super.setAttaquant().size();i++){
+			assertTrue("\\post : \\forall attaquant \\in setAttaquant() : attaquant.pointsDeVie() == attaquant.pointsDeVie()@pre", oldPointsDeVie.get(i)==super.setAttaquant().get(i).pointsDeVie());
+		}
+
+		//\post : muraille().pointsDeVie() == muraille()@pre.taper(\sum \forall attaquant in setAttaquant()@pre : attaquant.force())
+		//Fait dans super.combatMurailleMultiple()
+
+	}
 
 
 }

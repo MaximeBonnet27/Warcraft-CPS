@@ -3,15 +3,22 @@ service: GestionCombat
 use: Villageois, Muraille
 
 Observators:
+
 	defenseur : [GestionCombat] -> Villageois
+		pre defenseur(GC) require ¬estCombatMuraille(GC)
+		
 	const attaquant : [GestionCombat] -> Villageois
 		pre attaquant(GC) require ¬estCombatMultiple(GC)
+		
 	const setAttaquant : [GestionCombat] -> Villageois
 		pre setAttaquant(GC) require estCombatMultiple(GC)
+		
 	muraille : [GestionCombat] -> Muraille
 		pre muraille(GC) require estCombatMuraille(GC)
+		
 	const estCombatMultiple : [GestionCombat] -> boolean
 	const estCombatMuraille : [GestionCombat] -> boolean
+	
 Constructors:
 	init : Villageois x Villageois -> [GestionCombat]
 	
@@ -20,6 +27,7 @@ Constructors:
 	initMuraille : Villageois x Muraille -> [GestionCombat]
 
 	initMultipleMuraille : Set<Villageois> x Muraille -> [GestionCombat]
+	
 Operators:
 
 	combat : [GestionCombat] -> [GestionCombat]
