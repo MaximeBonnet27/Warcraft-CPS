@@ -111,7 +111,7 @@ public class VillageoisError implements IVillageoisService{
 	@Override
 	public void ajouterOr(int somme) throws Exception {
 		//error
-		//if(!(estMort()))
+		//if(estMort())
 		//	throw new Exception("\\pre : !estMort()");
 		if(!(somme>=0))
 			throw new Exception("\\pre: somme>=0");
@@ -120,7 +120,7 @@ public class VillageoisError implements IVillageoisService{
 
 	@Override
 	public void retraitOr(int somme) throws Exception {
-		if(!(estMort()))
+		if(estMort())
 			throw new Exception("\\pre : !estMort()");
 		if(!(somme>=0))
 			throw new Exception("\\pre: somme>=0");
@@ -155,7 +155,7 @@ public class VillageoisError implements IVillageoisService{
 		/*if(estMort())
 			throw new Exception("\\pre : !estMort()");
 
-		if(!corveeFinie())
+		if(corveeFinie())
 			throw new Exception("\\pre : !corveeFinie()");
 			*/
 		compteurCorvee += 1;

@@ -14,7 +14,8 @@ import org.junit.runners.Suite.SuiteClasses;
 	CentreNationalRechercheSpecialeTestsCorrect.class,
 	RouteTestsCorrect.class,
 	MurailleTestsCorrect.class,
-	GestionCombatTestCorrect.class
+	GestionCombatTestCorrect.class,
+	VillageoisTestCorrect.class
 })
 public class AllTestsCorrect {	
 
