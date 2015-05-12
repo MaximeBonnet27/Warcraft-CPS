@@ -294,7 +294,7 @@ public class VillageoisContrat extends VillageoisDecorator{
 
 		// \pre : !estMort() 
 		assertTrue("\\pre : !estMort()", !super.estMort() );
-		// \pre : !corveeFinie()
+		// \pre : enCorvee()
 		assertTrue("\\pre : enCorvee()", enCorvee());
 
 		checkInvariants();
