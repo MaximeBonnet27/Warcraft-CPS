@@ -121,7 +121,6 @@ public interface IMoteurJeuService {
 	public ICentreNationalRechercheSpecialeService CNRSB();
 	
 	// Invariants
-	//TODO conditions de victoire peut-être à revoir.
 	/**
 	 * \inv : 0 <= pasJeuCourant() && pasJeuCourant() <= maxPasJeu();
 	 * \inv : estFini() == 	(hotelDeVilleA().orRestant() >= 1664 && hotelDeVilleA().etat_d_appartenance()==EETAT.OCCUPE) ||

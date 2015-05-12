@@ -20,6 +20,7 @@ public class MoteurJeuDecorator {
 		this.moteur = moteur;
 	}
 
+	
 	public int largeurTerrain() {
 		return moteur.largeurTerrain();
 	}
