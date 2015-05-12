@@ -538,14 +538,20 @@ public class MoteurJeuContrat extends MoteurJeuDecorator {
 	 * 				(c1 == ECommande.ATTAQUER_MURAILLE => a1 \in numeroesMuraille()
 		 */
 		for(Integer i :s1){
-				assertTrue("mauvais parametre pour J1 pas de Jeux", super.numeroesVillageois().contains(i) &&
-						(super.getVillageois(i).race()==ERace.HUMAIN) &&
-						(!(c1==ECommande.DEPLACER) || (0<=a1 && a1<=360)) &&
-						(!(c1==ECommande.ENTRERMINE) || (super.numeroesMine().contains(a1) && super.peutEntrer(i, a1)))&&
-						(!(c1==ECommande.ENTRERHOTELVILLE) || ((a1==0 || a2==1) && super.peutEntrerHotelVille(i, a1))) &&
-						(!(c1==ECommande.CONSTRUIRECNRS) || ((a1==0 || a2==1) && super.getHotel(a1).etat_d_appartenance()==EETAT.OCCUPE && super.getHotel(a1).appartenance()==super.getVillageois(i).race())) &&
-						(!(c1==ECommande.RECHERCHECNRS) || ((a1==0 || a2==1) && super.getHotel(a1).etat_d_appartenance()==EETAT.OCCUPE && super.getHotel(a1).appartenance()==super.getVillageois(i).race()))) &&
-						(!(c1==ECommande.ATTAQUER))) ;
+				try {
+					assertTrue("mauvais parametre pour J1 pas de Jeux", super.numeroesVillageois().contains(i) &&
+							(super.getVillageois(i).race()==ERace.HUMAIN) &&
+							(!(c1==ECommande.DEPLACER) || (0<=a1 && a1<=360)) &&
+							(!(c1==ECommande.ENTRERMINE) || (super.numeroesMine().contains(a1) && super.peutEntrer(i, a1)))&&
+							(!(c1==ECommande.ENTRERHOTELVILLE) || ((a1==0 || a1==1) && super.peutEntrerHotelVille(i, a1))) &&
+							(!(c1==ECommande.CONSTRUIRECNRS) || ((a1==0 || a1==1) && super.getHotel(a1).etat_d_appartenance()==EETAT.OCCUPE && super.getHotel(a1).appartenance()==super.getVillageois(i).race()) &&
+							(!(c1==ECommande.RECHERCHECNRS) || ((a1==0 || a1==1) && super.getHotel(a1).etat_d_appartenance()==EETAT.OCCUPE && super.getHotel(a1).appartenance()==super.getVillageois(i).race())) &&
+							(!(c1==ECommande.ATTAQUER) || (100<=a1 && a1 <=199))&&
+							(!(c1==ECommande.ATTAQUER_MURAILLE) || (super.numeroesMuraille().contains(a1)))&&
+							(!(c1==ECommande.APPLIQUER_RECHERCHE) || ((a1==0 || a1==1) && super.getHotel(a1).etat_d_appartenance()==EETAT.OCCUPE && super.getHotel(a1).appartenance()==super.getVillageois(i).race())))) ;
+				} catch (Exception e) {
+					assertTrue("mauvais parametre pour J1 pas de Jeux",false);
+				}
 		}
 		
 		/* \pre : \foreach i \in s2 :
@@ -561,6 +567,22 @@ public class MoteurJeuContrat extends MoteurJeuDecorator {
 	 * 				(c2 == ECommande.ATTAQUER_MURAILLE => a2 \in numeroesMuraille()
 		 */
 		
+		for(Integer i :s2){
+			try {
+				assertTrue("mauvais parametre pour J2 pas de Jeux", super.numeroesVillageois().contains(i) &&
+						(super.getVillageois(i).race()==ERace.ORC) &&
+						(!(c2==ECommande.DEPLACER) || (0<=a2 && a2<=360)) &&
+						(!(c2==ECommande.ENTRERMINE) || (super.numeroesMine().contains(a2) && super.peutEntrer(i, a2)))&&
+						(!(c2==ECommande.ENTRERHOTELVILLE) || ((a2==0 || a2==1) && super.peutEntrerHotelVille(i, a2))) &&
+						(!(c2==ECommande.CONSTRUIRECNRS) || ((a2==0 || a2==1) && super.getHotel(a1).etat_d_appartenance()==EETAT.OCCUPE && super.getHotel(a1).appartenance()==super.getVillageois(i).race()) &&
+						(!(c2==ECommande.RECHERCHECNRS) || ((a2==0 || a2==1) && super.getHotel(a1).etat_d_appartenance()==EETAT.OCCUPE && super.getHotel(a1).appartenance()==super.getVillageois(i).race())) &&
+						(!(c2==ECommande.ATTAQUER) || (100<=a2 && a2 <=199))&&
+						(!(c2==ECommande.ATTAQUER_MURAILLE) || (super.numeroesMuraille().contains(a1)))&&
+						(!(c2==ECommande.APPLIQUER_RECHERCHE) || ((a2==0 || a2==1) && super.getHotel(a1).etat_d_appartenance()==EETAT.OCCUPE && super.getHotel(a1).appartenance()==super.getVillageois(i).race())))) ;
+			} catch (Exception e) {
+				assertTrue("mauvais parametre pour J1 pas de Jeux",false);
+			}
+	}
 		checkInvariants();
 		super.pasJeu(c1, s1, a1, c2, s2, a2);
 		checkInvariants();
