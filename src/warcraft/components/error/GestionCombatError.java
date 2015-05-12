@@ -1,7 +1,7 @@
 /**
  * 
  */
-package warcraft.components.correct;
+package warcraft.components.error;
 
 import static org.junit.Assert.assertTrue;
 
@@ -15,7 +15,7 @@ import warcraft.services.RequireMineService;
 import warcraft.services.RequireMurailleService;
 import warcraft.services.RequireVillageoisService;
 
-public class GestionCombat implements IGestionCombatService,RequireVillageoisService,RequireMurailleService{
+public class GestionCombatError implements IGestionCombatService,RequireVillageoisService,RequireMurailleService{
 
 	private IVillageoisService attaquant;
 	private ArrayList<IVillageoisService> setAttaquant;
@@ -26,7 +26,7 @@ public class GestionCombat implements IGestionCombatService,RequireVillageoisSer
 	private boolean attaquantInitialisation;
 
 
-	public GestionCombat() {
+	public GestionCombatError() {
 		setAttaquant=new ArrayList<IVillageoisService>();
 		attaquantInitialisation=true;
 	}
@@ -53,14 +53,16 @@ public class GestionCombat implements IGestionCombatService,RequireVillageoisSer
 
 	@Override
 	public IVillageoisService attaquant() throws Exception {
-		if(estCombatMultiple())
-			throw new Exception("\\pre: !estCombatMultiple()");
+		//error
+		//if(estCombatMultiple())
+		//	throw new Exception("\\pre: !estCombatMultiple()");
 		return attaquant;
 	}
 	@Override
 	public IVillageoisService defenseur() throws Exception {
-		if(estCombatMuraille())
-			throw new Exception("\\pre: !estCombatMuraille()");
+		//error
+		//if(estCombatMuraille())
+		//	throw new Exception("\\pre: !estCombatMuraille()");
 		return defenseur;
 	}
 
@@ -91,7 +93,8 @@ public class GestionCombat implements IGestionCombatService,RequireVillageoisSer
 	@Override
 	public void init(IVillageoisService attaquant, IVillageoisService defenseur) {
 		estCombatMultiple=false;
-		estCombatMuraille=false;
+		//error
+		//estCombatMuraille=false;
 		bindVillageoisService(attaquant);
 		bindVillageoisService(defenseur);
 	}
@@ -99,7 +102,8 @@ public class GestionCombat implements IGestionCombatService,RequireVillageoisSer
 	@Override
 	public void initMultiple(ArrayList<IVillageoisService> attaquants,
 			IVillageoisService defenseur) {
-		estCombatMultiple=true;
+		//error
+		//estCombatMultiple=true;
 		estCombatMuraille=false;
 		for(int i=0;i<attaquants.size();i++){
 			bindVillageoisService(attaquants.get(i));
@@ -138,8 +142,9 @@ public class GestionCombat implements IGestionCombatService,RequireVillageoisSer
 		if(attaquant().estMort())
 			throw new Exception("\\pre : !attaquant().estMort()");
 
-		if(defenseur().estMort())
-			throw new Exception("\\pre : !defenseur().estMort()");
+		//error
+		//if(defenseur().estMort())
+		//	throw new Exception("\\pre : !defenseur().estMort()");
 
 		if(estCombatMultiple())
 			throw new Exception("\\pre: !estCombatMultiple()");
@@ -147,7 +152,8 @@ public class GestionCombat implements IGestionCombatService,RequireVillageoisSer
 		if(estCombatMuraille())
 			throw new Exception("\\pre: !estCombatMuraille()");
 
-		defenseur().retraitPV(attaquant().force());
+		//error
+		//defenseur().retraitPV(attaquant().force());
 	}
 
 	@Override
@@ -166,10 +172,11 @@ public class GestionCombat implements IGestionCombatService,RequireVillageoisSer
 		if(estCombatMuraille())
 			throw new Exception("\\pre: !estCombatMuraille()");
 
-		for(IVillageoisService v: setAttaquant()){
-			if(!defenseur().estMort())
-				defenseur().retraitPV(v.force());
-		}
+		//error
+		//for(IVillageoisService v: setAttaquant()){
+		//	if(!defenseur().estMort())
+		//		defenseur().retraitPV(v.force());
+		//}
 	}
 
 	@Override
@@ -180,8 +187,9 @@ public class GestionCombat implements IGestionCombatService,RequireVillageoisSer
 		if(muraille().estDetruite())
 			throw new Exception("\\pre : !muraille().estDetruite()");
 
-		if(estCombatMultiple())
-			throw new Exception("\\pre: !estCombatMultiple()");
+		//error
+		//if(estCombatMultiple())
+		//	throw new Exception("\\pre: !estCombatMultiple()");
 
 		if(!estCombatMuraille())
 			throw new Exception("\\pre: estCombatMuraille()");
@@ -202,8 +210,9 @@ public class GestionCombat implements IGestionCombatService,RequireVillageoisSer
 		if(!estCombatMultiple())
 			throw new Exception("\\pre: estCombatMultiple()");
 
-		if(estCombatMuraille())
-			throw new Exception("\\pre: !estCombatMuraille()");
+		//error
+		//if(estCombatMuraille())
+		//	throw new Exception("\\pre: !estCombatMuraille()");
 
 		for(IVillageoisService v: setAttaquant()){
 			if(!muraille().estDetruite())

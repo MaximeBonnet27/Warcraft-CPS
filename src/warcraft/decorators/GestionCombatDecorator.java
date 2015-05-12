@@ -46,7 +46,7 @@ public abstract class GestionCombatDecorator implements IGestionCombatService{
 		delegate.init(attaquant, defenseur);
 	}
 
-	public void initMultiple(Set<IVillageoisService> attaquants,
+	public void initMultiple(ArrayList<IVillageoisService> attaquants,
 			IVillageoisService defenseur) {
 		delegate.initMultiple(attaquants, defenseur);
 	}
@@ -56,7 +56,7 @@ public abstract class GestionCombatDecorator implements IGestionCombatService{
 		delegate.initMuraille(attaquant, muraille);
 	}
 
-	public void initMurailleMultiple(Set<IVillageoisService> attaquants,
+	public void initMurailleMultiple(ArrayList<IVillageoisService> attaquants,
 			IMurailleService muraille) {
 		delegate.initMurailleMultiple(attaquants, muraille);
 	}

@@ -46,7 +46,7 @@ public interface IGestionCombatService {
 	 * \post : estCombatMultiple() == true
 	 * \post : estCombatMuraille() == false
 	 */
-	public void initMultiple(Set<IVillageoisService> attaquants, IVillageoisService defenseur);
+	public void initMultiple(ArrayList<IVillageoisService> attaquants, IVillageoisService defenseur);
 
 	/**
 	 * \post : attaquant() == attaquant
@@ -62,7 +62,7 @@ public interface IGestionCombatService {
 	 * \post : estCombatMultiple() == true
 	 * \post : estCombatMuraille() == true
 	 */
-	public void initMurailleMultiple(Set<IVillageoisService> attaquants, IMurailleService muraille);
+	public void initMurailleMultiple(ArrayList<IVillageoisService> attaquants, IMurailleService muraille);
 
 
 	// Operators
@@ -73,7 +73,6 @@ public interface IGestionCombatService {
 	 * \pre : !attaquant().estMort()
 	 * \pre : !defenseur().estMort()
 	 * 
-	 * \post : attaquant().pointsDeVie() == attaquant().pointsDeVie()@pre
 	 * \post : defenseur().pointsDeVie() == defenseur()@pre.retraitPV(attaquant()@pre.force())
 	 */
 	public void combat() throws Exception;
@@ -84,7 +83,6 @@ public interface IGestionCombatService {
 	 * \pre : \forall attaquant \in setAttaquant() : !attaquant.estMort()
 	 * \pre : !defenseur().estMort()
 	 * 
-	 * \post : \forall attaquant \in setAttaquant() : attaquant.pointsDeVie() == attaquant.pointsDeVie()@pre
 	 * \post : defenseur() ==  defenseur()@pre.retraitPV(\sum \forall attaquant in setAttaquant()@pre : attaquant.force())
 	 */
 	public void combatMultiple() throws Exception;
@@ -95,7 +93,6 @@ public interface IGestionCombatService {
 	 * \pre : !attaquant().estMort()
 	 * \pre : !muraille().estDetruite()
 	 * 
-	 * \post : attaquant().pointsDeVie() == attaquant().pointsDeVie()@pre
 	 * \post : muraille().pointsDeVie() == muraille()@pre.taper(attaquant()@pre.force())
 	 */
 	public void combatMuraille() throws Exception;
@@ -106,7 +103,6 @@ public interface IGestionCombatService {
 	 * \pre : \forall attaquant \in setAttaquant() : !attaquant.estMort()
 	 * \pre : !muraille().estDetruite()
 	 * 
-	 * \post : \forall attaquant \in setAttaquant() : attaquant.pointsDeVie() == attaquant.pointsDeVie()@pre
 	 * \post : muraille().pointsDeVie() == muraille()@pre.taper(\sum \forall attaquant in setAttaquant()@pre : attaquant.force())
 	 */
 	public void combatMurailleMultiple() throws Exception;

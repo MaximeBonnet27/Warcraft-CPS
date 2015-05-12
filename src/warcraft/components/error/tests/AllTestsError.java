@@ -11,7 +11,8 @@ import org.junit.runners.Suite.SuiteClasses;
 	HotelDeVilleTestsError.class,
 	CentreNationalRechercheSpecialeTestsError.class,
 	RouteTestsError.class,
-	MurailleTestsError.class
+	MurailleTestsError.class,
+	GestionCombatTestsError.class
 })
 
 public class AllTestsError {

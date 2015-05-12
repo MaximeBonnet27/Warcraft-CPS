@@ -85,7 +85,7 @@ public class GestionCombatContrat extends GestionCombatDecorator{
 		assertTrue("\\post: estCombatMuraille() == false", super.estCombatMuraille()==false);
 	}
 
-	public void initMultiple(Set<IVillageoisService> attaquants, IVillageoisService defenseur){
+	public void initMultiple(ArrayList<IVillageoisService> attaquants, IVillageoisService defenseur){
 		super.initMultiple(attaquants, defenseur);
 
 		checkInvariants();
@@ -133,7 +133,7 @@ public class GestionCombatContrat extends GestionCombatDecorator{
 		assertTrue("\\post: estCombatMuraille() == true", super.estCombatMuraille()==true);
 	}
 
-	public void initMurailleMultiple(Set<IVillageoisService> attaquants, IMurailleService muraille){
+	public void initMurailleMultiple(ArrayList<IVillageoisService> attaquants, IMurailleService muraille){
 		super.initMurailleMultiple(attaquants, muraille);
 
 		checkInvariants();
@@ -162,7 +162,6 @@ public class GestionCombatContrat extends GestionCombatDecorator{
 	public void combat()  throws Exception{
 
 		// Captures
-		int oldAttaquant_PointsDeVie = super.attaquant().pointsDeVie();
 		int oldAttaquant_Force = super.attaquant().force();
 		int oldDefenseur_PointsDeVie = super.defenseur().pointsDeVie();
 
@@ -189,13 +188,6 @@ public class GestionCombatContrat extends GestionCombatDecorator{
 		// Post-Conditions
 
 		try{
-			// \post : attaquant().pointsDeVie() == attaquant().pointsDeVie()@pre
-			assertTrue("\\post: attaquant().pointsDeVie() == attaquant().pointsDeVie()@pre", super.attaquant().pointsDeVie() == oldAttaquant_PointsDeVie);
-		}catch(Exception e){
-			assertTrue("\\post: attaquant().pointsDeVie() == attaquant().pointsDeVie()@pre",false);
-		}
-
-		try{
 			// \post : defenseur().pointsDeVie() == defenseur().pointsDeVie()@pre - attaquant().force()@pre
 			assertTrue("\\post: defenseur().pointsDeVie() == defenseur().pointsDeVie()@pre - attaquant().force()", super.defenseur().pointsDeVie() == oldDefenseur_PointsDeVie - oldAttaquant_Force);
 		}catch(Exception e){
@@ -204,12 +196,6 @@ public class GestionCombatContrat extends GestionCombatDecorator{
 	}
 
 	public void combatMultiple() throws Exception{
-
-		//Capture
-		ArrayList<Integer> oldPointsDeVie=new ArrayList<Integer>();
-		for(IVillageoisService v: setAttaquant()){
-			oldPointsDeVie.add(v.pointsDeVie());
-		}
 
 		// Pré-Conditions
 
@@ -228,13 +214,8 @@ public class GestionCombatContrat extends GestionCombatDecorator{
 		super.combatMultiple();
 		checkInvariants();
 
-		// \post : \forall attaquant \in setAttaquant() : attaquant.pointsDeVie() == attaquant.pointsDeVie()@pre
-		for(int i=0;i<super.setAttaquant().size();i++){
-			assertTrue("\\post : \\forall attaquant \\in setAttaquant() : attaquant.pointsDeVie() == attaquant.pointsDeVie()@pre", oldPointsDeVie.get(i)==super.setAttaquant().get(i).pointsDeVie());
-		}
-
 		//\post : defenseur() ==  defenseur()@pre.retraitPV(\sum \forall attaquant in setAttaquant()@pre : attaquant.force())
-		//Fait dans super.combatMultiple();
+		//appel a un autre service
 
 	}
 
@@ -242,7 +223,6 @@ public class GestionCombatContrat extends GestionCombatDecorator{
 	public void combatMuraille()  throws Exception{
 
 		// Captures
-		int oldAttaquant_PointsDeVie = super.attaquant().pointsDeVie();
 		int oldAttaquant_Force = super.attaquant().force();
 		int oldMuraille_PointsDeVie = super.muraille().pointsDeVie();
 
@@ -269,13 +249,6 @@ public class GestionCombatContrat extends GestionCombatDecorator{
 		// Post-Conditions
 
 		try{
-			// \post : attaquant().pointsDeVie() == attaquant().pointsDeVie()@pre
-			assertTrue("\\post: attaquant().pointsDeVie() == attaquant().pointsDeVie()@pre", super.attaquant().pointsDeVie() == oldAttaquant_PointsDeVie);
-		}catch(Exception e){
-			assertTrue("\\post: attaquant().pointsDeVie() == attaquant().pointsDeVie()@pre",false);
-		}
-
-		try{
 			// \post : muraille().pointsDeVie() == muraille()@pre.taper(attaquant()@pre.force())
 			assertTrue("\\post : muraille().pointsDeVie() == muraille()@pre.taper(attaquant()@pre.force())", super.muraille().pointsDeVie() == oldMuraille_PointsDeVie - oldAttaquant_Force);
 		}catch(Exception e){
@@ -284,12 +257,6 @@ public class GestionCombatContrat extends GestionCombatDecorator{
 	}
 
 	public void combatMurailleMultiple() throws Exception{
-
-		//Capture
-		ArrayList<Integer> oldPointsDeVie=new ArrayList<Integer>();
-		for(IVillageoisService v: setAttaquant()){
-			oldPointsDeVie.add(v.pointsDeVie());
-		}
 
 		// Pré-Conditions
 
@@ -308,13 +275,8 @@ public class GestionCombatContrat extends GestionCombatDecorator{
 		super.combatMurailleMultiple();
 		checkInvariants();
 
-		// \post : \forall attaquant \in setAttaquant() : attaquant.pointsDeVie() == attaquant.pointsDeVie()@pre
-		for(int i=0;i<super.setAttaquant().size();i++){
-			assertTrue("\\post : \\forall attaquant \\in setAttaquant() : attaquant.pointsDeVie() == attaquant.pointsDeVie()@pre", oldPointsDeVie.get(i)==super.setAttaquant().get(i).pointsDeVie());
-		}
-
 		//\post : muraille().pointsDeVie() == muraille()@pre.taper(\sum \forall attaquant in setAttaquant()@pre : attaquant.force())
-		//Fait dans super.combatMurailleMultiple()
+		//appel a un autre service
 
 	}
 
