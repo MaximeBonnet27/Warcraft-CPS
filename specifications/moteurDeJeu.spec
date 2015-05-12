@@ -121,7 +121,8 @@ Operators:
 					(commandJ1=COMMANDE.CONSTRUIRECNRS => ((argumentJ1 = 0 V argumentJ1 = 1) ^ HotelDeVille::etat_d_appartenance(getHotel(M, argumentJ1)) == ETAT.OCCUPE ^ HotelDeVille::appartenance(getHotel(M, argumentJ1)) == Villageois::race(getVillageois(M, i)))
 					(commandJ1=COMMANDE.RECHERCHECNRS => ((argumentJ1 = 0 V argumentJ1 = 1) ^ HotelDeVille::etat_d_appartenance(getHotel(M, argumentJ1)) == ETAT.OCCUPE ^ HotelDeVille::appartenance(getHotel(M, argumentJ1)) == Villageois::race(getVillageois(M, i)))
 					(commandJ1=COMMANDE.APPLIQUER_RECHERCHE =>((argumentJ1 = 0 V argumentJ1 = 1) ^ HotelDeVille::etat_d_appartenance(getHotel(M, argumentJ1)) == ETAT.OCCUPE ^ HotelDeVille::appartenance(getHotel(M, argumentJ1)) == Villageois::race(getVillageois(M, i)))
-					(commandJ1=COMMANDE.ATTAQUER => (100≤argumentJ1≤199))
+					(commandJ1=COMMANDE.ATTAQUER => (100≤argumentJ1≤199)) ^ 
+					(commandJ1=COMMANDE.ATTAQUER_MURAILLE => (argumentJ1 ∈ numeroesMuraille()))
 
 				Pour tout i dans numVillageoisJ2
 					i ∈ numeroesVillageois(M,i) ^
@@ -132,7 +133,8 @@ Operators:
 					(commandJ2=COMMANDE.CONSTRUIRECNRS => ((argumentJ2 = 0 V argumentJ2 = 1) ^ HotelDeVille::etat_d_appartenance(getHotel(M, argumentJ2)) == ETAT.OCCUPE ^ HotelDeVille::appartenance(getHotel(M, argumentJ2)) == Villageois::race(getVillageois(M, i)))
 					(commandJ2=COMMANDE.RECHERCHECNRS => ((argumentJ2 = 0 V argumentJ2 = 1) ^ HotelDeVille::etat_d_appartenance(getHotel(M, argumentJ2)) == ETAT.OCCUPE ^ HotelDeVille::appartenance(getHotel(M, argumentJ2)) == Villageois::race(getVillageois(M, i)))
 					(commandJ2=COMMANDE.APPLIQUER_RECHERCHE =>((argumentJ2 = 0 V argumentJ2 = 1) ^ HotelDeVille::etat_d_appartenance(getHotel(M, argumentJ2)) == ETAT.OCCUPE ^ HotelDeVille::appartenance(getHotel(M, argumentJ2)) == Villageois::race(getVillageois(M, i)))
-					(commandJ12=COMMANDE.ATTAQUER => (0≤argumentJ2≤99))
+					(commandJ2=COMMANDE.ATTAQUER => (0≤argumentJ2≤99))^
+					(commandJ2=COMMANDE.ATTAQUER_MURAILLE => (argumentJ2 ∈ numeroesMuraille()))
 					
 
 

@@ -167,12 +167,12 @@ public interface IMoteurJeuService {
 	 * 
 	 * \inv : peutEntrerHotelVille(numVillageois, numHotel) == 
 	 * 			numHotel == 0 => distance(positionVillageoisX(numVillageois), positionVillageoisY(numVillageois),
-	 * 					 		positionHotelVilleXA, positionHotelVilleYA) <= 51
+	 * 					 		positionHotelVilleXA(), positionHotelVilleYA() <= 51
 	 * 							&&
 	 * 							getHotelVilleA().etat_d_appartenance() == ETAT.OCCUPE
 	 * 							=> getHotelVilleA().appartenance() == getVillageois(numVillageois).race()
 	 *		 && numHotel == 1 => distance(positionVillageoisX(numVillageois), positionVillageoisY(numVillageois),
-	 * 					 		positionHotelVilleXB, positionHotelVilleYB) <= 51
+	 * 					 		positionHotelVilleXB(), positionHotelVilleYB()) <= 51
 	 * 							&&
 	 * 							getHotelVilleB().etat_d_appartenance() == ETAT.OCCUPE
 	 * 							=> getHotelVilleB<().appartenance() == getVillageois(numVillageois).race()
@@ -182,6 +182,7 @@ public interface IMoteurJeuService {
 	 * \inv: villageoisSurMuraille(M,x,y,l,h,m) == collision(x,y,l,h,positionMurailleX(m),positionMurailleY(m),getMuraille(m).largeur(),getMuraille(m).hauteur())
 	 */ 
 	
+	public boolean collision(int x1,int y1,int l1,int h1,int x2,int y2,int l2,int h2);
 	// Constructors
 
 	
@@ -190,8 +191,8 @@ public interface IMoteurJeuService {
 	* \pre: hauteur >=400
 	* \pre: maxPas >= 0
 	* 
-	* \post: largeur() == largeur
-	* \post: hauteur() == hauteur
+	* \post: largeurTerrain() == largeur
+	* \post: hauteurTerrain() == hauteur
 	* \post: maxPasJeu() == maxPas
 	* \post: pasJeuCourant() == 0
 	* \post: numerosVillageois() == {0,...,199}
@@ -200,7 +201,7 @@ public interface IMoteurJeuService {
 	* 				getVillageois(i)=new Villageois().init(ERace.ORC,3,3,20,1,50) &&
 	* 				distance(positionVillageoisX(i),positionVillageoisY(i), positionHotelVilleXA(), positionHotelVilleYA()) ≤ 51
 	* 			\else
-	* 				getVillageois(i)=new Villageois().init(ERace.ORC,3,3,10,1,100) &&
+	* 				getVillageois(i)=new Villageois().init(ERace.HUMAIN,3,3,10,1,100) &&
 	* 				distance(positionVillageoisX(i),positionVillageoisY(i), positionHotelVilleXB(), positionHotelVilleYB()) ≤ 51
 	* 
 	* \post: numeroesMines()={0,...,19}
@@ -248,7 +249,9 @@ public interface IMoteurJeuService {
 	 * 			(c1 == ECommande.ENTRERHOTELVILLE => (a1 == 0 || a1 == 1) && peutEntrerHotelVille(i, a1))
 	 * 			(c1 == ECommande.CONSTRUIRECNRS => (a1 == 0 || a1 == 1) && getHotel(a1).etat_d_appartenance() == EETAT.OCCUPE && getHotel(a1).appartenance() == getVillageois(i).race())
 	 * 			(c1 == ECommande.RECHERCHECNRS => (a1 == 0 || a1 == 1) && getHotel(a1).etat_d_appartenance() == EETAT.OCCUPE && getHotel(a1).appartenance() == getVillageois(i).race())
-	 * 			(c1 == ECommande.ATTAQUER => (100 <= a1 && a1 <= 199)
+	 * 			(c1 == ECommande.ATTAQUER => (100 <= a1 && a1 <= 199) &&
+	 * 			(c1 == ECommancde.APPLIQUER_RECHERCHE => ((a1== 0 || a1 = 1) && getHotel(a1).etat_d_appartenance() == EETAT.OCCUPE && getHotel(a1).appartenance() == getVillageois(i).race())) &&
+	 * 			(c1 == ECommande.ATTAQUER_MURAILLE => a1 \in numeroesMuraille()
 	 * \pre : \foreach i \in s2 :
 	 * 			i \in numeroesVillageois() &&
 	 * 			getVillageois(i).race() == ERace.ORC &&
@@ -257,7 +260,9 @@ public interface IMoteurJeuService {
 	 * 			(c2 == ECommande.ENTRERHOTELVILLE => (a2 == 0 || a2 == 1) && peutEntrerHotelVille(i, a2))
 	 * 			(c2 == ECommande.CONSTRUIRECNRS => (a2 == 0 || a2 == 1) && getHotel(a2).etat_d_appartenance() == EETAT.OCCUPE && getHotel(a2).appartenance() == getVillageois(i).race())
 	 * 			(c2 == ECommande.RECHERCHECNRS => (a2 == 0 || a2 == 1) && getHotel(a2).etat_d_appartenance() == EETAT.OCCUPE && getHotel(a2).appartenance() == getVillageois(i).race())
-	 * 			(c2 == ECommande.ATTAQUER => (100 <= a2 && a2 <= 199)
+	 * 			(c2 == ECommande.ATTAQUER => (100 <= a2 && a2 <= 199) &&
+	 * 			(c2==ECommancde.APPLIQUER_RECHERCHE => ((a2== 0 || a2 = 1) && getHotel(a2).etat_d_appartenance() == EETAT.OCCUPE && getHotel(a2).appartenance() == getVillageois(i).race())) &&
+	 * 			(c2 == ECommande.ATTAQUER_MURAILLE => a2 \in numeroesMuraille()
 	 * 
 	 * \post : pasJeuCourant() == pasJeuCourant()@pre + 1
 	 * \post : \foreach i \in numeroesVillageois() :
